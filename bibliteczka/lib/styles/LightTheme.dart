@@ -17,6 +17,13 @@ ThemeData lightTheme = ThemeData(
   ),
   buttonTheme: ButtonThemeData(buttonColor: colorAppBar),
   textTheme: TextTheme(
+    headline5: TextStyle(
+      color: Colors.black,
+      fontFamily: 'LobsterTwo',
+      fontWeight: FontWeight.w800,
+      fontStyle: FontStyle.italic,
+      fontSize: 20,
+    ),
     headline4: TextStyle(
         color: textMainColor,
         fontFamily: 'LobsterTwo',

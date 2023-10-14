@@ -5,20 +5,11 @@ import 'package:form_field_validator/form_field_validator.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
-      backgroundColor: Color.fromRGBO(253, 249, 240, 1),
       appBar: AppBar(
         title: Text(
           'Biblioteczka',
-          style: TextStyle(
-              color: Colors.black,
-              fontFamily: 'LobsterTwo',
-              fontWeight: FontWeight.w800,
-              fontStyle: FontStyle.italic,
-              fontSize: 35),
+          style: Theme.of(context).textTheme.headline2,
         ),
-        centerTitle: true,
-        foregroundColor: Colors.black,
-        backgroundColor: Color.fromRGBO(242, 224, 157, 1),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -32,13 +23,7 @@ class LoginScreen extends StatelessWidget {
           children: [
             Text(
               "Logowanie",
-              style: TextStyle(
-                color: Colors.black,
-                fontFamily: 'LobsterTwo',
-                fontWeight: FontWeight.w800,
-                fontStyle: FontStyle.italic,
-                fontSize: 50,
-              ),
+              style: Theme.of(context).textTheme.headline1,
             ),
             Row(children: [
               Spacer(
@@ -46,13 +31,7 @@ class LoginScreen extends StatelessWidget {
               ),
               Text(
                 "Nazwa użytkownika",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'LobsterTwo',
-                  fontWeight: FontWeight.w800,
-                  fontStyle: FontStyle.italic,
-                  fontSize: 20,
-                ),
+                style: Theme.of(context).textTheme.headline5,
               ),
               Spacer(
                 flex: 6,
@@ -83,6 +62,56 @@ class LoginScreen extends StatelessWidget {
                 flex: 2,
               )
             ]),
+            Row(children: [
+              Spacer(
+                flex: 2,
+              ),
+              Text(
+                "Hasło",
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              Spacer(
+                flex: 9,
+              ),
+            ]),
+            Row(children: [
+              Spacer(
+                flex: 2,
+              ),
+              Flexible(
+                child: TextFormField(
+                  validator: MultiValidator([
+                    RequiredValidator(errorText: "Enter email address"),
+                    EmailValidator(errorText: "Please correct email filled"),
+                  ]),
+                  decoration: InputDecoration(
+                    hintText: "Email",
+                    labelText: "Email",
+                    errorStyle: TextStyle(fontSize: 18.0),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red),
+                        borderRadius: BorderRadius.all(Radius.circular(9.0))),
+                  ),
+                ),
+                flex: 9,
+              ),
+              Spacer(
+                flex: 2,
+              )
+            ]),
+        Flexible(
+          flex: 2,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+
+            ),
+            child: Text(
+              "Zaloguj",
+              style: Theme.of(context).textTheme.headline4,
+            ),
+            onPressed: () {},
+          ),
+        ),
           ],
         ),
       ));
