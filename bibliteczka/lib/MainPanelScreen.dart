@@ -1,3 +1,4 @@
+import 'package:bibliteczka/styles/DarkTheme.dart';
 import 'package:bibliteczka/styles/LightTheme.dart';
 import 'package:bibliteczka/styles/ThemeConstants.dart';
 import 'package:bibliteczka/styles/ThemeManager.dart';
@@ -10,7 +11,9 @@ class SignUpNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      themeMode: ThemeMode.system,
       theme: lightTheme,
+      darkTheme: darkTheme,
       home:MainPanelScreen(),
     );
   }

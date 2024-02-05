@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-final Color colorAppBar = Color.fromRGBO(242, 224, 157, 1);
-final Color backgroundScreenColor = Color.fromRGBO(253, 249, 240, 1);
-final Color categoryButtonCyanColor = Color.fromRGBO(150, 218, 214, 1);
+final Color colorAppDarkBar = Color.fromRGBO(34, 0, 107, 1.0);
+final Color backgroundScreenDarkColor = Color.fromRGBO(216, 235, 240, 1.0);
+final Color categoryButtonDarkColor = Color.fromRGBO(8, 69, 129, 1.0);
 final Color textMainColor = Colors.black;
 final Color borderColor = Colors.grey;
 
-ThemeData lightTheme = ThemeData(
+ThemeData darkTheme = ThemeData(
     colorScheme: ColorScheme.fromSwatch()
-        .copyWith(primary: Colors.white60, secondary: const Color(0xffdfeaf2)),
-    brightness: Brightness.light,
-    scaffoldBackgroundColor: Color.fromRGBO(253, 249, 240, 1),
+        .copyWith(primary: Colors.white60, secondary: const Color(0xffdfeaf2), brightness: Brightness.dark),
+
+    scaffoldBackgroundColor: backgroundScreenDarkColor,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
           textStyle: TextStyle(
@@ -19,21 +19,21 @@ ThemeData lightTheme = ThemeData(
               fontStyle: FontStyle.italic,
               fontSize: 28),
           minimumSize: Size.square(50.0),
-          backgroundColor: categoryButtonCyanColor,
+          backgroundColor: categoryButtonDarkColor,
           foregroundColor: textMainColor,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
     ),
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-      textStyle: TextStyle(
-          fontFamily: 'Lato',
-          fontWeight: FontWeight.w700,
-          fontStyle: FontStyle.normal,
-          fontSize: 15),
-      foregroundColor: categoryButtonCyanColor,
-    )),
-    buttonTheme: ButtonThemeData(buttonColor: colorAppBar),
+          textStyle: TextStyle(
+              fontFamily: 'Lato',
+              fontWeight: FontWeight.w700,
+              fontStyle: FontStyle.normal,
+              fontSize: 15),
+          foregroundColor: categoryButtonDarkColor,
+        )),
+    buttonTheme: ButtonThemeData(buttonColor: colorAppDarkBar),
     textTheme: TextTheme(
       headline6: TextStyle(
           color: Colors.grey,
@@ -48,12 +48,6 @@ ThemeData lightTheme = ThemeData(
         fontStyle: FontStyle.normal,
         fontSize: 18,
       ),
-      // headline4: TextStyle(
-      //     color: textMainColor,
-      //     fontFamily: 'LobsterTwo',
-      //     fontWeight: FontWeight.w800,
-      //     fontStyle: FontStyle.italic,
-      //     fontSize: 28),
       headline2: TextStyle(
           color: textMainColor,
           fontFamily: 'LobsterTwo',
@@ -77,5 +71,5 @@ ThemeData lightTheme = ThemeData(
     appBarTheme: AppBarTheme(
       centerTitle: true,
       foregroundColor: textMainColor,
-      backgroundColor: colorAppBar,
+      backgroundColor: colorAppDarkBar,
     ));
