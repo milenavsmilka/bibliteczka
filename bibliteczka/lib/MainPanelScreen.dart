@@ -76,7 +76,6 @@ class ChooseCategoryButton extends StatelessWidget {
         ),
         child: Text(
           nameOfCategory,
-          style: Theme.of(context).textTheme.headline4,
         ),
         onPressed: () {},
       ),

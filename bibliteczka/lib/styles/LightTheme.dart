@@ -24,11 +24,28 @@ ThemeData lightTheme = ThemeData(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
     ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      labelStyle: TextStyle(
+          color: Colors.grey,
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.w700,
+          fontStyle: FontStyle.normal,
+          fontSize: 15),
+      errorStyle: TextStyle(fontSize: 18.0, color: Colors.red),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: categoryButtonCyanColor, width: 2.0),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: categoryButtonCyanColor),
+      ),
+    ),
+
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
       textStyle: TextStyle(
           fontFamily: 'Lato',
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w800,
           fontStyle: FontStyle.normal,
           fontSize: 15),
       foregroundColor: categoryButtonCyanColor,
@@ -42,7 +59,7 @@ ThemeData lightTheme = ThemeData(
           fontStyle: FontStyle.normal,
           fontSize: 15),
       headline5: TextStyle(
-        color: Colors.black,
+        color: textMainColor,
         fontFamily: 'Lato',
         fontWeight: FontWeight.w700,
         fontStyle: FontStyle.normal,

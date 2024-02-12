@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
           alignment: Alignment.center,
           decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/images/ekranpoczatkowy.jpg"),
+                  image: AssetImage("assets/images/tlo_start_page2.png"),
                   fit: BoxFit.cover)),
           child: Column(
             children: <Widget>[
@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => MainPanelScreen()),
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 },
               ),

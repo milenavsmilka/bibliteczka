@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-final Color colorAppDarkBar = Color.fromRGBO(34, 0, 107, 1.0);
-final Color backgroundScreenDarkColor = Color.fromRGBO(216, 235, 240, 1.0);
-final Color categoryButtonDarkColor = Color.fromRGBO(8, 69, 129, 1.0);
-final Color textMainColor = Colors.black;
+final Color colorAppDarkBar = Color.fromRGBO(0, 0, 0, 1.0);
+final Color backgroundScreenDarkColor = Color.fromRGBO(64, 63, 82, 1.0);
+final Color categoryButtonDarkColor = Color.fromRGBO(101, 100, 131, 1.0);
+final Color textMainColor = Color.fromRGBO(211, 207, 207, 1.0);
 final Color borderColor = Colors.grey;
 
 ThemeData darkTheme = ThemeData(
-    colorScheme: ColorScheme.fromSwatch()
-        .copyWith(primary: Colors.white60, secondary: const Color(0xffdfeaf2), brightness: Brightness.dark),
-
+    colorScheme: ColorScheme.fromSwatch().copyWith(
+        primary: Colors.white60,
+        secondary: const Color(0xffdfeaf2),
+        brightness: Brightness.dark),
     scaffoldBackgroundColor: backgroundScreenDarkColor,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -22,19 +23,38 @@ ThemeData darkTheme = ThemeData(
           backgroundColor: categoryButtonDarkColor,
           foregroundColor: textMainColor,
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
     ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      labelStyle: TextStyle(
+          color: Colors.grey,
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.w700,
+          fontStyle: FontStyle.normal,
+          fontSize: 15),
+      errorStyle: TextStyle(fontSize: 18.0, color: Colors.red),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: categoryButtonDarkColor, width: 2.0),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: categoryButtonDarkColor),
+      ),
+    ),
+
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          textStyle: TextStyle(
-              fontFamily: 'Lato',
-              fontWeight: FontWeight.w700,
-              fontStyle: FontStyle.normal,
-              fontSize: 15),
-          foregroundColor: categoryButtonDarkColor,
-        )),
+      textStyle: TextStyle(
+          color: borderColor,
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.w800,
+          fontStyle: FontStyle.normal,
+          fontSize: 15),
+      foregroundColor: textMainColor,
+    )),
     buttonTheme: ButtonThemeData(buttonColor: colorAppDarkBar),
     textTheme: TextTheme(
+      //TODO sprawdzić, czy można usunąć headline6, czy jest używane jeszcze gdzieś prócz inputDecoration
       headline6: TextStyle(
           color: Colors.grey,
           fontFamily: 'Lato',
@@ -42,7 +62,7 @@ ThemeData darkTheme = ThemeData(
           fontStyle: FontStyle.normal,
           fontSize: 15),
       headline5: TextStyle(
-        color: Colors.black,
+        color: textMainColor,
         fontFamily: 'Lato',
         fontWeight: FontWeight.w700,
         fontStyle: FontStyle.normal,

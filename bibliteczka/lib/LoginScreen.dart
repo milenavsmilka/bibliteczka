@@ -1,3 +1,4 @@
+import 'package:bibliteczka/MainPanelScreen.dart';
 import 'package:bibliteczka/styles/LightTheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,18 +47,7 @@ class LoginScreen extends StatelessWidget {
                             errorText: "Please correct email filled"),
                       ]),
                       decoration: InputDecoration(
-                        labelStyle: Theme.of(context).textTheme.headline6,
                         labelText: "Wpisz nazwę użytkownika",
-                        errorStyle:
-                            TextStyle(fontSize: 18.0, color: Colors.red),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: categoryButtonCyanColor, width: 2.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: categoryButtonCyanColor),
-                        ),
                       ),
                     ),
                   ),
@@ -77,17 +67,7 @@ class LoginScreen extends StatelessWidget {
                               errorText: "Please correct email filled"),
                         ]),
                         decoration: InputDecoration(
-                          labelStyle: Theme.of(context).textTheme.headline6,
                           labelText: "Podaj hasło",
-                          errorStyle: TextStyle(fontSize: 18.0),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: categoryButtonCyanColor, width: 2.0),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: categoryButtonCyanColor),
-                          ),
                         )),
                   ),
                 ]),
@@ -95,7 +75,13 @@ class LoginScreen extends StatelessWidget {
                 Center(
                   child: ElevatedButton(
                     child: Text("Zaloguj"),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainPanelScreen()),
+                      );
+                    },
                   ),
                 ),
                 Center(
