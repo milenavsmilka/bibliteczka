@@ -31,8 +31,7 @@ class _MainPanelScreen extends State<MainPanelScreen> {
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: Text(
-          'Biblioteczka',
-          style: Theme.of(context).textTheme.headline2,
+          'Biblioteczka'
         ),
         // centerTitle: true,
         // foregroundColor: Colors.black,

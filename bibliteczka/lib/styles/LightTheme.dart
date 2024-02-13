@@ -15,16 +15,15 @@ ThemeData lightTheme = ThemeData(
       style: ElevatedButton.styleFrom(
           textStyle: TextStyle(
               fontFamily: 'LobsterTwo',
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
               fontStyle: FontStyle.italic,
-              fontSize: 28),
+              fontSize: 25),
           minimumSize: Size.square(50.0),
           backgroundColor: categoryButtonCyanColor,
           foregroundColor: textMainColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
     ),
-
     inputDecorationTheme: InputDecorationTheme(
       labelStyle: TextStyle(
           color: Colors.grey,
@@ -40,7 +39,6 @@ ThemeData lightTheme = ThemeData(
         borderSide: BorderSide(color: categoryButtonCyanColor),
       ),
     ),
-
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
       textStyle: TextStyle(
@@ -60,8 +58,8 @@ ThemeData lightTheme = ThemeData(
           fontSize: 15),
       headline5: TextStyle(
         color: textMainColor,
-        fontFamily: 'Lato',
-        fontWeight: FontWeight.w700,
+        fontFamily: 'Merienda',
+        fontWeight: FontWeight.w600,
         fontStyle: FontStyle.normal,
         fontSize: 18,
       ),
@@ -71,18 +69,18 @@ ThemeData lightTheme = ThemeData(
       //     fontWeight: FontWeight.w800,
       //     fontStyle: FontStyle.italic,
       //     fontSize: 28),
-      headline2: TextStyle(
-          color: textMainColor,
-          fontFamily: 'LobsterTwo',
-          fontWeight: FontWeight.w800,
-          fontStyle: FontStyle.italic,
-          fontSize: 35),
+      // headline2: TextStyle(
+      //     color: textMainColor,
+      //     fontFamily: 'Merienda',
+      //     fontWeight: FontWeight.w800,
+      //     fontStyle: FontStyle.italic,
+      //     fontSize: 35),
       headline1: TextStyle(
           color: Colors.black,
           fontFamily: 'LobsterTwo',
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w800,
           fontStyle: FontStyle.italic,
-          fontSize: 50),
+          fontSize: 55),
       headline3: TextStyle(
         color: Colors.black,
         fontFamily: 'LobsterTwo',
@@ -92,6 +90,12 @@ ThemeData lightTheme = ThemeData(
       ),
     ),
     appBarTheme: AppBarTheme(
+      titleTextStyle: TextStyle(
+          color: textMainColor,
+          fontFamily: 'LobsterTwo',
+          fontWeight: FontWeight.w800,
+          fontStyle: FontStyle.italic,
+          fontSize: 35),
       centerTitle: true,
       foregroundColor: textMainColor,
       backgroundColor: colorAppBar,

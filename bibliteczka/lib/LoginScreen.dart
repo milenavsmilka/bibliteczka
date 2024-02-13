@@ -9,8 +9,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(
-            'Biblioteczka',
-            style: Theme.of(context).textTheme.headline2,
+            'Biblioteczka'
           ),
           leading: IconButton(
             onPressed: () {
