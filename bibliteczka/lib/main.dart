@@ -1,6 +1,6 @@
-import 'package:bibliteczka/LoginScreen.dart';
-import 'package:bibliteczka/styles/DarkTheme.dart';
-import 'package:bibliteczka/styles/LightTheme.dart';
+import 'package:biblioteczka/LoginScreen.dart';
+import 'package:biblioteczka/styles/DarkTheme.dart';
+import 'package:biblioteczka/styles/LightTheme.dart';
 import 'package:flutter/material.dart';
 
 import 'MainPanelScreen.dart';

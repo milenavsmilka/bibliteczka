@@ -1,12 +1,11 @@
+import 'package:biblioteczka/LoginScreen.dart';
 import 'package:biblioteczka/MainPanelScreen.dart';
 import 'package:biblioteczka/styles/LightTheme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
-import 'RegisterScreen.dart';
-
-class LoginScreen extends StatelessWidget {
+class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -20,13 +19,13 @@ class LoginScreen extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           padding: EdgeInsetsDirectional.only(
-              bottom: MediaQuery.of(context).size.height * 0.1,
-              top: MediaQuery.of(context).size.height * 0.2,
+              bottom: MediaQuery.of(context).size.height * 0.04,
+              top: MediaQuery.of(context).size.height * 0.09,
               start: MediaQuery.of(context).size.width * 0.1,
               end: MediaQuery.of(context).size.width * 0.1),
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height / 2,
+              maxHeight: MediaQuery.of(context).size.height / 1.4,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,6 +36,7 @@ class LoginScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ]),
+                // const SizedBox(height: 8),
                 Row(children: [
                   Flexible(
                     child: TextFormField(
@@ -51,12 +51,31 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ]),
+                // const SizedBox(height: 8),
+                Row(children: [
+                  Text(
+                    "Email",
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                ]),
+                // const SizedBox(height: 8),
+                Row(children: [
+                  Flexible(
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: "Wpisz email",
+                      ),
+                    ),
+                  ),
+                ]),
+                // const SizedBox(height: 8),
                 Row(children: [
                   Text(
                     "Hasło",
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ]),
+                // const SizedBox(height: 8),
                 Row(children: [
                   Flexible(
                     child: TextFormField(
@@ -71,15 +90,31 @@ class LoginScreen extends StatelessWidget {
                         )),
                   ),
                 ]),
-                const SizedBox(height: 2),
+                // const SizedBox(height: 8),
+                Row(children: [
+                  Text(
+                    "Powtórz hasło",
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                ]),
+                // const SizedBox(height: 8),
+                Row(children: [
+                  Flexible(
+                    child: TextFormField(
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: "Powtórz hasło",
+                        )),
+                  ),
+                ]),
+                // const SizedBox(height: 12),
                 Center(
                   child: ElevatedButton(
-                    child: Text("Zaloguj"),
+                    child: Text("Zarejestruj się"),
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => MainPanelScreen()),
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
                       );
                     },
                   ),
@@ -87,14 +122,14 @@ class LoginScreen extends StatelessWidget {
                 Center(
                     child: Row(
                   children: [
-                    Text("Lub zarejestruj się ",
+                    Text("Masz już konto? Zaloguj się ",
                         style: Theme.of(context).textTheme.headline6),
                     TextButton(
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RegisterScreen()),
+                                builder: (context) => LoginScreen()),
                           );
                         },
                         child: Text("tutaj"))

@@ -1,7 +1,7 @@
-import 'package:bibliteczka/styles/DarkTheme.dart';
-import 'package:bibliteczka/styles/LightTheme.dart';
-import 'package:bibliteczka/styles/ThemeConstants.dart';
-import 'package:bibliteczka/styles/ThemeManager.dart';
+import 'package:biblioteczka/styles/DarkTheme.dart';
+import 'package:biblioteczka/styles/LightTheme.dart';
+import 'package:biblioteczka/styles/ThemeConstants.dart';
+import 'package:biblioteczka/styles/ThemeManager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
