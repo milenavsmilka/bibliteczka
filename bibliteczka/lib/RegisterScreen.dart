@@ -41,7 +41,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
         body: Form(
-          // autovalidateMode: AutovalidateMode.onUserInteraction,
           key: _formKey,
           child: SingleChildScrollView(
             padding: EdgeInsetsDirectional.only(
