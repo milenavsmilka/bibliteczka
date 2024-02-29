@@ -1,11 +1,34 @@
+import 'dart:convert';
+
 import 'package:biblioteczka/LoginScreen.dart';
-import 'package:biblioteczka/MainPanelScreen.dart';
-import 'package:biblioteczka/styles/LightTheme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:http/http.dart' as http;
 
-class RegisterScreen extends StatelessWidget {
+String? validatePassword(String? password) {
+  RegExp passReg = RegExp(
+      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-_])[A-Za-z\d@$!%*?&]{10,50}$');
+  final isPassReg = passReg.hasMatch(password ?? '');
+  if (!isPassReg) {
+    return "Hasło musi zawierać min 10 znaków, w tym małe i duże litery, cyfry oraz znaki specjalne";
+  }
+  return null;
+}
+
+class RegisterScreen extends StatefulWidget {
+  @override
+  _RegisterScreenState createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final repeatPasswordController = TextEditingController();
+  final emailController = TextEditingController();
+  bool passVisible = false;
+  bool passRepVisible = false;
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
@@ -17,110 +40,129 @@ class RegisterScreen extends StatelessWidget {
             icon: Icon(Icons.arrow_back_ios_sharp),
           ),
         ),
-        body: SingleChildScrollView(
-          padding: EdgeInsetsDirectional.only(
-              bottom: MediaQuery.of(context).size.height * 0.04,
-              top: MediaQuery.of(context).size.height * 0.09,
-              start: MediaQuery.of(context).size.width * 0.1,
-              end: MediaQuery.of(context).size.width * 0.1),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height / 1.4,
-            ),
+        body: Form(
+          // autovalidateMode: AutovalidateMode.onUserInteraction,
+          key: _formKey,
+          child: SingleChildScrollView(
+            padding: EdgeInsetsDirectional.only(
+                bottom: MediaQuery.of(context).size.height * 0.02,
+                top: MediaQuery.of(context).size.height * 0.1,
+                start: MediaQuery.of(context).size.width * 0.1,
+                end: MediaQuery.of(context).size.width * 0.1),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Row(children: [
-                  Text(
-                    "Nazwa użytkownika",
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                ]),
-                // const SizedBox(height: 8),
-                Row(children: [
                   Flexible(
                     child: TextFormField(
-                      validator: MultiValidator([
-                        RequiredValidator(errorText: "Enter email address"),
-                        EmailValidator(
-                            errorText: "Please correct email filled"),
-                      ]),
+                      controller: usernameController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: RequiredValidator(
+                          errorText: "Podaj nazwę użytkownika"),
                       decoration: InputDecoration(
-                        labelText: "Wpisz nazwę użytkownika",
-                      ),
+                          labelText: "Nazwa użytkownika",
+                          prefixIcon: Icon(Icons.account_circle_rounded)),
                     ),
                   ),
                 ]),
-                // const SizedBox(height: 8),
-                Row(children: [
-                  Text(
-                    "Email",
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                ]),
-                // const SizedBox(height: 8),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Row(children: [
                   Flexible(
                     child: TextFormField(
+                      controller: emailController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         labelText: "Wpisz email",
+                        prefixIcon: Icon(Icons.email),
                       ),
+                      validator: MultiValidator([
+                        RequiredValidator(errorText: "Podaj adres email"),
+                        EmailValidator(
+                            errorText: "Podano niepoprawny adres email"),
+                      ]),
                     ),
                   ),
                 ]),
-                // const SizedBox(height: 8),
-                Row(children: [
-                  Text(
-                    "Hasło",
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                ]),
-                // const SizedBox(height: 8),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Row(children: [
                   Flexible(
                     child: TextFormField(
-                        obscureText: true,
-                        validator: MultiValidator([
-                          RequiredValidator(errorText: "Enter email address"),
-                          EmailValidator(
-                              errorText: "Please correct email filled"),
-                        ]),
-                        decoration: InputDecoration(
+                      controller: passwordController,
+                      obscureText: !passVisible,
+                      validator: validatePassword,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      decoration: InputDecoration(
                           labelText: "Podaj hasło",
-                        )),
+                          errorMaxLines: 3,
+                          prefixIcon: Icon(Icons.lock),
+                          suffix: InkWell(
+                            onTap: () {
+                              setState(() {
+                                passVisible = !passVisible;
+                              });
+                            },
+                            child: Icon(
+                              passVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                          )),
+                    ),
                   ),
                 ]),
-                // const SizedBox(height: 8),
-                Row(children: [
-                  Text(
-                    "Powtórz hasło",
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                ]),
-                // const SizedBox(height: 8),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Row(children: [
                   Flexible(
                     child: TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
+                      controller: repeatPasswordController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      obscureText: !passRepVisible,
+                      validator: (repeat) => repeat != passwordController.text
+                          ? "Hasła są różne"
+                          : null, //repeatPassValidator,
+                      decoration: InputDecoration(
                           labelText: "Powtórz hasło",
-                        )),
+                          prefixIcon: Icon(Icons.lock),
+                          suffix: InkWell(
+                            onTap: () {
+                              setState(() {
+                                passRepVisible = !passRepVisible;
+                              });
+                            },
+                            child: Icon(
+                              passRepVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                          )),
+                    ),
                   ),
                 ]),
-                // const SizedBox(height: 12),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Center(
                   child: ElevatedButton(
                     child: Text("Zarejestruj się"),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
+                    onPressed: () async {
+                      _formKey.currentState!.validate();
+                      int loginResult = await signUp(
+                          usernameController.text,
+                          passwordController.text,
+                          repeatPasswordController.text,
+                          emailController.text);
+                      if (loginResult == 0) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()),
+                        );
+                      }
                     },
                   ),
                 ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Center(
                     child: Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text("Masz już konto? Zaloguj się ",
                         style: Theme.of(context).textTheme.headline6),
@@ -134,11 +176,42 @@ class RegisterScreen extends StatelessWidget {
                         },
                         child: Text("tutaj"))
                   ],
-                  mainAxisSize: MainAxisSize.min,
                 ))
               ],
             ),
           ),
         ),
       );
+
+  Future<int> signUp(String username, String password, String repeatPassword,
+      String email) async {
+    if (password != repeatPassword) {
+      return 1;
+    }
+    print("Próba mikrofonu");
+    const String apiUrl = 'https://192.168.0.2:5000/api/account/register';
+    final Map<String, dynamic> requestBody = {
+      'username': username,
+      'password': password,
+      'email': email
+    };
+    String requestBodyJson = jsonEncode(requestBody);
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: requestBodyJson,
+    );
+    if (response.statusCode == 200) {
+      print("Okej :D");
+      Map<String, dynamic> data = jsonDecode(response.body);
+      print(data);
+      return 0;
+    } else {
+      print("Nie okej :(");
+      throw Exception('Failed to load data');
+    }
+  }
 }

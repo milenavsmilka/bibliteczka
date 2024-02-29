@@ -5,6 +5,8 @@ import 'package:biblioteczka/styles/ThemeManager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'TestScreen.dart';
+
 class SignUpNav extends StatelessWidget {
   const SignUpNav({Key? key}) : super(key: key);
 
@@ -76,7 +78,13 @@ class ChooseCategoryButton extends StatelessWidget {
         child: Text(
           nameOfCategory,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => TestScreen()),
+          );
+        },
       ),
     );
   }
