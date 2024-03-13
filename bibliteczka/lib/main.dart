@@ -1,15 +1,19 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:biblioteczka/LoginScreen.dart';
 import 'package:biblioteczka/styles/DarkTheme.dart';
 import 'package:biblioteczka/styles/LightTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 import 'MainPanelScreen.dart';
 
-void main()  {
+void main() {
   HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
@@ -19,13 +23,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: lightTheme,
       darkTheme: darkTheme,
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'HejApp'),
     );
   }
 }
@@ -36,10 +40,19 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
+  static const String TOKEN = "login";
+  static const bool isLogged = false;
+
+  @override
+  void initState() {
+    super.initState();
+    whereToGo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,45 +68,82 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             children: <Widget>[
               const Spacer(
-                flex: 4,
+                flex: 3,
               ),
               Text("Biblioteczka",
-                  style: Theme.of(context).textTheme.headline1
-              ),
+                  style: Theme.of(context).textTheme.headline1),
               const Spacer(
-                flex: 1,
+                flex: 4,
               ),
-              ElevatedButton(
-                style: ButtonStyle(
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(color: Colors.black))),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        colorAppBar)),
-                child: Text(
-                  "Start",
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
-                },
-              ),
-              const Spacer(
-                flex: 5,
-              ),
+              // ElevatedButton(
+              //   style: ButtonStyle(
+              //       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              //           RoundedRectangleBorder(
+              //               borderRadius: BorderRadius.circular(10.0),
+              //               side: BorderSide(color: Colors.black))),
+              //       backgroundColor:
+              //           MaterialStateProperty.all<Color>(colorAppBar)),
+              //   child: Text(
+              //     "Start",
+              //     style: Theme.of(context).textTheme.headline3,
+              //   ),
+              //   onPressed: () {
+              //     Navigator.push(
+              //       context,
+              //       MaterialPageRoute(builder: (context) => LoginScreen()),
+              //     );
+              //   },
+              // ),
+              // const Spacer(
+              //   flex: 5,
+              // ),
             ],
           )),
     );
   }
+
+ void whereToGo() async {
+    var sharedPreferences = await SharedPreferences.getInstance();
+    String? actualToken = sharedPreferences.getString(TOKEN);
+    // String? isLoggedIn = sharedPreferences.getString(isLogged);
+    var isLoggedIn = sharedPreferences.getBool('isLogged') ?? false;
+
+    print("Wypiszę $isLoggedIn $actualToken");
+
+    Timer(Duration(seconds: 2),() async {
+      if (actualToken != null) {
+        //pobranie ważności tokena
+        const String apiUrl = 'https://192.168.0.2:5000/api/account/check_if_logged_in';
+        final response = await http.get(
+          Uri.parse(apiUrl),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer $actualToken'
+          }
+        );
+        Map<String, dynamic> data = jsonDecode(response.body);
+        String tokenValid = data['msg'];
+        print('Czy token valid? $tokenValid');
+        if (tokenValid == 'Token valid') { //jeżeli token jest ważny
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => MainPanelScreen()));
+        } else {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        }
+      } else {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      }
+    });
+  }
 }
-class MyHttpOverrides extends HttpOverrides{
+
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext? context){
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

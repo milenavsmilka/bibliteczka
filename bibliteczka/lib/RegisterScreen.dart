@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 String? validatePassword(String? password) {
   RegExp passReg = RegExp(
-      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-_])[A-Za-z\d@$!%*?&]{10,50}$');
+  r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{10,50}$');
   final isPassReg = passReg.hasMatch(password ?? '');
   if (!isPassReg) {
     return "Hasło musi zawierać min 10 znaków, w tym małe i duże litery, cyfry oraz znaki specjalne";

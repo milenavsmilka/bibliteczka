@@ -1,11 +1,14 @@
+import 'dart:convert';
+
+import 'package:biblioteczka/LoginScreen.dart';
+import 'package:biblioteczka/main.dart';
 import 'package:biblioteczka/styles/DarkTheme.dart';
 import 'package:biblioteczka/styles/LightTheme.dart';
-import 'package:biblioteczka/styles/ThemeConstants.dart';
-import 'package:biblioteczka/styles/ThemeManager.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'TestScreen.dart';
+import 'package:http/http.dart' as http;
 
 class SignUpNav extends StatelessWidget {
   const SignUpNav({Key? key}) : super(key: key);
@@ -16,7 +19,7 @@ class SignUpNav extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: lightTheme,
       darkTheme: darkTheme,
-      home:MainPanelScreen(),
+      home: MainPanelScreen(),
     );
   }
 }
@@ -32,18 +35,27 @@ class _MainPanelScreen extends State<MainPanelScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Biblioteczka'
-        ),
-        // centerTitle: true,
-        // foregroundColor: Colors.black,
-        // backgroundColor: Color.fromRGBO(242, 224, 157, 1),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_sharp),
-        ),
+        title: Text('Biblioteczka'),
+        automaticallyImplyLeading: false,
+        actions: <Widget>[
+          PopupMenuButton(
+            icon: Icon(
+              Icons.account_circle,
+              color: Colors.black,
+              size: 35,
+            ),
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem(
+                child: Text("Iton 1"),
+              ),
+              PopupMenuItem(child: Text("Iton 2")),
+              PopupMenuItem(
+                child: Text("Wyloguj"),
+                onTap: logOut
+              )
+            ],
+          )
+        ],
       ),
       body: Container(
         child: Column(
@@ -57,6 +69,31 @@ class _MainPanelScreen extends State<MainPanelScreen> {
           ],
         ),
       ));
+
+ Future<void> logOut() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
+
+    const String apiUrl = 'https://192.168.0.2:5000/api/account/logout';
+
+    final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $actualToken'
+        }
+    );
+    Map<String, dynamic> data = jsonDecode(response.body);
+    String message = data['message'];
+    print('Otrzymana wiadomość po wylogowaniu: $message $actualToken');
+    if (response.statusCode == 200) {
+      sharedPreferences.clear();
+      print("Poprawnie wylogowano użytkownika");
+      Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+    } else {
+      print("Pojawił się błąd, użytkownik nie został wylogowany");
+    }
+ }
 }
 
 class ChooseCategoryButton extends StatelessWidget {
@@ -81,8 +118,7 @@ class ChooseCategoryButton extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => TestScreen()),
+            MaterialPageRoute(builder: (context) => TestScreen()),
           );
         },
       ),
