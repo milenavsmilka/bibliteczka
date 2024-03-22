@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:biblioteczka/LoginScreen.dart';
 import 'package:biblioteczka/styles/DarkTheme.dart';
 import 'package:biblioteczka/styles/LightTheme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'CustomPageRoute.dart';
 import 'MainPanelScreen.dart';
 
 void main() {
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: lightTheme,
       darkTheme: darkTheme,
-      home: MyHomePage(title: 'HejApp'),
+      home: const MyHomePage(title: 'HejApp'),
     );
   }
 }
@@ -75,28 +75,6 @@ class MyHomePageState extends State<MyHomePage> {
               const Spacer(
                 flex: 4,
               ),
-              // ElevatedButton(
-              //   style: ButtonStyle(
-              //       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              //           RoundedRectangleBorder(
-              //               borderRadius: BorderRadius.circular(10.0),
-              //               side: BorderSide(color: Colors.black))),
-              //       backgroundColor:
-              //           MaterialStateProperty.all<Color>(colorAppBar)),
-              //   child: Text(
-              //     "Start",
-              //     style: Theme.of(context).textTheme.headline3,
-              //   ),
-              //   onPressed: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(builder: (context) => LoginScreen()),
-              //     );
-              //   },
-              // ),
-              // const Spacer(
-              //   flex: 5,
-              // ),
             ],
           )),
     );
@@ -125,15 +103,15 @@ class MyHomePageState extends State<MyHomePage> {
         String tokenValid = data['msg'];
         print('Czy token valid? $tokenValid');
         if (tokenValid == 'Token valid') { //jeżeli token jest ważny
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => MainPanelScreen()));
+          Navigator.push(context,
+              CustomPageRoute(child: MainPanelScreen()));
         } else {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => LoginScreen()));
+          Navigator.push(
+              context, CustomPageRoute(child: LoginScreen()));
         }
       } else {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        Navigator.push(
+            context, CustomPageRoute(child: LoginScreen()));
       }
     });
   }

@@ -5,10 +5,11 @@ import 'package:biblioteczka/main.dart';
 import 'package:biblioteczka/styles/DarkTheme.dart';
 import 'package:biblioteczka/styles/LightTheme.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'TestScreen.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'TestScreen.dart';
 
 class SignUpNav extends StatelessWidget {
   const SignUpNav({Key? key}) : super(key: key);
@@ -33,42 +34,70 @@ class MainPanelScreen extends StatefulWidget {
 
 class _MainPanelScreen extends State<MainPanelScreen> {
   @override
-  Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(
-        title: Text('Biblioteczka'),
-        automaticallyImplyLeading: false,
-        actions: <Widget>[
-          PopupMenuButton(
-            icon: Icon(
-              Icons.account_circle,
-              color: Colors.black,
-              size: 35,
-            ),
-            itemBuilder: (BuildContext context) => [
-              PopupMenuItem(
-                child: Text("Iton 1"),
+  Widget build(BuildContext context) => PopScope(
+    canPop: false,
+    onPopInvoked: (didPop) async {
+      final shouldPop = await showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Exit'),
+            content: const Text('Czy chcesz wyjść z aplikacji'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    SystemNavigator.pop();
+                  },
+                  child: const Text('Tak')),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+                child: const Text('Nie'),
               ),
-              PopupMenuItem(child: Text("Iton 2")),
-              PopupMenuItem(
-                child: Text("Wyloguj"),
-                onTap: logOut
-              )
             ],
-          )
-        ],
-      ),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ChooseCategoryButton(nameOfCategory: "Kategoria"),
-            ChooseCategoryButton(nameOfCategory: "Zapowiedzi"),
-            ChooseCategoryButton(nameOfCategory: "Top 100"),
-            ChooseCategoryButton(nameOfCategory: "Autorzy"),
-            ChooseCategoryButton(nameOfCategory: "Społeczność"),
+          );
+        },
+      );
+      return Future.value(shouldPop);
+    },
+    child: Scaffold(
+        appBar: AppBar(
+          title: Text('Biblioteczka'),
+          automaticallyImplyLeading: false,
+          actions: <Widget>[
+            PopupMenuButton(
+              icon: Icon(
+                Icons.account_circle,
+                color: Colors.black,
+                size: 35,
+              ),
+              itemBuilder: (BuildContext context) => [
+                PopupMenuItem(
+                  child: Text("Iton 1"),
+                ),
+                PopupMenuItem(child: Text("Iton 2")),
+                PopupMenuItem(
+                  child: Text("Wyloguj"),
+                  onTap: logOut
+                )
+              ],
+            )
           ],
         ),
-      ));
+        body: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ChooseCategoryButton(nameOfCategory: "Kategoria"),
+              ChooseCategoryButton(nameOfCategory: "Zapowiedzi"),
+              ChooseCategoryButton(nameOfCategory: "Top 100"),
+              ChooseCategoryButton(nameOfCategory: "Autorzy"),
+              ChooseCategoryButton(nameOfCategory: "Społeczność"),
+            ],
+          ),
+        )),
+  );
 
  Future<void> logOut() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

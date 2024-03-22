@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final passwordController = TextEditingController();
   String token = '';
   bool passVisible = false;
+  String messageCanChange = 'who cares bejbe?';
 
   @override
   Widget build(BuildContext context) => PopScope(
@@ -88,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: MultiValidator([
                           RequiredValidator(errorText: "Podaj adres email"),
                           EmailValidator(
-                              errorText: "Podano niepoprawny adres email"),
+                              errorText: 'Podano niepoprawny adres email'),
                         ]),
                       ),
                     ),
@@ -122,17 +123,34 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text("Zaloguj"),
                         onPressed: () async {
                           _formKey.currentState!.validate();
-                          int loginResult = await signIn(
-                              emailController.text, passwordController.text);
-                          if (loginResult == 0) {
-                            Get.to(() => MainPanelScreen());
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //       builder: (context) => MainPanelScreen()),
-                            // );
+                          try {
+                            await signIn(
+                                emailController.text, passwordController.text);
+                          } catch (_) {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Błąd"),
+                                    content: Text(messageCanChange),
+                                    actions: [
+                                      TextButton(
+                                        child: Text("Ok"),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      )
+                                    ],
+                                  );
+                                });
                           }
                         },
+                      ),
+                    ),
+                    Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [Text(messageCanChange)],
                       ),
                     ),
                     Center(
@@ -160,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 
-  Future<int> signIn(String email, String password) async {
+  Future<void> signIn(String email, String password) async {
     print("Próba mikrofonu");
     const String apiUrl =
         'https://192.168.0.2:5000/api/account/login'; //https://192.168.1.102:5000/api/account/login
@@ -177,9 +195,10 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       body: requestBodyJson,
     );
-    if (response.statusCode == 200) {
+    Map<String, dynamic> data = jsonDecode(response.body);
+    var message = data['message'];
+    if (message == "login_successful") {
       print("Okej :D");
-      Map<String, dynamic> data = jsonDecode(response.body);
       token = data['token'];
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
@@ -187,10 +206,17 @@ class _LoginScreenState extends State<LoginScreen> {
       sharedPreferences.setBool('isLogged', true);
       var isLoggedIn = sharedPreferences.getBool('isLogged');
       print("Wypiszę podczas ustawiania boola logowania $isLoggedIn");
-      return 0;
+      Get.to(() => MainPanelScreen());
+    } else if (message == 'user_already_logged_in') {
+      print("Nie okej :(");
+      messageCanChange = 'Użytkownik już zalogowany';
+      throw Exception('Użytkownik już zalogowany');
+    } else if (message == 'authentication_failed') {
+      print("Nie okej :(");
+      messageCanChange = 'Nieudana próba logowania - brak danych w bazie';
+      throw Exception('Failed to load data');
     } else {
       print("Nie okej :(");
-      throw Exception('Failed to load data');
     }
   }
 }
