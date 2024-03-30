@@ -4,10 +4,12 @@ import 'dart:io';
 
 import 'package:biblioteczka/LoginScreen.dart';
 import 'package:biblioteczka/styles/DarkTheme.dart';
-import 'package:biblioteczka/styles/LightTheme.dart';
+import 'package:biblioteczka/styles/ThemeManager.dart';
+import 'package:biblioteczka/styles/ThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'CustomPageRoute.dart';
@@ -15,21 +17,51 @@ import 'MainPanelScreen.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeProvider themeChangeProvider = ThemeProvider();
+
+  void getCurrentTheme() async {
+    themeChangeProvider.setDarkTheme =
+        await themeChangeProvider.themePreferences.getTheme();
+  }
+
+  @override
+  void initState() {
+    getCurrentTheme();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.system,
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      home: const MyHomePage(title: 'HejApp'),
+    bool isDarkTheme = false;
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) {
+          return themeChangeProvider;
+        })
+      ],
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            debugShowCheckedModeBanner: false,
+            // themeMode: ThemeMode.system,
+            theme: ThemeManager.themeData(themeProvider.getDarkTheme, context),
+            darkTheme: darkTheme,
+            home: const MyHomePage(title: 'HejApp'),
+          );
+        },
+      ),
     );
   }
 }
@@ -55,6 +87,7 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       // appBar: AppBar(
       //  title: Text(widget.title),
@@ -80,7 +113,7 @@ class MyHomePageState extends State<MyHomePage> {
     );
   }
 
- void whereToGo() async {
+  void whereToGo() async {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(TOKEN);
     // String? isLoggedIn = sharedPreferences.getString(isLogged);
@@ -88,30 +121,26 @@ class MyHomePageState extends State<MyHomePage> {
 
     print("Wypiszę $isLoggedIn $actualToken");
 
-    Timer(Duration(seconds: 2),() async {
+    Timer(Duration(seconds: 2), () async {
       if (actualToken != null) {
         //pobranie ważności tokena
-        const String apiUrl = 'https://192.168.0.2:5000/api/account/check_if_logged_in';
-        final response = await http.get(
-          Uri.parse(apiUrl),
-          headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-            'Authorization': 'Bearer $actualToken'
-          }
-        );
+        const String apiUrl =
+            'https://192.168.1.102:5000/api/account/check_if_logged_in'; //'https://192.168.0.2:5000/api/account/check_if_logged_in';
+        final response = await http.get(Uri.parse(apiUrl), headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $actualToken'
+        });
         Map<String, dynamic> data = jsonDecode(response.body);
         String tokenValid = data['msg'];
         print('Czy token valid? $tokenValid');
-        if (tokenValid == 'Token valid') { //jeżeli token jest ważny
-          Navigator.push(context,
-              CustomPageRoute(child: MainPanelScreen()));
+        if (tokenValid == 'Token valid') {
+          //jeżeli token jest ważny
+          Navigator.push(context, CustomPageRoute(child: MainPanelScreen()));
         } else {
-          Navigator.push(
-              context, CustomPageRoute(child: LoginScreen()));
+          Navigator.push(context, CustomPageRoute(child: LoginScreen()));
         }
       } else {
-        Navigator.push(
-            context, CustomPageRoute(child: LoginScreen()));
+        Navigator.push(context, CustomPageRoute(child: LoginScreen()));
       }
     });
   }
