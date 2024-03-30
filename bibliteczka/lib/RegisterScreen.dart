@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:biblioteczka/LoginScreen.dart';
+import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +23,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text('Biblioteczka'),
+          title: const Text(titleOnAppBar),
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -47,9 +48,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: usernameController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: RequiredValidator(
-                          errorText: "Podaj nazwę użytkownika"),
+                          errorText: giveMeUserNameError),
                       decoration: InputDecoration(
-                          labelText: "Nazwa użytkownika",
+                          labelText: giveMeUserName,
                           prefixIcon: Icon(Icons.account_circle_rounded)),
                     ),
                   ),
@@ -61,13 +62,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: emailController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                        labelText: "Wpisz email",
+                        labelText: giveMeEmail,
                         prefixIcon: Icon(Icons.email),
                       ),
                       validator: MultiValidator([
-                        RequiredValidator(errorText: "Podaj adres email"),
+                        RequiredValidator(errorText: giveMeEmailError),
                         EmailValidator(
-                            errorText: "Podano niepoprawny adres email"),
+                            errorText: wrongEmailError),
                       ]),
                     ),
                   ),
@@ -81,7 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       validator: validatePassword,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                          labelText: "Podaj hasło",
+                          labelText: giveMePassword,
                           errorMaxLines: 3,
                           prefixIcon: Icon(Icons.lock),
                           suffix: InkWell(
@@ -107,10 +108,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       obscureText: !passRepVisible,
                       validator: (repeat) => repeat != passwordController.text
-                          ? "Hasła są różne"
+                          ? passwordIsDifferentError
                           : null, //repeatPassValidator,
                       decoration: InputDecoration(
-                          labelText: "Powtórz hasło",
+                          labelText: giveMeRepeatPassword,
                           prefixIcon: Icon(Icons.lock),
                           suffix: InkWell(
                             onTap: () {
@@ -130,7 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Center(
                   child: ElevatedButton(
-                    child: Text("Zarejestruj się"),
+                    child: Text(clickToRegisterButton),
                     onPressed: () async {
                       _formKey.currentState!.validate();
                       int loginResult = await signUp(
@@ -153,7 +154,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text("Masz już konto? Zaloguj się ",
+                    Text(haveAccountQuestion1,
                         style: Theme.of(context).textTheme.headline6),
                     TextButton(
                         onPressed: () {
@@ -163,7 +164,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 builder: (context) => LoginScreen()),
                           );
                         },
-                        child: Text("tutaj"))
+                        child: Text(haveOrNotAccountQuestion2))
                   ],
                 ))
               ],
@@ -178,7 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return 1;
     }
     print("Próba mikrofonu");
-    const String apiUrl = 'https://192.168.0.2:5000/api/account/register';
+    const String apiUrl = apiURLRegisterWybrany;
     final Map<String, dynamic> requestBody = {
       'username': username,
       'password': password,
@@ -210,7 +211,7 @@ String? validatePassword(String? password) {
   r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{10,50}$');
   final isPassReg = passReg.hasMatch(password ?? '');
   if (!isPassReg) {
-    return "Hasło musi zawierać min 10 znaków, w tym małe i duże litery, cyfry oraz znaki specjalne";
+    return validatePasswordError;
   }
   return null;
 }

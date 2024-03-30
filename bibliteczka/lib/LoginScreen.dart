@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:biblioteczka/MainPanelScreen.dart';
+import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -32,19 +33,19 @@ class _LoginScreenState extends State<LoginScreen> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: const Text('Exit'),
-              content: const Text('Czy chcesz wyjść z aplikacji'),
+              title: const Text(exitFromAppTitle),
+              content: const Text(exitFromAppQuestion),
               actions: [
                 TextButton(
                     onPressed: () {
                       SystemNavigator.pop();
                     },
-                    child: const Text('Tak')),
+                    child: const Text(yes)),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context, false);
                   },
-                  child: const Text('Nie'),
+                  child: const Text(no),
                 ),
               ],
             );
@@ -54,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Biblioteczka'),
+          title: const Text(titleOnAppBar),
           automaticallyImplyLeading: false,
         ),
         body: Form(
@@ -84,13 +85,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: emailController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                        labelText: "Wpisz email",
+                        labelText: giveMeEmail,
                         prefixIcon: Icon(Icons.email),
                       ),
                       validator: MultiValidator([
-                        RequiredValidator(errorText: "Podaj adres email"),
+                        RequiredValidator(errorText: giveMeEmailError),
                         EmailValidator(
-                            errorText: 'Podano niepoprawny adres email'),
+                            errorText: wrongEmailError),
                       ]),
                     ),
                   ),
@@ -101,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       validator: validatePassword,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                          labelText: "Podaj hasło",
+                          labelText: giveMePassword,
                           errorMaxLines: 3,
                           prefixIcon: Icon(Icons.lock),
                           suffix: InkWell(
@@ -121,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(height: 2),
                   Center(
                     child: ElevatedButton(
-                      child: Text("Zaloguj"),
+                      child: Text(clickToLoginButton),
                       onPressed: () async {
                         _formKey.currentState!.validate();
                         try {
@@ -143,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("Lub zarejestruj się ",
+                      Text(notHaveAccountYetQuestion1,
                           style: Theme.of(context).textTheme.headline6),
                       TextButton(
                           onPressed: () {
@@ -153,7 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   builder: (context) => RegisterScreen()),
                             );
                           },
-                          child: Text("tutaj"))
+                          child: Text(haveOrNotAccountQuestion2))
                     ],
                   ))
                 ],
@@ -168,25 +169,23 @@ class _LoginScreenState extends State<LoginScreen> {
   void changeText(String receivedMessageFromAPI) {
     setState(() {
       if (receivedMessageFromAPI == "login_successful") {
-        messageCanChange = "Zalogowano poprawnie";
+        messageCanChange = loginSuccessful;
       } else if (receivedMessageFromAPI == 'user_already_logged_in') {
-        messageCanChange = 'Użytkownik już zalogowany';
+        messageCanChange = userAlreadyLoggedIn;
       } else if (receivedMessageFromAPI == 'authentication_failed') {
-        messageCanChange = "Nieudana próba logowania - brak danych w bazie";
+        messageCanChange = loginNoDataError;
       } else if (receivedMessageFromAPI == 'email_wrong_format') {
-        messageCanChange = "Niepoprawny adres email";
+        messageCanChange = loginEmailError;
       } else if (receivedMessageFromAPI == 'password_wrong_format') {
-        messageCanChange =
-            "Hasło musi zawierać min 10 znaków, w tym małe i duże litery, cyfry oraz znaki specjalne";
+        messageCanChange = validatePasswordError;
       } else {
-        messageCanChange = "Przepraszamy, wystąpił błąd";
+        messageCanChange = sorryForError;
       }
     });
   }
 
   Future<void> signIn(String email, String password) async {
-    const String apiUrl =
-        'https://192.168.1.102:5000/api/account/login'; //'https://192.168.0.2:5000/api/account/login';
+    const String apiUrl = apiURLLoginWybrany; //apiURLLogin;
     final Map<String, dynamic> requestBody = {
       'email': email,
       'password': password,
@@ -216,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context) => MainPanelScreen()));
     } else if (message == 'user_already_logged_in') {
       print("Nie okej :(");
-      throw Exception('Użytkownik już zalogowany');
+      throw Exception(userAlreadyLoggedIn);
     } else if (message == 'authentication_failed') {
       print("Nie okej :(");
       throw Exception('Failed to load data');

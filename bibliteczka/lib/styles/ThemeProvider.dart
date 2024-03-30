@@ -1,15 +1,16 @@
 import 'package:biblioteczka/styles/ThemePreferences.dart';
+import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/cupertino.dart';
 
 class ThemeProvider with ChangeNotifier {
   ThemePreferences themePreferences = ThemePreferences();
-  String _howTheme = 'light';
+  String _whichTheme = light;
 
-  String get getDarkTheme => _howTheme;
+  String get getCurrentTheme => _whichTheme;
 
-  set setDarkTheme(String value) {
-    _howTheme = value;
-    themePreferences.setDarkTheme(value);
+  set setAnotherTheme(String value) {
+    _whichTheme = value;
+    themePreferences.setAnotherTheme(value);
     notifyListeners();
   }
 }

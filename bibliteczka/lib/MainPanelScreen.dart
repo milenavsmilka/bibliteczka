@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:biblioteczka/LoginScreen.dart';
 import 'package:biblioteczka/main.dart';
 import 'package:biblioteczka/styles/ThemeProvider.dart';
+import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -27,19 +28,19 @@ class _MainPanelScreen extends State<MainPanelScreen> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: const Text('Wyjście'),
-                content: const Text('Czy chcesz opuścić aplikację?'),
+                title: const Text(exitFromAppTitle),
+                content: const Text(exitFromAppQuestion),
                 actions: [
                   TextButton(
                       onPressed: () {
                         SystemNavigator.pop();
                       },
-                      child: const Text('Tak')),
+                      child: const Text(yes)),
                   TextButton(
                     onPressed: () {
                       Navigator.pop(context, false);
                     },
-                    child: const Text('Nie'),
+                    child: const Text(no),
                   ),
                 ],
               );
@@ -49,7 +50,7 @@ class _MainPanelScreen extends State<MainPanelScreen> {
         },
         child: Scaffold(
             appBar: AppBar(
-              title: Text('Biblioteczka'),
+              title: Text(titleOnAppBar),
               automaticallyImplyLeading: false,
               actions: <Widget>[
                 PopupMenuButton(
@@ -63,13 +64,13 @@ class _MainPanelScreen extends State<MainPanelScreen> {
                       child: Text("Iton 1"),
                     ),
                     PopupMenuItem(
-                      child: Text("Zmień motyw"),
+                      child: Text(clickToChangeThemeButton),
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ChangeTheme()));
                       },
                     ),
-                    PopupMenuItem(child: Text("Wyloguj"), onTap: logOut)
+                    PopupMenuItem(child: Text(clickToLogOutButton), onTap: logOut)
                   ],
                 )
               ],
@@ -92,8 +93,7 @@ class _MainPanelScreen extends State<MainPanelScreen> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
 
-    const String apiUrl =
-        'https://192.168.1.102:5000/api/account/logout'; //'https://192.168.0.2:5000/api/account/logout';
+    const String apiUrl = apiURLLogOutWybrany; //apiURLLogOut;
 
     final response = await http.post(Uri.parse(apiUrl), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
@@ -124,7 +124,7 @@ class _ChangeThemeState extends State<ChangeTheme> {
     final themeState = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Zmień motyw"),
+        title: Text(clickToChangeThemeButton),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
@@ -142,17 +142,17 @@ class _ChangeThemeState extends State<ChangeTheme> {
               ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      themeState.setDarkTheme = 'light';
+                      themeState.setAnotherTheme = light;
                     });
                   },
-                  child: Text('Jasny')),
+                  child: Text(clickToLightThemeButton)),
               ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      themeState.setDarkTheme = 'dark';
+                      themeState.setAnotherTheme = dark;
                     });
                   },
-                  child: Text('Ciemny')),
+                  child: Text(clickToDarkThemeButton)),
             ],
           ),
         ),

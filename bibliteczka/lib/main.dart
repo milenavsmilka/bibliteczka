@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:biblioteczka/LoginScreen.dart';
 import 'package:biblioteczka/styles/ThemeManager.dart';
 import 'package:biblioteczka/styles/ThemeProvider.dart';
+import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -19,7 +20,7 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -29,7 +30,7 @@ class _MyAppState extends State<MyApp> {
   ThemeProvider themeChangeProvider = ThemeProvider();
 
   void getCurrentTheme() async {
-    themeChangeProvider.setDarkTheme =
+    themeChangeProvider.setAnotherTheme =
         await themeChangeProvider.themePreferences.getTheme();
   }
 
@@ -52,9 +53,8 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
-            // themeMode: ThemeMode.system,
-            theme: ThemeManager.themeData(themeProvider.getDarkTheme, context),
-            home: const MyHomePage(title: 'HejApp'),
+            theme: ThemeManager.themeData(themeProvider.getCurrentTheme, context),
+            home: const MyHomePage(),
           );
         },
       ),
@@ -63,9 +63,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => MyHomePageState();
@@ -99,7 +97,7 @@ class MyHomePageState extends State<MyHomePage> {
               const Spacer(
                 flex: 3,
               ),
-              Text("Biblioteczka",
+              Text(titleOnAppBar,
                   style: Theme.of(context).textTheme.headline1),
               const Spacer(
                 flex: 4,
@@ -129,7 +127,7 @@ class MyHomePageState extends State<MyHomePage> {
         Map<String, dynamic> data = jsonDecode(response.body);
         String tokenValid = data['msg'];
         print('Czy token valid? $tokenValid');
-        if (tokenValid == 'Token valid') {
+        if (tokenValid == tokenIsValid) {
           //jeżeli token jest ważny
           Navigator.push(context, CustomPageRoute(child: MainPanelScreen()));
         } else {
