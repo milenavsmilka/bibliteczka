@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 
 class ThemeProvider with ChangeNotifier {
   ThemePreferences themePreferences = ThemePreferences();
-  bool _darkTheme = false;
+  String _howTheme = 'light';
 
-  bool get getDarkTheme => _darkTheme;
+  String get getDarkTheme => _howTheme;
 
-  set setDarkTheme(bool value) {
-    _darkTheme = value;
+  set setDarkTheme(String value) {
+    _howTheme = value;
     themePreferences.setDarkTheme(value);
     notifyListeners();
   }

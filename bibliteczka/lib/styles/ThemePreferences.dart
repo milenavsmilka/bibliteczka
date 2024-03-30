@@ -3,13 +3,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ThemePreferences {
   static const THEME_TYPE = 'THEMETYPE';
 
-  setDarkTheme(bool value) async {
+  setDarkTheme(String value) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setBool(THEME_TYPE, value);
+    preferences.setString(THEME_TYPE, value);
   }
 
-  Future<bool> getTheme() async {
+  Future<String> getTheme() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return preferences.getBool(THEME_TYPE) ?? false;
+    return preferences.getString(THEME_TYPE) ?? 'light';
   }
 }

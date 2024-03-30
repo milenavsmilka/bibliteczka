@@ -3,11 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:biblioteczka/LoginScreen.dart';
-import 'package:biblioteczka/styles/DarkTheme.dart';
 import 'package:biblioteczka/styles/ThemeManager.dart';
 import 'package:biblioteczka/styles/ThemeProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,7 +41,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkTheme = false;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) {
@@ -57,7 +54,6 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             // themeMode: ThemeMode.system,
             theme: ThemeManager.themeData(themeProvider.getDarkTheme, context),
-            darkTheme: darkTheme,
             home: const MyHomePage(title: 'HejApp'),
           );
         },

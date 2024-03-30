@@ -5,16 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
 
-String? validatePassword(String? password) {
-  RegExp passReg = RegExp(
-  r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{10,50}$');
-  final isPassReg = passReg.hasMatch(password ?? '');
-  if (!isPassReg) {
-    return "Hasło musi zawierać min 10 znaków, w tym małe i duże litery, cyfry oraz znaki specjalne";
-  }
-  return null;
-}
-
 class RegisterScreen extends StatefulWidget {
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -213,4 +203,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
       throw Exception('Failed to load data');
     }
   }
+}
+
+String? validatePassword(String? password) {
+  RegExp passReg = RegExp(
+  r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{10,50}$');
+  final isPassReg = passReg.hasMatch(password ?? '');
+  if (!isPassReg) {
+    return "Hasło musi zawierać min 10 znaków, w tym małe i duże litery, cyfry oraz znaki specjalne";
+  }
+  return null;
 }

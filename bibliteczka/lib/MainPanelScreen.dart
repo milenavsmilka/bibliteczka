@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:biblioteczka/LoginScreen.dart';
 import 'package:biblioteczka/main.dart';
-import 'package:biblioteczka/styles/DarkTheme.dart';
-import 'package:biblioteczka/styles/LightTheme.dart';
 import 'package:biblioteczka/styles/ThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,20 +10,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'TestScreen.dart';
-
-class SignUpNav extends StatelessWidget {
-  const SignUpNav({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      themeMode: ThemeMode.system,
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      home: MainPanelScreen(),
-    );
-  }
-}
 
 class MainPanelScreen extends StatefulWidget {
   const MainPanelScreen({Key? key}) : super(key: key);
@@ -43,8 +27,8 @@ class _MainPanelScreen extends State<MainPanelScreen> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: const Text('Exit'),
-                content: const Text('Czy chcesz wyjść z aplikacji'),
+                title: const Text('Wyjście'),
+                content: const Text('Czy chcesz opuścić aplikację?'),
                 actions: [
                   TextButton(
                       onPressed: () {
@@ -108,7 +92,8 @@ class _MainPanelScreen extends State<MainPanelScreen> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
 
-    const String apiUrl = 'https://192.168.1.102:5000/api/account/logout';//'https://192.168.0.2:5000/api/account/logout';
+    const String apiUrl =
+        'https://192.168.1.102:5000/api/account/logout'; //'https://192.168.0.2:5000/api/account/logout';
 
     final response = await http.post(Uri.parse(apiUrl), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
@@ -154,16 +139,20 @@ class _ChangeThemeState extends State<ChangeTheme> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-            SwitchListTile(
-                  value: themeState.getDarkTheme,
-                  secondary: Icon(themeState.getDarkTheme
-                      ? Icons.dark_mode
-                      : Icons.light_mode),
-                  onChanged: (bool value) {
+              ElevatedButton(
+                  onPressed: () {
                     setState(() {
-                      themeState.setDarkTheme = value;
+                      themeState.setDarkTheme = 'light';
                     });
-                  })
+                  },
+                  child: Text('Jasny')),
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      themeState.setDarkTheme = 'dark';
+                    });
+                  },
+                  child: Text('Ciemny')),
             ],
           ),
         ),
