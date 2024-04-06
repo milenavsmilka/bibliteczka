@@ -33,14 +33,11 @@ ThemeData lightTheme = ThemeData(
           fontSize: 18),
       errorStyle: TextStyle(fontSize: 14.0, color: Colors.red),
       errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.red, width: 1.0)
-      ),
+          borderSide: BorderSide(color: Colors.red, width: 1.0)),
       focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.red, width: 1.5)
-      ),
+          borderSide: BorderSide(color: Colors.red, width: 1.5)),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: categoryButtonCyanColor, width: 2.0)
-      ),
+          borderSide: BorderSide(color: categoryButtonCyanColor, width: 2.0)),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: categoryButtonCyanColor),
       ),
@@ -52,7 +49,7 @@ ThemeData lightTheme = ThemeData(
           fontWeight: FontWeight.w800,
           fontStyle: FontStyle.normal,
           fontSize: 15),
-      foregroundColor: categoryButtonCyanColor,
+      foregroundColor: textMainColor,
     )),
     buttonTheme: ButtonThemeData(buttonColor: colorAppBar),
     textTheme: TextTheme(
@@ -105,4 +102,20 @@ ThemeData lightTheme = ThemeData(
       centerTitle: true,
       foregroundColor: textMainColor,
       backgroundColor: colorAppBar,
-    ));
+    ),
+    dialogTheme: DialogTheme(
+        backgroundColor: backgroundScreenColor,
+        titleTextStyle: const TextStyle(
+            color: Colors.black,
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.w700,
+            fontStyle: FontStyle.normal,
+            fontSize: 20),
+        contentTextStyle: const TextStyle(
+            color: Colors.black,
+            fontFamily: 'Lato',
+            fontWeight: FontWeight.w700,
+            fontStyle: FontStyle.normal,
+            fontSize: 15),
+        surfaceTintColor: Colors.transparent),
+);

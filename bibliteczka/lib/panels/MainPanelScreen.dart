@@ -1,16 +1,20 @@
 import 'dart:convert';
 
-import 'package:biblioteczka/LoginScreen.dart';
-import 'package:biblioteczka/main.dart';
-import 'package:biblioteczka/styles/ThemeProvider.dart';
+import 'package:biblioteczka/panels/TestScreen.dart';
 import 'package:biblioteczka/styles/strings.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'TestScreen.dart';
+import 'ChangeThemeScreen.dart';
+import 'ChooseCategoryScreen.dart';
+import 'LoginScreen.dart';
+import 'SettingsScreen.dart';
+import 'funcions.dart';
+import 'main.dart';
 
 class MainPanelScreen extends StatefulWidget {
   const MainPanelScreen({Key? key}) : super(key: key);
@@ -61,16 +65,29 @@ class _MainPanelScreen extends State<MainPanelScreen> {
                   ),
                   itemBuilder: (BuildContext context) => [
                     PopupMenuItem(
-                      child: Text("Iton 1"),
-                    ),
-                    PopupMenuItem(
-                      child: Text(clickToChangeThemeButton),
+                      child: Text('Wyświetl profil'),
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ChangeTheme()));
+                        // checkIsTokenValid(context, );
                       },
                     ),
-                    PopupMenuItem(child: Text(clickToLogOutButton), onTap: logOut)
+                    PopupMenuItem(
+                      child: Text(changeTheme),
+                      onTap: () {
+                        checkIsTokenValid(context, ChangeThemeScreen());
+                      },
+                    ),
+                    PopupMenuItem(
+                      child: Text('Ustawienia'),
+                      onTap: () {
+                        checkIsTokenValid(context, SettingsScreen());
+                      },
+                    ),
+                    PopupMenuItem(
+                        child: Text(clickToLogOutButton),
+                        onTap: () {
+                          checkIsTokenValid(context, LoginScreen());
+                          logOut();
+                        })
                   ],
                 )
               ],
@@ -79,11 +96,21 @@ class _MainPanelScreen extends State<MainPanelScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ChooseCategoryButton(nameOfCategory: "Kategoria"),
-                  ChooseCategoryButton(nameOfCategory: "Zapowiedzi"),
-                  ChooseCategoryButton(nameOfCategory: "Top 100"),
-                  ChooseCategoryButton(nameOfCategory: "Autorzy"),
-                  ChooseCategoryButton(nameOfCategory: "Społeczność"),
+                  ChooseOptionFromMenuButton(
+                      nameOfOptionFromMenu: "Kategoria",
+                      widgetToRoute: ChooseCategoryScreen()),
+                  ChooseOptionFromMenuButton(
+                      nameOfOptionFromMenu: "Nowości",
+                      widgetToRoute: TestScreen()),
+                  ChooseOptionFromMenuButton(
+                      nameOfOptionFromMenu: "Top 100",
+                      widgetToRoute: TestScreen()),
+                  ChooseOptionFromMenuButton(
+                      nameOfOptionFromMenu: "Autorzy",
+                      widgetToRoute: TestScreen()),
+                  ChooseOptionFromMenuButton(
+                      nameOfOptionFromMenu: "Społeczność",
+                      widgetToRoute: TestScreen()),
                 ],
               ),
             )),
@@ -93,7 +120,7 @@ class _MainPanelScreen extends State<MainPanelScreen> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
 
-    const String apiUrl = apiURLLogOutWybrany; //apiURLLogOut;
+    const String apiUrl = apiURLLogOutWybrany; //apiURLLogOutWybrany;
 
     final response = await http.post(Uri.parse(apiUrl), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
@@ -113,60 +140,14 @@ class _MainPanelScreen extends State<MainPanelScreen> {
   }
 }
 
-class ChangeTheme extends StatefulWidget {
-  @override
-  _ChangeThemeState createState() => _ChangeThemeState();
-}
+class ChooseOptionFromMenuButton extends StatelessWidget {
+  final String nameOfOptionFromMenu;
+  final Widget widgetToRoute;
 
-class _ChangeThemeState extends State<ChangeTheme> {
-  @override
-  Widget build(BuildContext context) {
-    final themeState = Provider.of<ThemeProvider>(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(clickToChangeThemeButton),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Container(
-          color: Colors.transparent,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      themeState.setAnotherTheme = light;
-                    });
-                  },
-                  child: Text(clickToLightThemeButton)),
-              ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      themeState.setAnotherTheme = dark;
-                    });
-                  },
-                  child: Text(clickToDarkThemeButton)),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ChooseCategoryButton extends StatelessWidget {
-  final String nameOfCategory;
-
-  const ChooseCategoryButton({
+  const ChooseOptionFromMenuButton({
     Key? key,
-    required this.nameOfCategory,
+    required this.nameOfOptionFromMenu,
+    required this.widgetToRoute,
   }) : super(key: key);
 
   @override
@@ -178,12 +159,13 @@ class ChooseCategoryButton extends StatelessWidget {
           minimumSize: Size.fromHeight(95),
         ),
         child: Text(
-          nameOfCategory,
+          nameOfOptionFromMenu,
         ),
         onPressed: () {
+          checkIsTokenValid(context, widgetToRoute);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TestScreen()),
+            MaterialPageRoute(builder: (context) => widgetToRoute),
           );
         },
       ),

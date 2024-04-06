@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:biblioteczka/LoginScreen.dart';
 import 'package:biblioteczka/styles/ThemeManager.dart';
 import 'package:biblioteczka/styles/ThemeProvider.dart';
 import 'package:biblioteczka/styles/strings.dart';
@@ -12,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'CustomPageRoute.dart';
+import 'LoginScreen.dart';
 import 'MainPanelScreen.dart';
 
 void main() {
@@ -53,7 +53,8 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
-            theme: ThemeManager.themeData(themeProvider.getCurrentTheme, context),
+            theme:
+                ThemeManager.themeData(themeProvider.getCurrentTheme, context),
             home: const MyHomePage(),
           );
         },
@@ -71,6 +72,7 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   static const String TOKEN = "login";
+  static const String password = "password";
   static const bool isLogged = false;
 
   @override
@@ -81,11 +83,7 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      // appBar: AppBar(
-      //  title: Text(widget.title),
-      // ),
       body: Container(
           alignment: Alignment.center,
           decoration: const BoxDecoration(
@@ -97,8 +95,7 @@ class MyHomePageState extends State<MyHomePage> {
               const Spacer(
                 flex: 3,
               ),
-              Text(titleOnAppBar,
-                  style: Theme.of(context).textTheme.headline1),
+              Text(titleOnAppBar, style: Theme.of(context).textTheme.headline1),
               const Spacer(
                 flex: 4,
               ),
@@ -116,17 +113,21 @@ class MyHomePageState extends State<MyHomePage> {
     print("Wypiszę $isLoggedIn $actualToken");
 
     Timer(Duration(seconds: 2), () async {
+      final params = {'language': "pl"};
       if (actualToken != null) {
         //pobranie ważności tokena
-        const String apiUrl =
-            'https://192.168.1.102:5000/api/account/check_if_logged_in'; //'https://192.168.0.2:5000/api/account/check_if_logged_in';
-        final response = await http.get(Uri.parse(apiUrl), headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $actualToken'
+        final apiUrl = Uri.parse(apiURLIsTokenValidWybrany).replace(queryParameters: params); //apiURLIsTokenValid;
+        final response = await http.get(
+            apiUrl,
+            headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer $actualToken',
         });
         Map<String, dynamic> data = jsonDecode(response.body);
-        String tokenValid = data['msg'];
+        String tokenValid = data['message'];
+        // String details = data['details'];
         print('Czy token valid? $tokenValid');
+        // print('details $details');
         if (tokenValid == tokenIsValid) {
           //jeżeli token jest ważny
           Navigator.push(context, CustomPageRoute(child: MainPanelScreen()));

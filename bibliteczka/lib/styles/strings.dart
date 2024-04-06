@@ -1,19 +1,23 @@
 const String apiURLRegister = 'https://192.168.0.2:5000/api/account/register';
 const String apiURLRegisterWybrany = 'https://192.168.1.102:5000/api/account/register';
 const String apiURLLogin = 'https://192.168.0.2:5000/api/account/login';
-const String apiURLLoginWybrany = 'https://192.168.1.102:5000/api/account/register';
+const String apiURLLoginWybrany = 'https://192.168.1.102:5000/api/account/login';
 const String apiURLLogOut = 'https://192.168.0.2:5000/api/account/logout';
 const String apiURLLogOutWybrany = 'https://192.168.1.102:5000/api/account/logout';
+const String apiURLIsTokenValid = 'https://192.168.0.2:5000/api/account/check_if_logged_in';
+const String apiURLIsTokenValidWybrany = 'https://192.168.1.102:5000/api/account/check_if_logged_in';
+const String apiURLDeleteAccount = 'https://192.168.0.2:5000/api/account/delete_account';
+const String apiURLDeleteAccountWybrany = 'https://192.168.1.102:5000/api/account/delete_account';
 
 
 const String yes = 'Tak';
 const String no = 'Nie';
 const String light = 'light';
 const String dark = 'dark';
-const String clickToLightThemeButton = 'Jasny';
-const String clickToDarkThemeButton = 'Ciemny';
+const String changeToLightTheme = 'Jasny';
+const String changeToDarkTheme = 'Ciemny';
 const String titleOnAppBar = 'Biblioteczka';
-const String tokenIsValid = 'Token valid';
+const String tokenIsValid = 'token_valid';
 const String giveMeUserNameError = 'Podaj nazwę użytkownika';
 const String giveMeUserName = 'Nazwa użytkownika';
 const String giveMeEmail = 'Wpisz email';
@@ -34,6 +38,8 @@ const String exitFromAppTitle = 'Wyjście';
 const String loginSuccessful = 'Zalogowano poprawnie';
 const String loginNoDataError = 'Nieudana próba logowania - brak danych w bazie';
 const String loginEmailError = 'Niepoprawny adres email';
+const String tooMuchLoginAttemptsError = 'locked_user_login_attempts';
 const String sorryForError = 'Przepraszamy, wystąpił błąd';
 const String userAlreadyLoggedIn = 'Użytkownik już zalogowany';
-const String clickToChangeThemeButton = 'Zmień motyw';
+const String changeTheme = 'Zmień motyw';
+const String settings = 'Ustawienia';

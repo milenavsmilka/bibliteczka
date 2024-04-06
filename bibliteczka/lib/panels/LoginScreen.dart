@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:biblioteczka/MainPanelScreen.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +7,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'MainPanelScreen.dart';
 import 'RegisterScreen.dart';
 import 'main.dart';
 
@@ -170,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() {
       if (receivedMessageFromAPI == "login_successful") {
         messageCanChange = loginSuccessful;
-      } else if (receivedMessageFromAPI == 'user_already_logged_in') {
+      } else if (receivedMessageFromAPI == 'already_logged_in') {
         messageCanChange = userAlreadyLoggedIn;
       } else if (receivedMessageFromAPI == 'authentication_failed') {
         messageCanChange = loginNoDataError;
@@ -178,6 +178,8 @@ class _LoginScreenState extends State<LoginScreen> {
         messageCanChange = loginEmailError;
       } else if (receivedMessageFromAPI == 'password_wrong_format') {
         messageCanChange = validatePasswordError;
+      } else if (receivedMessageFromAPI == 'locked_user_login_attempts') {
+        messageCanChange = tooMuchLoginAttemptsError;
       } else {
         messageCanChange = sorryForError;
       }
@@ -202,18 +204,20 @@ class _LoginScreenState extends State<LoginScreen> {
     Map<String, dynamic> data = jsonDecode(response.body);
     var message = data['message'];
     changeText(message);
+    print(message);
     if (message == "login_successful") {
       print("Okej :D");
       token = data['token'];
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       sharedPreferences.setString(MyHomePageState.TOKEN, token);
+      sharedPreferences.setString(MyHomePageState.password, passwordController.toString());
       sharedPreferences.setBool('isLogged', true);
       var isLoggedIn = sharedPreferences.getBool('isLogged');
       print("Wypiszę podczas ustawiania boola logowania $isLoggedIn");
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => MainPanelScreen()));
-    } else if (message == 'user_already_logged_in') {
+    } else if (message == 'already_logged_in') {
       print("Nie okej :(");
       throw Exception(userAlreadyLoggedIn);
     } else if (message == 'authentication_failed') {

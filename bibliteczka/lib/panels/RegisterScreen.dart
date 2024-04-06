@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:biblioteczka/LoginScreen.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
+
+import 'LoginScreen.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
