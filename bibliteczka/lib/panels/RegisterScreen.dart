@@ -20,6 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final emailController = TextEditingController();
   bool passVisible = false;
   bool passRepVisible = false;
+  String messageCanChange = '';
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -135,22 +136,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Text(clickToRegisterButton),
                     onPressed: () async {
                       _formKey.currentState!.validate();
-                      int loginResult = await signUp(
+                      await signUp(
                           usernameController.text,
                           passwordController.text,
                           repeatPasswordController.text,
                           emailController.text);
-                      if (loginResult == 0) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LoginScreen()),
-                        );
-                      }
                     },
                   ),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [Flexible(child: Text(messageCanChange))],
+                  ),
+                ),
                 Center(
                     child: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -174,17 +174,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       );
 
-  Future<int> signUp(String username, String password, String repeatPassword,
+  Future<void> signUp(String username, String password, String repeatPassword,
       String email) async {
     if (password != repeatPassword) {
-      return 1;
+      return;
     }
     print("Próba mikrofonu");
     const String apiUrl = apiURLRegisterWybrany;
     final Map<String, dynamic> requestBody = {
       'username': username,
       'password': password,
-      'email': email
+      'email': email,
+      'language': 'pl'
     };
     String requestBodyJson = jsonEncode(requestBody);
 
@@ -195,15 +196,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
       },
       body: requestBodyJson,
     );
+    Map<String, dynamic> data = jsonDecode(response.body);
+    var message = data['message'];
+    changeText(message);
     if (response.statusCode == 200) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LoginScreen()),
+      );
       print("Okej :D");
-      Map<String, dynamic> data = jsonDecode(response.body);
-      print(data);
-      return 0;
     } else {
-      print("Nie okej :(");
-      throw Exception('Failed to load data');
+      print('Nie okej $message');
     }
+  }
+  void changeText(String receivedMessageFromAPI) {
+    setState(() {
+      if (receivedMessageFromAPI == "register_successful") {
+        messageCanChange = registerSuccessful;
+      } else if (receivedMessageFromAPI == 'username_wrong_format') {
+        messageCanChange = validateUsernameError;
+      } else if (receivedMessageFromAPI == 'password_wrong_format') {
+        messageCanChange = validatePasswordError;
+      } else if (receivedMessageFromAPI == 'email_wrong_format') {
+        messageCanChange = loginEmailError;
+      } else if (receivedMessageFromAPI == 'user_already_exists') {
+        messageCanChange = userAlreadyExists;
+      } else {
+        messageCanChange = sorryForError;
+      }
+    });
   }
 }
 

@@ -166,26 +166,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void changeText(String receivedMessageFromAPI) {
-    setState(() {
-      if (receivedMessageFromAPI == "login_successful") {
-        messageCanChange = loginSuccessful;
-      } else if (receivedMessageFromAPI == 'already_logged_in') {
-        messageCanChange = userAlreadyLoggedIn;
-      } else if (receivedMessageFromAPI == 'authentication_failed') {
-        messageCanChange = loginNoDataError;
-      } else if (receivedMessageFromAPI == 'email_wrong_format') {
-        messageCanChange = loginEmailError;
-      } else if (receivedMessageFromAPI == 'password_wrong_format') {
-        messageCanChange = validatePasswordError;
-      } else if (receivedMessageFromAPI == 'locked_user_login_attempts') {
-        messageCanChange = tooMuchLoginAttemptsError;
-      } else {
-        messageCanChange = sorryForError;
-      }
-    });
-  }
-
   Future<void> signIn(String email, String password) async {
     const String apiUrl = apiURLLoginWybrany; //apiURLLogin;
     final Map<String, dynamic> requestBody = {
@@ -226,5 +206,25 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       print("Nie okej :(");
     }
+  }
+
+  void changeText(String receivedMessageFromAPI) {
+    setState(() {
+      if (receivedMessageFromAPI == "login_successful") {
+        messageCanChange = loginSuccessful;
+      } else if (receivedMessageFromAPI == 'already_logged_in') {
+        messageCanChange = userAlreadyLoggedIn;
+      } else if (receivedMessageFromAPI == 'authentication_failed') {
+        messageCanChange = loginNoDataError;
+      } else if (receivedMessageFromAPI == 'email_wrong_format') {
+        messageCanChange = loginEmailError;
+      } else if (receivedMessageFromAPI == 'password_wrong_format') {
+        messageCanChange = validatePasswordError;
+      } else if (receivedMessageFromAPI == 'locked_user_login_attempts') {
+        messageCanChange = tooMuchLoginAttemptsError;
+      } else {
+        messageCanChange = sorryForError;
+      }
+    });
   }
 }

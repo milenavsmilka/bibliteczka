@@ -1,19 +1,18 @@
 import 'dart:convert';
 
+import 'package:biblioteczka/panels/CustomPageRoute.dart';
 import 'package:biblioteczka/panels/TestScreen.dart';
 import 'package:biblioteczka/styles/strings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'ChangeThemeScreen.dart';
 import 'ChooseCategoryScreen.dart';
 import 'LoginScreen.dart';
 import 'SettingsScreen.dart';
-import 'funcions.dart';
+import 'apiRequests.dart';
 import 'main.dart';
 
 class MainPanelScreen extends StatefulWidget {
@@ -84,9 +83,9 @@ class _MainPanelScreen extends State<MainPanelScreen> {
                     ),
                     PopupMenuItem(
                         child: Text(clickToLogOutButton),
-                        onTap: () {
-                          checkIsTokenValid(context, LoginScreen());
-                          logOut();
+                        onTap: () async {
+                          checkIsTokenValid(context);
+                          await logOut();//podwójnie jadą ekrany logowania
                         })
                   ],
                 )
@@ -121,11 +120,15 @@ class _MainPanelScreen extends State<MainPanelScreen> {
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
 
     const String apiUrl = apiURLLogOutWybrany; //apiURLLogOutWybrany;
+    final Map<String, dynamic> requestBody = {
+      'language': 'pl'
+    };
+    String requestBodyJson = jsonEncode(requestBody);
 
     final response = await http.post(Uri.parse(apiUrl), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $actualToken'
-    });
+    }, body: requestBodyJson);
     Map<String, dynamic> data = jsonDecode(response.body);
     String message = data['message'];
     print('Otrzymana wiadomość po wylogowaniu: $message $actualToken');
@@ -133,7 +136,7 @@ class _MainPanelScreen extends State<MainPanelScreen> {
       sharedPreferences.clear();
       print("Poprawnie wylogowano użytkownika");
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LoginScreen()));
+          context, CustomPageRoute(child: LoginScreen()));
     } else {
       print("Pojawił się błąd, użytkownik nie został wylogowany");
     }
@@ -163,10 +166,6 @@ class ChooseOptionFromMenuButton extends StatelessWidget {
         ),
         onPressed: () {
           checkIsTokenValid(context, widgetToRoute);
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => widgetToRoute),
-          );
         },
       ),
     );
