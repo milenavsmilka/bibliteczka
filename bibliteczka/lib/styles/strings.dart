@@ -1,12 +1,12 @@
-const String apiURLRegister = 'https://192.168.0.2:5000/api/account/register';
+const String apiURLRegister = 'https://192.168.0.3:5000/api/account/register';
 const String apiURLRegisterWybrany = 'https://192.168.1.102:5000/api/account/register';
-const String apiURLLogin = 'https://192.168.0.2:5000/api/account/login';
+const String apiURLLogin = 'https://192.168.0.3:5000/api/account/login';
 const String apiURLLoginWybrany = 'https://192.168.1.102:5000/api/account/login';
-const String apiURLLogOut = 'https://192.168.0.2:5000/api/account/logout';
+const String apiURLLogOut = 'https://192.168.0.3:5000/api/account/logout';
 const String apiURLLogOutWybrany = 'https://192.168.1.102:5000/api/account/logout';
-const String apiURLIsTokenValid = 'https://192.168.0.2:5000/api/account/check_if_logged_in';
+const String apiURLIsTokenValid = 'https://192.168.0.3:5000/api/account/check_if_logged_in';
 const String apiURLIsTokenValidWybrany = 'https://192.168.1.102:5000/api/account/check_if_logged_in';
-const String apiURLDeleteAccount = 'https://192.168.0.2:5000/api/account/delete_account';
+const String apiURLDeleteAccount = 'https://192.168.0.3:5000/api/account/delete_account';
 const String apiURLDeleteAccountWybrany = 'https://192.168.1.102:5000/api/account/delete_account';
 
 

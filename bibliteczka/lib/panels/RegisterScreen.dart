@@ -180,7 +180,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       return;
     }
     print("Próba mikrofonu");
-    const String apiUrl = apiURLRegisterWybrany;
+    const String apiUrl = apiURLRegister;
     final Map<String, dynamic> requestBody = {
       'username': username,
       'password': password,

@@ -22,7 +22,7 @@ void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {
 
   if (actualToken != null) {
     //pobranie ważności tokena
-    const String apiUrl = apiURLIsTokenValidWybrany; //apiURLIsTokenValid;
+    const String apiUrl = apiURLIsTokenValid; //apiURLIsTokenValid;
     final response = await http.get(Uri.parse(apiUrl), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $actualToken'
@@ -67,7 +67,7 @@ void whereToGo(BuildContext context) async {
     final params = {'language': "pl"};
     if (actualToken != null) {
       //pobranie ważności tokena
-      final apiUrl = Uri.parse(apiURLIsTokenValidWybrany)
+      final apiUrl = Uri.parse(apiURLIsTokenValid)
           .replace(queryParameters: params); //apiURLIsTokenValid;
       final response = await http.get(apiUrl, headers: {
         'Content-Type': 'application/json; charset=UTF-8',

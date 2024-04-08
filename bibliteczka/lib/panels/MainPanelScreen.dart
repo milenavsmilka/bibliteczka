@@ -119,7 +119,7 @@ class _MainPanelScreen extends State<MainPanelScreen> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
 
-    const String apiUrl = apiURLLogOutWybrany; //apiURLLogOutWybrany;
+    const String apiUrl = apiURLLogOut; //apiURLLogOut;
     final Map<String, dynamic> requestBody = {
       'language': 'pl'
     };

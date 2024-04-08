@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:biblioteczka/styles/LightTheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 
 class ChooseCategoryScreen extends StatefulWidget {
@@ -11,16 +13,27 @@ class ChooseCategoryScreen extends StatefulWidget {
 }
 
 class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
-  List<dynamic> users=[];
+  List<dynamic> users = [];
 
   @override
   Widget build(BuildContext context) {
+    // final String iconPath = "assets/icons/hearts.svg";
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Testy mikrofonu"),
+          title: const Text("Kategoria"),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: giveMeInformation,
+        body: Container(
+          alignment: Alignment.center,
+          child: Wrap(children: [
+            CategoryButton(nameOfCategory: 'Romans', pathToImage: 'assets/icons/hearts.svg'),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.06),
+            CategoryButton(nameOfCategory: 'Dziecięce', pathToImage: 'assets/icons/child.svg'),
+            SizedBox(width: 1, height: MediaQuery.of(context).size.height* 0.3),
+            CategoryButton(nameOfCategory: 'Dziecięce', pathToImage: 'assets/icons/child.svg'),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.06),
+            CategoryButton(nameOfCategory: 'Dziecięce', pathToImage: 'assets/icons/child.svg'),
+            CategoryButton(nameOfCategory: 'Dziecięce', pathToImage: 'assets/icons/child.svg'),
+          ]),
         ));
   }
 
@@ -54,5 +67,36 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
       // If the server returns an error response
       throw Exception('Failed to load data');
     }
+  }
+}
+
+class CategoryButton extends StatelessWidget {
+  final String nameOfCategory;
+  final String pathToImage;
+
+  const CategoryButton({
+    super.key,
+    required this.nameOfCategory,
+    required this.pathToImage
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        onPressed: () {},
+        style: ButtonStyle(
+            shape:
+                MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(23.0)))),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(pathToImage,
+                height: MediaQuery.of(context).size.width * 0.3),
+            Text(nameOfCategory)
+          ],
+        ));
   }
 }

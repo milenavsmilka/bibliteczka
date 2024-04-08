@@ -50,7 +50,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      themeState.setAnotherTheme = light;
+                      //TODO zmiana hasła
                     });
                   },
                   child: Text('Zmień hasło')),
@@ -169,7 +169,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   TextButton(
                       onPressed: () async {
-                        const String apiUrl = apiURLDeleteAccountWybrany;
+                        const String apiUrl = apiURLDeleteAccount;
                         final Map<String, dynamic> requestBody = {
                           'password': passwordController.text,
                         };
