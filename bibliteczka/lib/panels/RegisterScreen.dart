@@ -199,7 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     Map<String, dynamic> data = jsonDecode(response.body);
     var message = data['message'];
     changeText(message);
-    if (response.statusCode == 200) {
+    if (message == 'register_successful') {
       Navigator.push(
         context,
         MaterialPageRoute(
