@@ -9,6 +9,20 @@ const String apiURLIsTokenValidWybrany = 'https://192.168.1.102:5000/api/account
 const String apiURLDeleteAccount = 'https://192.168.0.3:5000/api/account/delete_account';
 const String apiURLDeleteAccountWybrany = 'https://192.168.1.102:5000/api/account/delete_account';
 
+const String iconHeart = "assets/icons/hearts.svg";
+const String iconBrainstorming = "assets/icons/brainstorming.svg";
+const String iconChild = "assets/icons/child.svg";
+const String iconContacts = "assets/icons/contacts.svg";
+const String iconContactsBook = "assets/icons/contactsBook.svg";
+const String iconDetective = "assets/icons/detective.svg";
+const String iconDragon = "assets/icons/dragon.svg";
+const String iconHeartsOneIsEmpty = "assets/icons/heartsOneIsEmpty.svg";
+const String iconMailWithHeart = "assets/icons/mailWithHeart.svg";
+const String iconQuill = "assets/icons/quill.svg";
+const String iconSwords = "assets/icons/swords.svg";
+const String iconSwordsWithEmblem = "assets/icons/swordsWithEmblem.svg";
+const String iconWand = "assets/icons/wand.svg";
+const String iconYoungAdults = "assets/icons/youngAdults.svg";
 
 const String yes = 'Tak';
 const String no = 'Nie';
