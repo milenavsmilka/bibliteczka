@@ -22,72 +22,72 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
         appBar: AppBar(
           title: const Text("Kategoria"),
         ),
-        body: Container(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-              // alignment: WrapAlignment.spaceBetween,
-              // crossAxisAlignment: WrapCrossAlignment.end,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    CategoryButton(
-                        nameOfCategory: 'Romans',
-                        pathToImage: iconHeart),
-                    // SizedBox(width: MediaQuery.of(context).size.width * 0.06),
-                    CategoryButton(
-                        nameOfCategory: 'Dziecięce',
-                        pathToImage: iconChild),
-                  ],
-                ),
-                // SizedBox(width: 1, height: MediaQuery.of(context).size.height* 0.3),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    CategoryButton(
-                        nameOfCategory: 'Historia',
-                        pathToImage: iconSwords),
-                    // SizedBox(width: MediaQuery.of(context).size.width * 0.06),
-                    CategoryButton(
-                        nameOfCategory: 'Popularno\nnaukowe',
-                        pathToImage: iconBrainstorming),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    CategoryButton(
-                        nameOfCategory: 'Wiersze',
-                        pathToImage: iconQuill),
-                    CategoryButton(
-                        nameOfCategory: 'Młodzieżowe',
-                        pathToImage: iconYoungAdults)
-                  ],
-                ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //   children: [
-                //     CategoryButton(
-                //         nameOfCategory: 'Fantasy',
-                //         pathToImage: 'assets/icons/child.svg'),
-                //     CategoryButton(
-                //         nameOfCategory: 'Biografie',
-                //         pathToImage: 'assets/icons/child.svg')
-                //   ],
-                // ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //   children: [
-                //     CategoryButton(
-                //         nameOfCategory: 'Kryminał',
-                //         pathToImage: 'assets/icons/child.svg'),
-                //     CategoryButton(
-                //         nameOfCategory: 'Dziecięce',
-                //         pathToImage: 'assets/icons/child.svg')
-                //   ],
-                // ),
-              ]),
+        body: SingleChildScrollView(
+          child: Container(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CategoryButton(
+                          nameOfCategory: 'Romans',
+                          pathToImage: iconHeart),
+                      // SizedBox(width: MediaQuery.of(context).size.width * 0.06),
+                      CategoryButton(
+                          nameOfCategory: 'Dziecięce',
+                          pathToImage: iconChild),
+                    ],
+                  ),
+                  // SizedBox(width: 1, height: MediaQuery.of(context).size.height* 0.3),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CategoryButton(
+                          nameOfCategory: 'Historia',
+                          pathToImage: iconSwords),
+                      // SizedBox(width: MediaQuery.of(context).size.width * 0.06),
+                      CategoryButton(
+                          nameOfCategory: 'Nauka',
+                          pathToImage: iconBrainstorming),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CategoryButton(
+                          nameOfCategory: 'Wiersze',
+                          pathToImage: iconQuill),
+                      CategoryButton(
+                          nameOfCategory: 'Młodzieżowe',
+                          pathToImage: iconYoungAdults)
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CategoryButton(
+                          nameOfCategory: 'Fantasy',
+                          pathToImage: 'assets/icons/child.svg'),
+                      CategoryButton(
+                          nameOfCategory: 'Biografie',
+                          pathToImage: 'assets/icons/child.svg')
+                    ],
+                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //   children: [
+                  //     CategoryButton(
+                  //         nameOfCategory: 'Kryminał',
+                  //         pathToImage: 'assets/icons/child.svg'),
+                  //     CategoryButton(
+                  //         nameOfCategory: 'Dziecięce',
+                  //         pathToImage: 'assets/icons/child.svg')
+                  //   ],
+                  // ),
+                ]),
+          ),
         ));
   }
 
