@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:biblioteczka/panels/apiRequests.dart';
 import 'package:biblioteczka/styles/LightTheme.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
+
+import 'TestScreen.dart';
 
 class ChooseCategoryScreen extends StatefulWidget {
   const ChooseCategoryScreen({Key? key}) : super(key: key);
@@ -22,72 +25,100 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
         appBar: AppBar(
           title: const Text("Kategoria"),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CategoryButton(
-                          nameOfCategory: 'Romans',
-                          pathToImage: iconHeart),
-                      // SizedBox(width: MediaQuery.of(context).size.width * 0.06),
-                      CategoryButton(
-                          nameOfCategory: 'Dziecięce',
-                          pathToImage: iconChild),
-                    ],
-                  ),
-                  // SizedBox(width: 1, height: MediaQuery.of(context).size.height* 0.3),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CategoryButton(
-                          nameOfCategory: 'Historia',
-                          pathToImage: iconSwords),
-                      // SizedBox(width: MediaQuery.of(context).size.width * 0.06),
-                      CategoryButton(
-                          nameOfCategory: 'Nauka',
-                          pathToImage: iconBrainstorming),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CategoryButton(
-                          nameOfCategory: 'Wiersze',
-                          pathToImage: iconQuill),
-                      CategoryButton(
-                          nameOfCategory: 'Młodzieżowe',
-                          pathToImage: iconYoungAdults)
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CategoryButton(
-                          nameOfCategory: 'Fantasy',
-                          pathToImage: 'assets/icons/child.svg'),
-                      CategoryButton(
-                          nameOfCategory: 'Biografie',
-                          pathToImage: 'assets/icons/child.svg')
-                    ],
-                  ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  //   children: [
-                  //     CategoryButton(
-                  //         nameOfCategory: 'Kryminał',
-                  //         pathToImage: 'assets/icons/child.svg'),
-                  //     CategoryButton(
-                  //         nameOfCategory: 'Dziecięce',
-                  //         pathToImage: 'assets/icons/child.svg')
-                  //   ],
-                  // ),
-                ]),
-          ),
+        body: CustomScrollView(
+          scrollDirection: Axis.vertical,
+          slivers: [
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Wrap(children: [
+                SizedBox(height: 20, width: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CategoryButton(
+                      nameOfCategory: 'Romans',
+                      pathToImage: iconHeart,
+                      widgetToRoute: TestScreen(),
+                    ),
+                    // SizedBox(width: MediaQuery.of(context).size.width * 0.06),
+                    CategoryButton(
+                        nameOfCategory: 'Dziecięce',
+                        pathToImage: iconChild,
+                        widgetToRoute: TestScreen()),
+                  ],
+                ),
+                SizedBox(height: 20, width: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CategoryButton(
+                        nameOfCategory: 'Historia',
+                        pathToImage: iconSwords,
+                        widgetToRoute: TestScreen()),
+                    // SizedBox(width: MediaQuery.of(context).size.width * 0.06),
+                    CategoryButton(
+                        nameOfCategory: 'Nauka',
+                        pathToImage: iconBrainstorming,
+                        widgetToRoute: TestScreen()),
+                  ],
+                ),
+                SizedBox(height: 20, width: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CategoryButton(
+                        nameOfCategory: 'Wiersze',
+                        pathToImage: iconQuill,
+                        widgetToRoute: TestScreen()),
+                    CategoryButton(
+                        nameOfCategory: 'Młodzieżowe',
+                        pathToImage: iconYoungAdults,
+                        widgetToRoute: TestScreen())
+                  ],
+                ),
+                SizedBox(height: 20, width: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CategoryButton(
+                        nameOfCategory: 'Fantasy',
+                        pathToImage: iconDragon,
+                        widgetToRoute: TestScreen()),
+                    CategoryButton(
+                        nameOfCategory: 'Biografie',
+                        pathToImage: iconContacts,
+                        widgetToRoute: TestScreen())
+                  ],
+                ),
+                SizedBox(height: 20, width: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CategoryButton(
+                        nameOfCategory: 'Przygodowe',
+                        pathToImage: iconAdventure,
+                        widgetToRoute: TestScreen()),
+                    CategoryButton(nameOfCategory: 'Komiksy', pathToImage: iconComic, widgetToRoute: TestScreen())
+                  ],
+                ),
+                SizedBox(height: 20, width: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    CategoryButton(
+                        nameOfCategory: 'Thrillery',
+                        pathToImage: iconDetective,
+                        widgetToRoute: TestScreen()),
+                    CategoryButton(
+                        nameOfCategory: 'Inne',
+                        pathToImage: iconOther,
+                        widgetToRoute: TestScreen())
+                  ],
+                ),
+                SizedBox(height: 20, width: 20),
+              ]),
+            )
+          ],
         ));
   }
 
@@ -127,14 +158,20 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
 class CategoryButton extends StatelessWidget {
   final String nameOfCategory;
   final String pathToImage;
+  final Widget widgetToRoute;
 
   const CategoryButton(
-      {super.key, required this.nameOfCategory, required this.pathToImage});
+      {super.key,
+      required this.nameOfCategory,
+      required this.pathToImage,
+      required this.widgetToRoute});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          checkIsTokenValid(context, widgetToRoute);
+        },
         style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
@@ -143,8 +180,8 @@ class CategoryButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(pathToImage,
-                height: MediaQuery.of(context).size.width * 0.3),
-            Text(nameOfCategory)
+                    height: MediaQuery.of(context).size.width * 0.3)
+            ,Text(nameOfCategory)
           ],
         ));
   }

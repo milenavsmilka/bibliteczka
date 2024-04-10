@@ -1,13 +1,15 @@
-const String apiURLRegister = 'https://192.168.0.3:5000/api/account/register';
-const String apiURLRegisterWybrany = 'https://192.168.1.102:5000/api/account/register';
-const String apiURLLogin = 'https://192.168.0.3:5000/api/account/login';
-const String apiURLLoginWybrany = 'https://192.168.1.102:5000/api/account/login';
-const String apiURLLogOut = 'https://192.168.0.3:5000/api/account/logout';
-const String apiURLLogOutWybrany = 'https://192.168.1.102:5000/api/account/logout';
-const String apiURLIsTokenValid = 'https://192.168.0.3:5000/api/account/check_if_logged_in';
-const String apiURLIsTokenValidWybrany = 'https://192.168.1.102:5000/api/account/check_if_logged_in';
-const String apiURLDeleteAccount = 'https://192.168.0.3:5000/api/account/delete_account';
-const String apiURLDeleteAccountWybrany = 'https://192.168.1.102:5000/api/account/delete_account';
+const String apiURL ='https://192.168.100.17:5000/api/';
+const String apiURLWybrany ='https://192.168.1.102:5000/api/';
+const String apiURLRegister = '${apiURL}account/register';
+const String apiURLRegisterWybrany = '${apiURLWybrany}account/register';
+const String apiURLLogin = '${apiURL}account/login';
+const String apiURLLoginWybrany = '${apiURLWybrany}account/login';
+const String apiURLLogOut = '${apiURL}account/logout';
+const String apiURLLogOutWybrany = '${apiURLWybrany}account/logout';
+const String apiURLIsTokenValid = '${apiURL}account/check_if_logged_in';
+const String apiURLIsTokenValidWybrany = '${apiURLWybrany}account/check_if_logged_in';
+const String apiURLDeleteAccount = '${apiURL}account/delete_account';
+const String apiURLDeleteAccountWybrany = '${apiURLWybrany}account/delete_account';
 
 const String iconHeart = "assets/icons/hearts.svg";
 const String iconBrainstorming = "assets/icons/brainstorming.svg";
@@ -23,6 +25,9 @@ const String iconSwords = "assets/icons/swords.svg";
 const String iconSwordsWithEmblem = "assets/icons/swordsWithEmblem.svg";
 const String iconWand = "assets/icons/wand.svg";
 const String iconYoungAdults = "assets/icons/youngAdults.svg";
+const String iconComic = "assets/icons/comic.svg";
+const String iconOther = "assets/icons/other.svg";
+const String iconAdventure = "assets/icons/adventure.svg";
 
 const String yes = 'Tak';
 const String no = 'Nie';
