@@ -22,7 +22,7 @@ void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {
 
   if (actualToken != null) {
     //pobranie ważności tokena
-    const String apiUrl = apiURLIsTokenValid; //apiURLIsTokenValid;
+    const String apiUrl = apiURLIsTokenValid;
     final response = await http.get(Uri.parse(apiUrl), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $actualToken'
@@ -75,9 +75,7 @@ void whereToGo(BuildContext context) async {
       });
       Map<String, dynamic> data = jsonDecode(response.body);
       String tokenValid = data['message'];
-      // String details = data['details'];
       print('Czy token valid? $tokenValid');
-      // print('details $details');
       if (tokenValid == tokenIsValid) {
         //jeżeli token jest ważny
         Navigator.push(context, CustomPageRoute(child: MainPanelScreen()));

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:biblioteczka/panels/CustomPageRoute.dart';
-import 'package:biblioteczka/panels/TestScreen.dart';
+import 'package:biblioteczka/panels/AllCategoryBooksScreen.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -100,16 +100,16 @@ class _MainPanelScreen extends State<MainPanelScreen> {
                       widgetToRoute: ChooseCategoryScreen()),
                   ChooseOptionFromMenuButton(
                       nameOfOptionFromMenu: "Nowości",
-                      widgetToRoute: TestScreen()),
+                      widgetToRoute: ChooseCategoryScreen()),
                   ChooseOptionFromMenuButton(
                       nameOfOptionFromMenu: "Top 100",
-                      widgetToRoute: TestScreen()),
+                      widgetToRoute: ChooseCategoryScreen()),
                   ChooseOptionFromMenuButton(
                       nameOfOptionFromMenu: "Autorzy",
-                      widgetToRoute: TestScreen()),
+                      widgetToRoute: ChooseCategoryScreen()),
                   ChooseOptionFromMenuButton(
                       nameOfOptionFromMenu: "Społeczność",
-                      widgetToRoute: TestScreen()),
+                      widgetToRoute: ChooseCategoryScreen()),
                 ],
               ),
             )),

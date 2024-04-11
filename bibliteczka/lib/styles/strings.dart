@@ -1,4 +1,4 @@
-const String apiURL ='https://192.168.100.17:5000/api/';
+const String apiURL ='https://10.0.2.2:5000/api/';
 const String apiURLWybrany ='https://192.168.1.102:5000/api/';
 const String apiURLRegister = '${apiURL}account/register';
 const String apiURLRegisterWybrany = '${apiURLWybrany}account/register';
@@ -10,6 +10,7 @@ const String apiURLIsTokenValid = '${apiURL}account/check_if_logged_in';
 const String apiURLIsTokenValidWybrany = '${apiURLWybrany}account/check_if_logged_in';
 const String apiURLDeleteAccount = '${apiURL}account/delete_account';
 const String apiURLDeleteAccountWybrany = '${apiURLWybrany}account/delete_account';
+const String apiURLGetBooksByGenres = '${apiURL}data/book';
 
 const String iconHeart = "assets/icons/hearts.svg";
 const String iconBrainstorming = "assets/icons/brainstorming.svg";
