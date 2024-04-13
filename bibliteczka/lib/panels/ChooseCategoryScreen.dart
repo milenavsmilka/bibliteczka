@@ -39,10 +39,12 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   children: [
                     CategoryButton(
                       nameOfCategory: 'Romans',
+                      nameOfCategoryEN: 'Romance',
                       pathToImage: iconHeart,
                     ),
                     CategoryButton(
                       nameOfCategory: 'Dziecięce',
+                      nameOfCategoryEN: "Children's",
                       pathToImage: iconChild,
                     ),
                   ],
@@ -53,11 +55,13 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   children: [
                     CategoryButton(
                       nameOfCategory: 'Historia',
+                      nameOfCategoryEN: 'History',
                       pathToImage: iconSwords,
                     ),
                     // SizedBox(width: MediaQuery.of(context).size.width * 0.06),
                     CategoryButton(
                       nameOfCategory: 'Nauka',
+                      nameOfCategoryEN: 'Popular Science',
                       pathToImage: iconBrainstorming,
                     ),
                   ],
@@ -68,10 +72,12 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   children: [
                     CategoryButton(
                       nameOfCategory: 'Wiersze',
+                      nameOfCategoryEN: 'Poetry, Plays',
                       pathToImage: iconQuill,
                     ),
                     CategoryButton(
                       nameOfCategory: 'Młodzieżowe',
+                      nameOfCategoryEN: 'Young Adult',
                       pathToImage: iconYoungAdults,
                     )
                   ],
@@ -82,10 +88,12 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   children: [
                     CategoryButton(
                       nameOfCategory: 'Fantasy',
+                      nameOfCategoryEN: 'Fantasy, Science fiction',
                       pathToImage: iconDragon,
                     ),
                     CategoryButton(
                       nameOfCategory: 'Biografie',
+                      nameOfCategoryEN: 'Biography',
                       pathToImage: iconContacts,
                     )
                   ],
@@ -96,10 +104,12 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   children: [
                     CategoryButton(
                       nameOfCategory: 'Przygodowe',
+                      nameOfCategoryEN: 'Action & Adventure',
                       pathToImage: iconAdventure,
                     ),
                     CategoryButton(
                       nameOfCategory: 'Komiksy',
+                      nameOfCategoryEN: 'Comic books',
                       pathToImage: iconComic,
                     )
                   ],
@@ -110,10 +120,12 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   children: [
                     CategoryButton(
                       nameOfCategory: 'Thrillery',
+                      nameOfCategoryEN: 'Thriller, Horror, Mystery and detective stories',
                       pathToImage: iconDetective,
                     ),
                     CategoryButton(
                       nameOfCategory: 'Inne',
+                      nameOfCategoryEN: 'Other',
                       pathToImage: iconOther,
                     )
                   ],
@@ -126,30 +138,26 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
   }
 }
 
-Future<List> giveMeListsOfBook() async {
+Future<List> giveMeListsOfBook(String language, String nameOfCategory) async {
   List<dynamic> books = [];
   var sharedPreferences = await SharedPreferences.getInstance();
   String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
   const String apiUrl = apiURLGetBooksByGenres;
 
-  final params = {'language':'pl','genres': 'Romance'};
+  final params = {'language': language,'genres': nameOfCategory};
   final response = await http
       .get(Uri.parse(apiUrl).replace(queryParameters: params), headers: {
     'Content-Type': 'application/json; charset=UTF-8',
     'Authorization': 'Bearer $actualToken',
   });
-  print('Dupa');
   Map<String, dynamic> data = jsonDecode(response.body);
 
   books = data['books'];
   print('number of books ${books.length}');
 
   if (response.statusCode == 200) {
-    print("Czy okej?");
-    // If the server returns a 200 OK response, parse the JSON
     Map<String, dynamic> data = jsonDecode(response.body);
     print(data);
-    // Do something with the data
   } else {
     print("Nie okej :(");
   }
@@ -158,18 +166,19 @@ Future<List> giveMeListsOfBook() async {
 
 class CategoryButton extends StatelessWidget {
   final String nameOfCategory;
+  final String nameOfCategoryEN;
   final String pathToImage;
 
   const CategoryButton(
-      {super.key, required this.nameOfCategory, required this.pathToImage});
+      {super.key, required this.nameOfCategory, required this.pathToImage, required this.nameOfCategoryEN});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         onPressed: () async {
-          List<dynamic> books = await giveMeListsOfBook();
+          List<dynamic> books = await giveMeListsOfBook('pl',nameOfCategoryEN);
           checkIsTokenValid(
-              context, TestScreen(nameOfCategory: nameOfCategory,listOfBooks: books));
+              context, AllCategoryBooksScreen(nameOfCategory: nameOfCategory,listOfBooks: books));
         },
         style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
