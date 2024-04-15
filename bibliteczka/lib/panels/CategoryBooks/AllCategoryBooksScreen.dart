@@ -1,16 +1,13 @@
 import 'dart:convert';
-import 'dart:math';
 
-import 'package:biblioteczka/panels/ChooseCategoryScreen.dart';
-import 'package:biblioteczka/panels/DetailsOfBookScreen.dart';
-import 'package:biblioteczka/panels/MainPanelScreen.dart';
 import 'package:biblioteczka/panels/apiRequests.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../styles/strings.dart';
-import 'main.dart';
+import '../../styles/strings.dart';
+import '../main.dart';
+import 'DetailsOfBookScreen.dart';
 
 class AllCategoryBooksScreen extends StatefulWidget {
   const AllCategoryBooksScreen(
@@ -30,6 +27,8 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
   String dateOfPremiere = '';
   String publishingHouse = '';
   String picture = '';
+  int score = 0;
+  int opinions_count = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +53,7 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                       isbn: isbn,
                       picture: picture,
                       publishingHouse: publishingHouse,
+                      rate: score*1.0/opinions_count,
                     ));
               },
               child: Card(
@@ -91,6 +91,8 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
     dateOfPremiere = data['premiere_date'];
     publishingHouse = data['publishing_house'];
     picture = data['picture'];
+    score = data['score'];
+    opinions_count = data['opinions_count'];
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);

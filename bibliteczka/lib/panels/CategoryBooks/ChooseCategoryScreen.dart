@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:isolate';
 
 import 'package:biblioteczka/panels/apiRequests.dart';
 import 'package:biblioteczka/styles/strings.dart';
@@ -8,8 +7,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../main.dart';
 import 'AllCategoryBooksScreen.dart';
-import 'main.dart';
 
 class ChooseCategoryScreen extends StatefulWidget {
   const ChooseCategoryScreen({super.key});
