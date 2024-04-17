@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:biblioteczka/panels/CustomPageRoute.dart';
+import 'package:biblioteczka/panels/News/NewBooksScreen.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -99,7 +100,7 @@ class _MainPanelScreen extends State<MainPanelScreen> {
                       widgetToRoute: ChooseCategoryScreen()),
                   ChooseOptionFromMenuButton(
                       nameOfOptionFromMenu: "Nowości",
-                      widgetToRoute: ChooseCategoryScreen()),
+                      widgetToRoute: NewBooksScreen()),
                   ChooseOptionFromMenuButton(
                       nameOfOptionFromMenu: "Top 100",
                       widgetToRoute: ChooseCategoryScreen()),

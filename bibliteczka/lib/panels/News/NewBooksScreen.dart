@@ -5,43 +5,45 @@ import 'package:biblioteczka/panels/apiRequests.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../styles/strings.dart';
+import '../CategoryBooks/DetailsOfBookScreen.dart';
 import '../main.dart';
-import 'DetailsOfBookScreen.dart';
 
-class AllCategoryBooksScreen extends StatefulWidget {
-  const AllCategoryBooksScreen(
-      {super.key,
-      required this.nameOfCategory,
-      required this.nameOfCategoryEN});
-
-  final String nameOfCategory;
-  final String nameOfCategoryEN;
+class NewBooksScreen extends StatefulWidget {
+  const NewBooksScreen({super.key});
 
   @override
-  State<AllCategoryBooksScreen> createState() => _AllCategoryBooksScreenState();
+  State<NewBooksScreen> createState() => _NewBooksScreenState();
 }
 
-class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
+class _NewBooksScreenState extends State<NewBooksScreen> {
   List<dynamic> listOfBooks = [];
+  String title = '';
+  String description = '';
+  String isbn = '';
+  String dateOfPremiere = '';
+  String publishingHouse = '';
+  String picture = '';
+  double score = 0;
+  int opinions_count = 0;
 
   @override
-  void initState() {
+  initState() {
     super.initState();
-    giveMeListsOfBook('pl', widget.nameOfCategoryEN);
+    giveMeNewBooks('pl');
   }
 
   @override
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
     double heightScreen = MediaQuery.of(context).size.height;
-
-    print(widget.nameOfCategory);
+    print(listOfBooks);
     return listOfBooks.isEmpty
-        ? LoadingScreen()
+        ? const LoadingScreen()
         : Scaffold(
             appBar: AppBar(
-              title: Text(widget.nameOfCategory),
+              title: Text('Nowości'),
             ),
             body: ListView.builder(
                 itemCount: listOfBooks.length,
@@ -78,12 +80,12 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
           );
   }
 
-  Future<void> giveMeListsOfBook(String language, String nameOfCategory) async {
+  Future<void> giveMeNewBooks(String language) async {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-    const String apiUrl = apiURLGetBooksByGenres;
+    const String apiUrl = apiURLGetNewBooks;
 
-    final params = {'language': language, 'genres': nameOfCategory};
+    final params = {'language': language};
     final response = await http
         .get(Uri.parse(apiUrl).replace(queryParameters: params), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
@@ -94,8 +96,7 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
     setState(() {
       listOfBooks = data['results'];
     });
-
-    print('number of books ${listOfBooks.length}');
+    print('number of listOfBooks ${listOfBooks.length}');
 
     if (response.statusCode == 200) {
       Map<String, dynamic> data = jsonDecode(response.body);

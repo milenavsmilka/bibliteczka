@@ -11,7 +11,7 @@ const String apiURLIsTokenValidWybrany = '${apiURLWybrany}account/check_if_logge
 const String apiURLDeleteAccount = '${apiURL}account/delete_account';
 const String apiURLDeleteAccountWybrany = '${apiURLWybrany}account/delete_account';
 const String apiURLGetBooksByGenres = '${apiURL}data/book';
-const String apiURLGetDetailsOfBook = '${apiURL}data/book';
+const String apiURLGetNewBooks = '${apiURL}data/new_book';
 
 const String iconHeart = "assets/icons/hearts.svg";
 const String iconBrainstorming = "assets/icons/brainstorming.svg";
