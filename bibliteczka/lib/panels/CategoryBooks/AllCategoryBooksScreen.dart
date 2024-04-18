@@ -53,7 +53,7 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                         checkIsTokenValid(
                             context,
                             DetailsOfBookScreen(
-                              bookId: index,
+                              bookId: listOfBooks[index]['id'],
                             ));
                       },
                       child: Row(

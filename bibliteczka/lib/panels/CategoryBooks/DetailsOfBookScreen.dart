@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../LoadingScreen.dart';
 import '../../styles/strings.dart';
+import '../apiRequests.dart';
 import '../main.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,6 +27,8 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   String dateOfPremiere = '';
   String publishingHouse = '';
   String picture = '';
+  String authorName = '';
+  int authorId = -1;
   double rate = 1.0;
 
   @override
@@ -65,7 +68,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                         Row(
                           children: [
                             Text('Autor: '),
-                            Text('Tutaj będzie autor')
+                            Text(authorName)
                           ],
                         ),
                         Row(children: [
@@ -97,7 +100,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   Future<void> giveMeDetailsOfBook(String language, int bookId) async {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-    const String apiUrl = apiURLGetBooksByGenres;
+    String apiUrl = apiURLGetBooksByGenres;
 
     final params = {'language': language, 'id': bookId.toString()};
     print(Uri.parse(apiUrl).replace(queryParameters: params));
@@ -107,6 +110,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       'Authorization': 'Bearer $actualToken',
     });
     Map<String, dynamic> data = jsonDecode(response.body);
+
     setState(() {
       final results = data['results'];
       title = results[0]['title'];
@@ -115,15 +119,22 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       dateOfPremiere = results[0]['premiere_date'];
       publishingHouse = results[0]['publishing_house'];
       picture = results[0]['picture'];
+      authorId = results[0]['author_id'];
       rate = results[0]['score'] * 1.0 / results[0]['opinions_count'];
     });
 
     if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
       print(data);
     } else {
       print("Nie okej :(");
     }
+
+    List<dynamic> result = await getSthById(language, apiURLGetAuthorById, actualToken!, authorId);
+    setState(() {
+      authorName = result[0]['name'];
+    });
+
+    print('Imię autora $authorName');
   }
 }
 

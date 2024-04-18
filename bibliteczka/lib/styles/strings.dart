@@ -12,6 +12,7 @@ const String apiURLDeleteAccount = '${apiURL}account/delete_account';
 const String apiURLDeleteAccountWybrany = '${apiURLWybrany}account/delete_account';
 const String apiURLGetBooksByGenres = '${apiURL}data/book';
 const String apiURLGetNewBooks = '${apiURL}data/new_book';
+const String apiURLGetAuthorById = '${apiURL}data/author';
 
 const String iconHeart = "assets/icons/hearts.svg";
 const String iconBrainstorming = "assets/icons/brainstorming.svg";

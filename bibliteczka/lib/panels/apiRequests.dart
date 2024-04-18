@@ -12,6 +12,24 @@ import 'LoginScreen.dart';
 import 'MainPanelScreen.dart';
 import 'main.dart';
 
+Future<List> getSthById(
+    String language, String url, String token, int id) async {
+  final params2 = {'language': language, 'id': id.toString()};
+  final response = await http
+      .get(Uri.parse(url).replace(queryParameters: params2), headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Authorization': 'Bearer $token',
+  });
+  Map<String, dynamic> data = jsonDecode(response.body);
+  var results = data['results'];
+  if (response.statusCode == 200) {
+    print('good');
+  } else {
+    print("Nie okej :(");
+  }
+  return results;
+}
+
 void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {
   var sharedPreferences = await SharedPreferences.getInstance();
   String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
