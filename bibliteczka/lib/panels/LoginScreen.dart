@@ -66,99 +66,85 @@ class _LoginScreenState extends State<LoginScreen> {
                 top: MediaQuery.of(context).size.height * 0.1,
                 start: MediaQuery.of(context).size.width * 0.1,
                 end: MediaQuery.of(context).size.width * 0.1),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height / 1.5,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Center(
-                    child: Icon(
-                      Icons.account_circle_rounded,
-                      size: 120,
-                      color: Colors.black,
-                    ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(
+                  Icons.account_circle_rounded,
+                  size: 120,
+                  color: Colors.black,
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  controller: emailController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: InputDecoration(
+                    labelText: giveMeEmail,
+                    prefixIcon: Icon(Icons.email),
                   ),
-                  Flexible(
-                    child: TextFormField(
-                      controller: emailController,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: InputDecoration(
-                        labelText: giveMeEmail,
-                        prefixIcon: Icon(Icons.email),
-                      ),
-                      validator: MultiValidator([
-                        RequiredValidator(errorText: giveMeEmailError),
-                        EmailValidator(
-                            errorText: wrongEmailError),
-                      ]),
-                    ),
-                  ),
-                  Flexible(
-                    child: TextFormField(
-                      controller: passwordController,
-                      obscureText: !passVisible,
-                      validator: validatePassword,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: InputDecoration(
-                          labelText: giveMePassword,
-                          errorMaxLines: 3,
-                          prefixIcon: Icon(Icons.lock),
-                          suffix: InkWell(
-                            onTap: () {
-                              setState(() {
-                                passVisible = !passVisible;
-                              });
-                            },
-                            child: Icon(
-                              passVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                            ),
-                          )),
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Center(
-                    child: ElevatedButton(
-                      child: Text(clickToLoginButton),
-                      onPressed: () async {
-                        _formKey.currentState!.validate();
-                        try {
-                          await signIn(
-                              emailController.text, passwordController.text);
-                        } catch (_) {
-                          //co łapiemy?
-                        }
-                      },
-                    ),
-                  ),
-                  Center(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [Flexible(child: Text(messageCanChange))],
-                    ),
-                  ),
-                  Center(
-                      child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(notHaveAccountYetQuestion1,
-                          style: Theme.of(context).textTheme.headline6),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterScreen()),
-                            );
-                          },
-                          child: Text(haveOrNotAccountQuestion2))
-                    ],
-                  ))
-                ],
-              ),
+                  validator: MultiValidator([
+                    RequiredValidator(errorText: giveMeEmailError),
+                    EmailValidator(errorText: wrongEmailError),
+                  ]),
+                ),
+                SizedBox(height: 20),
+                TextFormField(
+                  controller: passwordController,
+                  obscureText: !passVisible,
+                  validator: validatePassword,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  decoration: InputDecoration(
+                      labelText: giveMePassword,
+                      errorMaxLines: 3,
+                      prefixIcon: Icon(Icons.lock),
+                      suffix: InkWell(
+                        onTap: () {
+                          setState(() {
+                            passVisible = !passVisible;
+                          });
+                        },
+                        child: Icon(
+                          passVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                      )),
+                ),
+                SizedBox(height: 30),
+                ElevatedButton(
+                  child: Text(clickToLoginButton),
+                  onPressed: () async {
+                    _formKey.currentState!.validate();
+                    try {
+                      await signIn(
+                          emailController.text, passwordController.text);
+                    } catch (_) {
+                      //co łapiemy?
+                    }
+                  },
+                ),
+                SizedBox(height: 15),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [Flexible(child: Text(messageCanChange))],
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(notHaveAccountYetQuestion1,
+                        style: Theme.of(context).textTheme.headline6),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => RegisterScreen()),
+                          );
+                        },
+                        child: Text(haveOrNotAccountQuestion2))
+                  ],
+                )
+              ],
             ),
           ),
         ),
@@ -191,12 +177,13 @@ class _LoginScreenState extends State<LoginScreen> {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       sharedPreferences.setString(MyHomePageState.TOKEN, token);
-      sharedPreferences.setString(MyHomePageState.password, passwordController.toString());
+      sharedPreferences.setString(
+          MyHomePageState.password, passwordController.toString());
       sharedPreferences.setBool('isLogged', true);
       var isLoggedIn = sharedPreferences.getBool('isLogged');
       print("Wypiszę podczas ustawiania boola logowania $isLoggedIn");
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MainPanelScreen()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => MainPanelScreen()));
     } else if (message == 'already_logged_in') {
       print("Nie okej :(");
       throw Exception(userAlreadyLoggedIn);
