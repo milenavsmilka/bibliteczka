@@ -12,9 +12,10 @@ import '../main.dart';
 import 'package:http/http.dart' as http;
 
 class DetailsOfBookScreen extends StatefulWidget {
-  const DetailsOfBookScreen({super.key, required this.bookId});
+  const DetailsOfBookScreen({super.key, required this.bookId, this.turnOpinions});
 
   final int bookId;
+  final bool? turnOpinions;
 
   @override
   State<DetailsOfBookScreen> createState() => _DetailsOfBookScreenState();
@@ -92,8 +93,10 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                   Flexible(child: Text(description)),
                 ],
               ),
-              for (int i =0;i< opinions.length; i++)
-                OpinionScreen(opinionId: opinions[i]),
+              if(widget.turnOpinions == true)...{
+                for (int i =0;i< opinions.length; i++)
+                  OpinionScreen(opinionId: opinions[i]),
+              }
             ]),
           );
     }

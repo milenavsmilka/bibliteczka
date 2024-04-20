@@ -97,7 +97,7 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   children: [
                     CategoryButton(
                       nameOfCategory: 'Przygodowe',
-                      nameOfCategoryEN: 'Action & Adventure',
+                      nameOfCategoryEN: 'Adventure',
                       pathToImage: iconAdventure,
                     ),
                     CategoryButton(
