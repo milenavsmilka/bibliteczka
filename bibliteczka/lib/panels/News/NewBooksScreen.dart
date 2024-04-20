@@ -31,7 +31,7 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
   @override
   initState() {
     super.initState();
-    giveMeNewBooks('pl');
+    giveMeNewBooks();
   }
 
   @override
@@ -80,14 +80,13 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
           );
   }
 
-  Future<void> giveMeNewBooks(String language) async {
+  Future<void> giveMeNewBooks() async {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
     const String apiUrl = apiURLGetNewBooks;
 
-    final params = {'language': language};
     final response = await http
-        .get(Uri.parse(apiUrl).replace(queryParameters: params), headers: {
+        .get(Uri.parse(apiUrl), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $actualToken',
     });

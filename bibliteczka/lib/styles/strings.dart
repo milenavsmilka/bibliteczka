@@ -1,15 +1,9 @@
 const String apiURL ='https://10.0.2.2:5000/api/';
-const String apiURLWybrany ='https://192.168.1.102:5000/api/';
 const String apiURLRegister = '${apiURL}account/register';
-const String apiURLRegisterWybrany = '${apiURLWybrany}account/register';
 const String apiURLLogin = '${apiURL}account/login';
-const String apiURLLoginWybrany = '${apiURLWybrany}account/login';
 const String apiURLLogOut = '${apiURL}account/logout';
-const String apiURLLogOutWybrany = '${apiURLWybrany}account/logout';
 const String apiURLIsTokenValid = '${apiURL}account/check_if_logged_in';
-const String apiURLIsTokenValidWybrany = '${apiURLWybrany}account/check_if_logged_in';
 const String apiURLDeleteAccount = '${apiURL}account/delete_account';
-const String apiURLDeleteAccountWybrany = '${apiURLWybrany}account/delete_account';
 const String apiURLGetBooksByGenres = '${apiURL}data/book';
 const String apiURLGetNewBooks = '${apiURL}data/new_book';
 const String apiURLGetAuthorById = '${apiURL}data/author';

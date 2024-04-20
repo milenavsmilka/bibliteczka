@@ -28,7 +28,7 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
   @override
   void initState() {
     super.initState();
-    giveMeListsOfBook('pl', widget.nameOfCategoryEN);
+    giveMeListsOfBook(widget.nameOfCategoryEN);
   }
 
   @override
@@ -78,12 +78,12 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
           );
   }
 
-  Future<void> giveMeListsOfBook(String language, String nameOfCategory) async {
+  Future<void> giveMeListsOfBook(String nameOfCategory) async {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
     const String apiUrl = apiURLGetBooksByGenres;
 
-    final params = {'language': language, 'genres': nameOfCategory};
+    final params = {'genres': nameOfCategory};
     final response = await http
         .get(Uri.parse(apiUrl).replace(queryParameters: params), headers: {
       'Content-Type': 'application/json; charset=UTF-8',

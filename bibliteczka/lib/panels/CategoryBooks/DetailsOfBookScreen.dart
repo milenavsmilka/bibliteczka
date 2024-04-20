@@ -12,7 +12,8 @@ import '../main.dart';
 import 'package:http/http.dart' as http;
 
 class DetailsOfBookScreen extends StatefulWidget {
-  const DetailsOfBookScreen({super.key, required this.bookId, this.turnOpinions});
+  const DetailsOfBookScreen(
+      {super.key, required this.bookId, this.turnOpinions});
 
   final int bookId;
   final bool? turnOpinions;
@@ -37,7 +38,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   @override
   void initState() {
     super.initState();
-    giveMeDetailsOfBook('pl', widget.bookId);
+    giveMeDetailsOfBook(widget.bookId);
   }
 
   @override
@@ -50,10 +51,13 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       return const LoadingScreen();
     } else {
       return Scaffold(
-            appBar: AppBar(
-              title: Text(title),
-            ),
-            body: Wrap(children: [
+        appBar: AppBar(
+          title: Text(title),
+        ),
+        body: CustomScrollView(scrollDirection: Axis.vertical, slivers: [
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Wrap(children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -93,21 +97,23 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                   Flexible(child: Text(description)),
                 ],
               ),
-              if(widget.turnOpinions == true)...{
-                for (int i =0;i< opinions.length; i++)
+              if (widget.turnOpinions == true) ...{
+                for (int i = 0; i < opinions.length; i++)
                   OpinionScreen(opinionId: opinions[i]),
               }
             ]),
-          );
+          ),
+        ]),
+      );
     }
   }
 
-  Future<void> giveMeDetailsOfBook(String language, int bookId) async {
+  Future<void> giveMeDetailsOfBook(int bookId) async {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
     String apiUrl = apiURLGetBooksByGenres;
 
-    final params = {'language': language, 'id': bookId.toString()};
+    final params = {'id': bookId.toString()};
     print(Uri.parse(apiUrl).replace(queryParameters: params));
     final response = await http
         .get(Uri.parse(apiUrl).replace(queryParameters: params), headers: {
@@ -136,7 +142,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     }
 
     Map<String, dynamic> authorData =
-        await getSthById(language, apiURLGetAuthorById, actualToken!, authorId);
+        await getSthById(apiURLGetAuthorById, actualToken!, authorId);
     setState(() {
       authorName = authorData['results'][0]['name'];
     });

@@ -184,8 +184,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final Map<String, dynamic> requestBody = {
       'username': username,
       'password': password,
-      'email': email,
-      'language': 'pl'
+      'email': email
     };
     String requestBodyJson = jsonEncode(requestBody);
 

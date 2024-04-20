@@ -85,7 +85,7 @@ class _MainPanelScreen extends State<MainPanelScreen> {
                         child: Text(clickToLogOutButton),
                         onTap: () async {
                           checkIsTokenValid(context);
-                          await logOut();//podwójnie jadą ekrany logowania
+                          await logOut();
                         })
                   ],
                 )
@@ -119,9 +119,8 @@ class _MainPanelScreen extends State<MainPanelScreen> {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
 
-    const String apiUrl = apiURLLogOut; //apiURLLogOut;
+    const String apiUrl = apiURLLogOut;
     final Map<String, dynamic> requestBody = {
-      'language': 'pl'
     };
     String requestBodyJson = jsonEncode(requestBody);
 

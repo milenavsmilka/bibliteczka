@@ -12,9 +12,8 @@ import 'LoginScreen.dart';
 import 'MainPanelScreen.dart';
 import 'main.dart';
 
-Future<Map<String, dynamic>> getSthById(
-    String language, String url, String token, int id) async {
-  final params = {'language': language, 'id': id.toString()};
+Future<Map<String, dynamic>> getSthById(String url, String token, int id) async {
+  final params = {'id': id.toString()};
   final response = await http
       .get(Uri.parse(url).replace(queryParameters: params), headers: {
     'Content-Type': 'application/json; charset=UTF-8',
@@ -81,11 +80,9 @@ void whereToGo(BuildContext context) async {
   print("Wypiszę $isLoggedIn $actualToken");
 
   Timer(const Duration(seconds: 2), () async {
-    final params = {'language': "pl"};
     if (actualToken != null) {
       //pobranie ważności tokena
-      final apiUrl = Uri.parse(apiURLIsTokenValid)
-          .replace(queryParameters: params); //apiURLIsTokenValid;
+      final apiUrl = Uri.parse(apiURLIsTokenValid); //apiURLIsTokenValid;
       final response = await http.get(apiUrl, headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $actualToken',

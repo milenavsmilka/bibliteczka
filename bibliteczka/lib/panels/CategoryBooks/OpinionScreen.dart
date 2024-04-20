@@ -1,13 +1,12 @@
-import 'dart:convert';
-
-import 'package:biblioteczka/LoadingScreen.dart';
 import 'package:biblioteczka/panels/apiRequests.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../LoadingScreen.dart';
 import '../../styles/strings.dart';
 import '../main.dart';
-import 'DetailsOfBookScreen.dart';
 
 class OpinionScreen extends StatefulWidget {
   const OpinionScreen({super.key, required this.opinionId});
@@ -21,10 +20,11 @@ class OpinionScreen extends StatefulWidget {
 class _OpinionScreenState extends State<OpinionScreen> {
   Map<String, dynamic> opinionResponse = {'': ''};
 
-  // Map<String, dynamic> index = {'':''};
   int index = -1;
   List<dynamic> opinionsDetails = [];
   String comment = '';
+  String profilePicture = '';
+  String username = '';
 
   @override
   void initState() {
@@ -36,19 +36,40 @@ class _OpinionScreenState extends State<OpinionScreen> {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
 
-    opinionResponse = await getSthById(
-        'pl', apiURLGetOpinionById, actualToken!, widget.opinionId);
+    opinionResponse = await getSthById(apiURLGetOpinionById, actualToken!, widget.opinionId);
     setState(() {
       index = opinionResponse['pagination']['count'];
       opinionsDetails = opinionResponse['results'];
       comment = opinionsDetails[index - 1]['comment'];
+      profilePicture = opinionsDetails[index - 1]['profile_picture'];
+      username = opinionsDetails[index - 1]['username'];
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text(comment + index.toString()),
-    );
+    if (index == -1) {
+      return Row(children: [Text('Loading')]);
+    } else {
+      return Row(
+        children: [
+          Flexible(
+            child: Column(children: [
+              Image.network(
+                profilePicture,
+                height: 50,
+                width: 50,
+              ),
+              Text(username),
+            ]),
+          ),
+          Flexible(
+            child: Container(
+                child: Text(comment),
+                decoration: BoxDecoration(color: Colors.grey.shade50)),
+          )
+        ],
+      );
+    }
   }
 }
