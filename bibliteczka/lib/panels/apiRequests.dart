@@ -12,22 +12,21 @@ import 'LoginScreen.dart';
 import 'MainPanelScreen.dart';
 import 'main.dart';
 
-Future<List> getSthById(
+Future<Map<String, dynamic>> getSthById(
     String language, String url, String token, int id) async {
-  final params2 = {'language': language, 'id': id.toString()};
+  final params = {'language': language, 'id': id.toString()};
   final response = await http
-      .get(Uri.parse(url).replace(queryParameters: params2), headers: {
+      .get(Uri.parse(url).replace(queryParameters: params), headers: {
     'Content-Type': 'application/json; charset=UTF-8',
     'Authorization': 'Bearer $token',
   });
   Map<String, dynamic> data = jsonDecode(response.body);
-  var results = data['results'];
   if (response.statusCode == 200) {
     print('good');
   } else {
-    print("Nie okej :(");
+    print("Nie good");
   }
-  return results;
+  return data;
 }
 
 void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {

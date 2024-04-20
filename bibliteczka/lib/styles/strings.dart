@@ -13,6 +13,7 @@ const String apiURLDeleteAccountWybrany = '${apiURLWybrany}account/delete_accoun
 const String apiURLGetBooksByGenres = '${apiURL}data/book';
 const String apiURLGetNewBooks = '${apiURL}data/new_book';
 const String apiURLGetAuthorById = '${apiURL}data/author';
+const String apiURLGetOpinionById = '${apiURL}data/opinion';
 
 const String iconHeart = "assets/icons/hearts.svg";
 const String iconBrainstorming = "assets/icons/brainstorming.svg";

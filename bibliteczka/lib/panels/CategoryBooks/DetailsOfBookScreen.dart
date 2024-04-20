@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:biblioteczka/panels/CategoryBooks/OpinionScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +30,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   String picture = '';
   String authorName = '';
   int authorId = -1;
+  List<dynamic> opinions = [];
   double rate = 1.0;
 
   @override
@@ -43,9 +45,10 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     double heightScreen = MediaQuery.of(context).size.height;
     print('${nameOfCategory} ${title}');
 
-    return picture == ''
-        ? const LoadingScreen()
-        : Scaffold(
+    if (authorName == '') {
+      return const LoadingScreen();
+    } else {
+      return Scaffold(
             appBar: AppBar(
               title: Text(title),
             ),
@@ -66,10 +69,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                       children: [
                         Row(children: [Text('Tytuł: '), Text(title)]),
                         Row(
-                          children: [
-                            Text('Autor: '),
-                            Text(authorName)
-                          ],
+                          children: [Text('Autor: '), Text(authorName)],
                         ),
                         Row(children: [
                           Text('Wydawnictwo: '),
@@ -91,10 +91,12 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                 children: [
                   Flexible(child: Text(description)),
                 ],
-                //todo tutaj dodam sekcję komentarzy, ale wydzielę ją jako osobny screen i fajnie dołączę do tego
-              )
+              ),
+              for (int i =0;i< opinions.length; i++)
+                OpinionScreen(opinionId: opinions[i]),
             ]),
           );
+    }
   }
 
   Future<void> giveMeDetailsOfBook(String language, int bookId) async {
@@ -121,6 +123,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       picture = results[0]['picture'];
       authorId = results[0]['author_id'];
       rate = results[0]['score'] * 1.0 / results[0]['opinions_count'];
+      opinions = results[0]['opinions'];
     });
 
     if (response.statusCode == 200) {
@@ -129,12 +132,13 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       print("Nie okej :(");
     }
 
-    List<dynamic> result = await getSthById(language, apiURLGetAuthorById, actualToken!, authorId);
+    Map<String, dynamic> authorData =
+        await getSthById(language, apiURLGetAuthorById, actualToken!, authorId);
     setState(() {
-      authorName = result[0]['name'];
+      authorName = authorData['results'][0]['name'];
     });
 
-    print('Imię autora $authorName');
+    print('Imię autora $authorName i opinie $opinions');
   }
 }
 
