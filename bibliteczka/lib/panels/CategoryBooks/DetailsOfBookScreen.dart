@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:biblioteczka/panels/CategoryBooks/OpinionScreen.dart';
+import 'package:biblioteczka/panels/DefaultAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,57 +52,106 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       return const LoadingScreen();
     } else {
       return Scaffold(
-        appBar: AppBar(
-          title: Text(title),
+        appBar: DefaultAppBar(
+          title: title,
+          automaticallyImplyLeading: true,
         ),
         body: CustomScrollView(scrollDirection: Axis.vertical, slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
-            child: Wrap(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Column(
-                    children: [
-                      Image.network(picture,
-                          width: widthScreen / 2, height: heightScreen / 3),
-                      Text(title),
-                    ],
-                  ),
-                  Flexible(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Wrap(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Column(
                       children: [
-                        Row(children: [Text('Tytuł: '), Text(title)]),
-                        Row(
-                          children: [Text('Autor: '), Text(authorName)],
-                        ),
-                        Row(children: [
-                          Text('Wydawnictwo: '),
-                          Text(publishingHouse)
-                        ]),
-                        Row(
-                          children: [
-                            Text('Premiera: '),
-                            Text(dateOfPremiere.substring(5, 16))
-                          ],
-                        ),
-                        HowMuchStars(rate: rate.isNaN ? 0 : rate),
+                        Container(
+                          width: widthScreen / 2.3,
+                          height: heightScreen / 2.5,
+                          child: Image.network(picture, fit: BoxFit.fill),
+                        )
                       ],
                     ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Flexible(child: Text(description)),
-                ],
-              ),
-              if (widget.turnOpinions == true) ...{
-                for (int i = 0; i < opinions.length; i++)
-                  OpinionScreen(opinionId: opinions[i]),
-              }
-            ]),
+                    Flexible(
+                      child: Container(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          children: [
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Tytuł: ',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall)
+                                ]),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    title,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  )
+                                ]),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Autor: ',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall)
+                                ]),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    authorName,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  )
+                                ]),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Wydawnictwo: ',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall)
+                                ]),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    publishingHouse,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  )
+                                ]),
+                            Row(children: [Text('')]),
+                            HowMuchStars(rate: rate.isNaN ? 0 : rate),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Row(children: [Text('')]),
+                Row(
+                  children: [
+                    Flexible(child: Text(description, style: Theme.of(context).textTheme.titleMedium)),
+                  ],
+                ),
+                Row(children: [Text('')]),
+                if (widget.turnOpinions == true) ...{
+                  Text("Opinie i dyskusje", style: Theme.of(context).textTheme.headlineSmall),
+                  for (int i = 0; i < opinions.length; i++)
+                    OpinionScreen(opinionId: opinions[i]),
+                }
+              ]),
+            ),
           ),
         ]),
       );
@@ -162,24 +212,28 @@ class HowMuchStars extends StatelessWidget {
     double halfStar = double.parse(halfStarString);
     print('Ile gwiazdek? $rate, jaki wynik połówki? $halfStar');
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (rate == 0.0) ...[
-          for (var i = 0; i < 5; i++) const Icon(Icons.star_border_rounded),
+          for (var i = 0; i < 5; i++)
+            const Icon(Icons.star_border_rounded, color: Colors.yellow),
         ] else if (rate == 5.0) ...[
-          for (var i = 0; i < 5; i++) const Icon(Icons.star_rounded),
+          for (var i = 0; i < 5; i++)
+            const Icon(Icons.star_rounded, color: Colors.yellow),
         ] else ...[
-          for (var i = 0; i < rate.toInt(); i++) Icon(Icons.star_rounded),
+          for (var i = 0; i < rate.toInt(); i++)
+            Icon(Icons.star_rounded, color: Colors.yellow),
           if (halfStar >= 0.35 && halfStar <= 0.65) ...[
-            Icon(Icons.star_half_rounded)
+            Icon(Icons.star_half_rounded, color: Colors.yellow)
           ] else if (halfStar < 0.35) ...[
-            Icon(Icons.star_border_rounded)
+            Icon(Icons.star_border_rounded, color: Colors.yellow)
           ] else if (halfStar > 0.65) ...[
-            Icon(Icons.star_rounded)
+            Icon(Icons.star_rounded, color: Colors.yellow)
           ],
           for (var i = 0; i < 4 - rate.toInt(); i++)
-            Icon(Icons.star_border_rounded),
+            Icon(Icons.star_border_rounded, color: Colors.yellow),
         ],
-        Text(rate.toString()),
+        Text(rate.toString(), style: Theme.of(context).textTheme.titleMedium),
       ],
     );
   }

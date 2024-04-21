@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(titleOnAppBar),
+          title: const Text(titleOfApp),
           automaticallyImplyLeading: false,
         ),
         body: Form(
@@ -115,12 +115,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text(clickToLoginButton),
                   onPressed: () async {
                     _formKey.currentState!.validate();
-                    try {
                       await signIn(
                           emailController.text, passwordController.text);
-                    } catch (_) {
-                      //co łapiemy?
-                    }
                   },
                 ),
                 SizedBox(height: 15),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:biblioteczka/panels/DefaultAppBar.dart';
 import 'package:biblioteczka/panels/CustomPageRoute.dart';
 import 'package:biblioteczka/panels/News/NewBooksScreen.dart';
 import 'package:biblioteczka/styles/strings.dart';
@@ -52,45 +53,7 @@ class _MainPanelScreen extends State<MainPanelScreen> {
           return Future.value(shouldPop);
         },
         child: Scaffold(
-            appBar: AppBar(
-              title: Text(titleOnAppBar),
-              automaticallyImplyLeading: false,
-              actions: <Widget>[
-                PopupMenuButton(
-                  icon: Icon(
-                    Icons.account_circle,
-                    color: Colors.black,
-                    size: 35,
-                  ),
-                  itemBuilder: (BuildContext context) => [
-                    PopupMenuItem(
-                      child: Text('Wyświetl profil'),
-                      onTap: () {
-                        // checkIsTokenValid(context, );
-                      },
-                    ),
-                    PopupMenuItem(
-                      child: Text(changeTheme),
-                      onTap: () {
-                        checkIsTokenValid(context, ChangeThemeScreen());
-                      },
-                    ),
-                    PopupMenuItem(
-                      child: Text('Ustawienia'),
-                      onTap: () {
-                        checkIsTokenValid(context, SettingsScreen());
-                      },
-                    ),
-                    PopupMenuItem(
-                        child: Text(clickToLogOutButton),
-                        onTap: () async {
-                          checkIsTokenValid(context);
-                          await logOut();
-                        })
-                  ],
-                )
-              ],
-            ),
+            appBar: DefaultAppBar(title: titleOfApp,automaticallyImplyLeading: false),
             body: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

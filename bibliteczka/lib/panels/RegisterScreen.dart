@@ -25,7 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text(titleOnAppBar),
+          title: const Text(titleOfApp),
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);

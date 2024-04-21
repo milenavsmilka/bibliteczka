@@ -89,7 +89,7 @@ class MyHomePageState extends State<MyHomePage> {
               const Spacer(
                 flex: 3,
               ),
-              Text(titleOnAppBar, style: Theme.of(context).textTheme.headline1),
+              Text(titleOfApp, style: Theme.of(context).textTheme.headline1),
               const Spacer(
                 flex: 4,
               ),

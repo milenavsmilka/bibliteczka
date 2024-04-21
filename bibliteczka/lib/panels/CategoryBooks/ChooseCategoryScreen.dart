@@ -3,6 +3,7 @@ import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../DefaultAppBar.dart';
 import 'AllCategoryBooksScreen.dart';
 
 class ChooseCategoryScreen extends StatefulWidget {
@@ -17,8 +18,9 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Kategoria"),
+        appBar: DefaultAppBar(
+          title: 'Kategoria',
+          automaticallyImplyLeading: true,
         ),
         body: CustomScrollView(
           scrollDirection: Axis.vertical,

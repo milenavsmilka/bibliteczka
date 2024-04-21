@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:biblioteczka/LoadingScreen.dart';
+import 'package:biblioteczka/panels/DefaultAppBar.dart';
 import 'package:biblioteczka/panels/apiRequests.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -40,8 +41,9 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
     return listOfBooks.isEmpty
         ? LoadingScreen()
         : Scaffold(
-            appBar: AppBar(
-              title: Text(widget.nameOfCategory),
+            appBar: DefaultAppBar(
+              title: widget.nameOfCategory,
+              automaticallyImplyLeading: true,
             ),
             body: ListView.builder(
                 itemCount: listOfBooks.length,
@@ -59,8 +61,11 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                       child: Row(
                         children: [
                           Column(children: [
-                            Image.network(listOfBooks[index]['picture'],
-                                width: widthScreen / 2, height: heightScreen / 3)
+                            Container(
+                              width: widthScreen / 2.3,
+                              height: heightScreen / 2.5,
+                              child: Image.network(listOfBooks[index]['picture'], fit: BoxFit.fill),
+                            )
                           ]),
                           Column(
                             children: [
