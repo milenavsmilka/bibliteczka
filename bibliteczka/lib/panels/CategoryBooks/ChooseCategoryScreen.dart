@@ -3,7 +3,7 @@ import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../DefaultAppBar.dart';
+import '../Tools/DefaultAppBar.dart';
 import 'AllCategoryBooksScreen.dart';
 
 class ChooseCategoryScreen extends StatefulWidget {

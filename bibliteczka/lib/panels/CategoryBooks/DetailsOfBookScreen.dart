@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:biblioteczka/panels/CategoryBooks/OpinionScreen.dart';
-import 'package:biblioteczka/panels/DefaultAppBar.dart';
+import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../LoadingScreen.dart';
@@ -47,6 +48,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     double widthScreen = MediaQuery.of(context).size.width;
     double heightScreen = MediaQuery.of(context).size.height;
     print('${nameOfCategory} ${title}');
+    TextEditingController opinionTextToSend = TextEditingController();
 
     if (authorName == '') {
       return const LoadingScreen();
@@ -56,9 +58,9 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
           title: title,
           automaticallyImplyLeading: true,
         ),
-        body: CustomScrollView(scrollDirection: Axis.vertical, slivers: [
-          SliverFillRemaining(
-            hasScrollBody: false,
+        body:
+          SingleChildScrollView(
+            // hasScrollBody: false,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Wrap(children: [
@@ -147,14 +149,15 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                 Row(children: [Text('')]),
                 if (widget.turnOpinions == true) ...{
                   Text("Opinie i dyskusje", style: Theme.of(context).textTheme.headlineSmall),
+                  SizedBox(height:20, child: TextFormField(controller:opinionTextToSend)),
+                  Row(children: [Text('')]),
                   for (int i = 0; i < opinions.length; i++)
                     OpinionScreen(opinionId: opinions[i]),
                 }
               ]),
             ),
           ),
-        ]),
-      );
+        );
     }
   }
 

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:biblioteczka/panels/DefaultAppBar.dart';
-import 'package:biblioteczka/panels/CustomPageRoute.dart';
+import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
+import 'package:biblioteczka/panels/Tools/CustomPageRoute.dart';
 import 'package:biblioteczka/panels/News/NewBooksScreen.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
