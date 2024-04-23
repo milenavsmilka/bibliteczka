@@ -1,4 +1,5 @@
 const String apiURL ='https://10.0.2.2:5000/api/';
+// const String apiURL ='https://192.168.0.3:5000/api/';
 const String apiURLRegister = '${apiURL}account/register';
 const String apiURLLogin = '${apiURL}account/login';
 const String apiURLLogOut = '${apiURL}account/logout';
@@ -6,8 +7,9 @@ const String apiURLIsTokenValid = '${apiURL}account/check_if_logged_in';
 const String apiURLDeleteAccount = '${apiURL}account/delete_account';
 const String apiURLGetBooksByGenres = '${apiURL}data/book';
 const String apiURLGetNewBooks = '${apiURL}data/new_book';
-const String apiURLGetAuthorById = '${apiURL}data/author';
-const String apiURLGetOpinionById = '${apiURL}data/opinion';
+const String apiURLGetAuthor = '${apiURL}data/author';
+const String apiURLGetOpinion = '${apiURL}data/opinion';
+const String apiURLGetUser = '${apiURL}data/user';
 
 const String iconHeart = "assets/icons/hearts.svg";
 const String iconBrainstorming = "assets/icons/brainstorming.svg";

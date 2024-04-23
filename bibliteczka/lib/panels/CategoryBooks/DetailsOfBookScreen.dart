@@ -48,7 +48,6 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     double widthScreen = MediaQuery.of(context).size.width;
     double heightScreen = MediaQuery.of(context).size.height;
     print('${nameOfCategory} ${title}');
-    TextEditingController opinionTextToSend = TextEditingController();
 
     if (authorName == '') {
       return const LoadingScreen();
@@ -58,106 +57,109 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
           title: title,
           automaticallyImplyLeading: true,
         ),
-        body:
-          SingleChildScrollView(
-            // hasScrollBody: false,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Wrap(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          width: widthScreen / 2.3,
-                          height: heightScreen / 2.5,
-                          child: Image.network(picture, fit: BoxFit.fill),
-                        )
-                      ],
-                    ),
-                    Flexible(
-                      child: Container(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Column(
-                          children: [
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Tytuł: ',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall)
-                                ]),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    title,
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  )
-                                ]),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Autor: ',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall)
-                                ]),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    authorName,
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  )
-                                ]),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Wydawnictwo: ',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall)
-                                ]),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    publishingHouse,
-                                    style:
-                                        Theme.of(context).textTheme.titleMedium,
-                                  )
-                                ]),
-                            Row(children: [Text('')]),
-                            HowMuchStars(rate: rate.isNaN ? 0 : rate),
-                          ],
-                        ),
+        body: SingleChildScrollView(
+          // hasScrollBody: false,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Wrap(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        width: widthScreen / 2.3,
+                        height: heightScreen / 2.5,
+                        child: Image.network(picture, fit: BoxFit.fill),
+                      )
+                    ],
+                  ),
+                  Flexible(
+                    child: Container(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        children: [
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Tytuł: ',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  title,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                )
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Autor: ',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  authorName,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                )
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('Wydawnictwo: ',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall)
+                              ]),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  publishingHouse,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                )
+                              ]),
+                          Row(children: [Text('')]),
+                          HowMuchStars(rate: rate.isNaN ? 0 : rate),
+                        ],
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
+              ),
+              Row(children: [Text('')]),
+              Row(
+                children: [
+                  Flexible(
+                      child: Text(description,
+                          style: Theme.of(context).textTheme.titleMedium)),
+                ],
+              ),
+              Row(children: [Text('')]),
+              if (widget.turnOpinions == true) ...{
+                Text("Opinie i dyskusje",
+                    style: Theme.of(context).textTheme.headlineSmall),
                 Row(children: [Text('')]),
-                Row(
-                  children: [
-                    Flexible(child: Text(description, style: Theme.of(context).textTheme.titleMedium)),
-                  ],
-                ),
-                Row(children: [Text('')]),
-                if (widget.turnOpinions == true) ...{
-                  Text("Opinie i dyskusje", style: Theme.of(context).textTheme.headlineSmall),
-                  SizedBox(height:20, child: TextFormField(controller:opinionTextToSend)),
-                  Row(children: [Text('')]),
-                  for (int i = 0; i < opinions.length; i++)
-                    OpinionScreen(opinionId: opinions[i]),
-                }
-              ]),
-            ),
+                OpinionScreen(instruction: OpinionScreen.SEND),
+                for (int i = 0; i < opinions.length; i++)
+                  OpinionScreen(
+                      opinionId: opinions[i], instruction: OpinionScreen.LOAD),
+              }
+            ]),
           ),
-        );
+        ),
+      );
     }
   }
 
@@ -195,7 +197,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     }
 
     Map<String, dynamic> authorData =
-        await getSthById(apiURLGetAuthorById, actualToken!, authorId);
+        await getSthById(apiURLGetAuthor, actualToken!, 'id', authorId.toString());
     setState(() {
       authorName = authorData['results'][0]['name'];
     });

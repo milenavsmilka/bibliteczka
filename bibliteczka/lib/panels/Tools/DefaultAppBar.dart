@@ -54,7 +54,7 @@ class _DefaultAppBarState extends State<DefaultAppBar>{
                 child: Text(clickToLogOutButton),
                 onTap: () async {
                   checkIsTokenValid(context);
-                  // await logOut();//todo logout, dodać strzałkę powrotną
+                  await logOut(context);
                 })
           ],
         )

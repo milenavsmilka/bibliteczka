@@ -12,8 +12,8 @@ import 'LoginScreen.dart';
 import 'MainPanelScreen.dart';
 import 'main.dart';
 
-Future<Map<String, dynamic>> getSthById(String url, String token, int id) async {
-  final params = {'id': id.toString()};
+Future<Map<String, dynamic>> getSthById(String url, String token, String key, String value) async {
+  final params = {key: value};
   final response = await http
       .get(Uri.parse(url).replace(queryParameters: params), headers: {
     'Content-Type': 'application/json; charset=UTF-8',
@@ -26,6 +26,32 @@ Future<Map<String, dynamic>> getSthById(String url, String token, int id) async 
     print("Nie good");
   }
   return data;
+}
+
+Future<void> logOut(BuildContext context) async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
+
+  const String apiUrl = apiURLLogOut;
+  final Map<String, dynamic> requestBody = {
+  };
+  String requestBodyJson = jsonEncode(requestBody);
+
+  final response = await http.post(Uri.parse(apiUrl), headers: {
+    'Content-Type': 'application/json; charset=UTF-8',
+    'Authorization': 'Bearer $actualToken'
+  }, body: requestBodyJson);
+  Map<String, dynamic> data = jsonDecode(response.body);
+  String message = data['message'];
+  print('Otrzymana wiadomość po wylogowaniu: $message $actualToken');
+  if (response.statusCode == 200) {
+    sharedPreferences.clear();
+    print("Poprawnie wylogowano użytkownika");
+    Navigator.push(
+        context, CustomPageRoute(child: LoginScreen()));
+  } else {
+    print("Pojawił się błąd, użytkownik nie został wylogowany");
+  }
 }
 
 void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {

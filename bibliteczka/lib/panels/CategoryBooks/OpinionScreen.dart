@@ -11,9 +11,12 @@ import '../Tools/ShowAndHideMoreText.dart';
 import '../main.dart';
 
 class OpinionScreen extends StatefulWidget {
-  const OpinionScreen({super.key, required this.opinionId});
+  const OpinionScreen({super.key, this.opinionId, required this.instruction});
 
-  final int opinionId;
+  final int? opinionId;
+  final String instruction;
+  static const String SEND = 'SEND';
+  static const String LOAD = 'LOAD';
 
   @override
   State<OpinionScreen> createState() => _OpinionScreenState();
@@ -38,23 +41,32 @@ class _OpinionScreenState extends State<OpinionScreen> {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
 
-    opinionResponse =
-        await getSthById(apiURLGetOpinionById, actualToken!, widget.opinionId);
+    widget.instruction == OpinionScreen.LOAD
+        ? opinionResponse = await getSthById(
+            apiURLGetOpinion, actualToken!, 'id', widget.opinionId.toString())
+        : opinionResponse = await getSthById(
+            apiURLGetUser, actualToken!, 'get_self', true.toString());
+
     setState(() {
       index = opinionResponse['pagination']['count'];
       opinionsDetails = opinionResponse['results'];
-      comment = opinionsDetails[index - 1]['comment'];
       profilePicture = opinionsDetails[index - 1]['profile_picture'];
       username = opinionsDetails[index - 1]['username'];
+
+      if (widget.instruction == OpinionScreen.LOAD) {
+        comment = opinionsDetails[index - 1]['comment'];
+        opinionsDetails = opinionResponse['results'];
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    TextEditingController opinionTextToSend = TextEditingController();
 
     if (index == -1) {
-      return Row(children: [Text('Loading')]);
+      return const Row(children: [Text('Loading')]);
     } else {
       return Column(
         children: [
@@ -80,19 +92,53 @@ class _OpinionScreenState extends State<OpinionScreen> {
                     children: [
                       ClipPath(
                         child: Container(
-                          decoration: BoxDecoration(color:colorAppBar, borderRadius: BorderRadius.circular(10)),
-                          width: screenWidth*0.05,
-                          height: screenWidth*0.08,
+                          decoration: BoxDecoration(
+                              color: widget.instruction == OpinionScreen.LOAD
+                                  ? colorAppBar
+                                  : Colors.black12,
+                              borderRadius: BorderRadius.circular(10)),
+                          width: screenWidth * 0.05,
+                          height: screenWidth * 0.08,
                         ),
                         clipper: Triangle(),
                       ),
                       Container(
-                        width: screenWidth * 0.65,
+                          width: screenWidth * 0.65,
                           padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(color: colorAppBar, borderRadius: BorderRadius.circular(10)),
-                          child: ShowAndHideMoreText(comment: comment)),
+                          decoration: BoxDecoration(
+                              color: widget.instruction == OpinionScreen.LOAD
+                                  ? colorAppBar
+                                  : Colors.black12,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: widget.instruction == OpinionScreen.LOAD
+                              ? ShowAndHideMoreText(comment: comment)
+                              : TextFormField(
+                                  controller: opinionTextToSend,
+                                  decoration: InputDecoration(
+                                      focusedBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      hintText: 'Napisz swoją opinię...'))),
                     ],
                   ),
+                  //todo uruchomienie odrzucenia i zatwierdzenia komentarza po kliknięciu w pole
+                  // if (widget.instruction == OpinionScreen.SEND) ...{
+                  //   Row(
+                  //     children: [
+                  //       Ink(
+                  //         child: IconButton(
+                  //           icon: Icon(Icons.highlight_remove),
+                  //           onPressed: () {},
+                  //         ),
+                  //       ),
+                  //       Ink(
+                  //         child: IconButton(
+                  //           icon: Icon(Icons.check),
+                  //           onPressed: () {},
+                  //         ),
+                  //       )
+                  //     ],
+                  //   )
+                  // },
                   Text('')
                 ],
               )
@@ -107,17 +153,16 @@ class _OpinionScreenState extends State<OpinionScreen> {
 
 class Triangle extends CustomClipper<Path> {
   @override
-  Path getClip(Size size){
-    final path= Path();
-    path.lineTo(0, size.height/2);
-    path.lineTo(size.width+15, 0);
-    path.lineTo(size.width+15, size.height);
-    path.lineTo(0, size.height/2);
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0, size.height / 2);
+    path.lineTo(size.width + 15, 0);
+    path.lineTo(size.width + 15, size.height);
+    path.lineTo(0, size.height / 2);
     path.close();
     return path;
   }
 
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
-
 }

@@ -39,7 +39,7 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
 
     print(widget.nameOfCategory);
     return listOfBooks.isEmpty
-        ? LoadingScreen()
+        ? const LoadingScreen()
         : Scaffold(
             appBar: DefaultAppBar(
               title: widget.nameOfCategory,
