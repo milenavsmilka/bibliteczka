@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:biblioteczka/LoadingScreen.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
-import 'package:biblioteczka/panels/apiRequests.dart';
+import 'package:biblioteczka/panels/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -71,8 +71,7 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                             children: [
                               Text(listOfBooks[index]['title']),
                               Text(listOfBooks[index]['publishing_house']),
-                              Text(listOfBooks[index]['premiere_date']
-                                  .substring(5, 16))
+                              Text(listOfBooks[index]['premiere_date'])
                             ],
                           )
                         ],

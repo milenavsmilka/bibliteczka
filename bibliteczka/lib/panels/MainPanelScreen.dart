@@ -13,7 +13,7 @@ import 'CategoryBooks/ChooseCategoryScreen.dart';
 import 'ChangeThemeScreen.dart';
 import 'LoginScreen.dart';
 import 'SettingsScreen.dart';
-import 'apiRequests.dart';
+import 'functions.dart';
 import 'main.dart';
 
 class MainPanelScreen extends StatefulWidget {

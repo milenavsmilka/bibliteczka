@@ -47,6 +47,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
+                      autocorrect: false,
                       controller: usernameController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: RequiredValidator(
@@ -61,6 +62,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
+                      autocorrect: false,
                       controller: emailController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
@@ -79,6 +81,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
+                      autocorrect: false,
                       controller: passwordController,
                       obscureText: !passVisible,
                       validator: validatePassword,
@@ -106,6 +109,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
+                      autocorrect: false,
                       controller: repeatPasswordController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       obscureText: !passRepVisible,

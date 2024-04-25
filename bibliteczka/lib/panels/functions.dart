@@ -60,7 +60,7 @@ void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {
   var isLoggedIn = sharedPreferences.getBool('isLogged') ?? false;
 
   print(
-      "W pliku apiRequests.dart wypisuję ważność tokenu i jego zawartość $isLoggedIn $actualToken");
+      "W pliku functions.dart wypisuję ważność tokenu i jego zawartość $isLoggedIn $actualToken");
 
   if (actualToken != null) {
     //pobranie ważności tokena
@@ -126,4 +126,18 @@ void whereToGo(BuildContext context) async {
       Navigator.push(context, CustomPageRoute(child: LoginScreen()));
     }
   });
+}
+
+void showSnackBar(BuildContext context, String text, Color color) {
+  final snackBar = SnackBar(
+    content: Text(
+      text,
+      style: TextStyle(fontSize: 20),
+    ),
+    backgroundColor: color,
+  );
+
+  ScaffoldMessenger.of(context)
+    ..removeCurrentSnackBar()
+    ..showSnackBar(snackBar);
 }

@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../LoadingScreen.dart';
 import '../../styles/strings.dart';
-import '../apiRequests.dart';
+import '../functions.dart';
 import '../main.dart';
 import 'package:http/http.dart' as http;
 
@@ -47,7 +47,6 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
     double heightScreen = MediaQuery.of(context).size.height;
-    print('${nameOfCategory} ${title}');
 
     if (authorName == '') {
       return const LoadingScreen();
@@ -58,7 +57,6 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
           automaticallyImplyLeading: true,
         ),
         body: SingleChildScrollView(
-          // hasScrollBody: false,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Wrap(children: [
@@ -151,10 +149,10 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                 Text("Opinie i dyskusje",
                     style: Theme.of(context).textTheme.headlineSmall),
                 Row(children: [Text('')]),
-                OpinionScreen(instruction: OpinionScreen.SEND),
+                OpinionScreen(instruction: OpinionScreen.SEND,bookId: widget.bookId),
                 for (int i = 0; i < opinions.length; i++)
                   OpinionScreen(
-                      opinionId: opinions[i], instruction: OpinionScreen.LOAD),
+                      opinionId: opinions[i], instruction: OpinionScreen.LOAD,bookId: widget.bookId),
               }
             ]),
           ),
@@ -238,7 +236,7 @@ class HowMuchStars extends StatelessWidget {
           for (var i = 0; i < 4 - rate.toInt(); i++)
             Icon(Icons.star_border_rounded, color: Colors.yellow),
         ],
-        Text(rate.toString(), style: Theme.of(context).textTheme.titleMedium),
+        Text(rate.toStringAsPrecision(2), style: Theme.of(context).textTheme.titleMedium),
       ],
     );
   }

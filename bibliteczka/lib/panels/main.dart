@@ -6,7 +6,7 @@ import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'apiRequests.dart';
+import 'functions.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();

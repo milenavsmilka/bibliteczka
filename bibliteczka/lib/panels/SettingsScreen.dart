@@ -16,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Tools/CustomPageRoute.dart';
 import 'LoginScreen.dart';
+import 'functions.dart';
 import 'main.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -140,7 +141,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ' w oknie aplikacji, który potwierdzi usunięcie Twoich danych: $deleteCode';
     try {
       await send(message, smtpServer);
-      showSnackBar('Poprawnie wysłano email');
+      showSnackBar(context, 'Poprawnie wysłano email', Colors.greenAccent);
       return deleteCode.toString();
     } catch (e) {
       if (kDebugMode) {
@@ -200,19 +201,5 @@ class _SettingsScreenState extends State<SettingsScreen> {
     } else {
       print('Kody nie są zgodne. Konto nie zostanie usunięte');
     }
-  }
-
-  void showSnackBar(String text) {
-    final snackBar = SnackBar(
-      content: Text(
-        text,
-        style: TextStyle(fontSize: 20),
-      ),
-      backgroundColor: Colors.greenAccent,
-    );
-
-    ScaffoldMessenger.of(context)
-      ..removeCurrentSnackBar()
-      ..showSnackBar(snackBar);
   }
 }

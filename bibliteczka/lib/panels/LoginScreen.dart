@@ -77,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 10),
                 TextFormField(
                   controller: emailController,
+                  autocorrect: false,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     labelText: giveMeEmail,
@@ -90,6 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 20),
                 TextFormField(
                   controller: passwordController,
+                  autocorrect: false,
                   obscureText: !passVisible,
                   validator: validatePassword,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
