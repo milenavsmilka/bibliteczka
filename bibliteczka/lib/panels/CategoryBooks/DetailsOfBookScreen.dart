@@ -184,7 +184,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       publishingHouse = results[0]['publishing_house'];
       picture = results[0]['picture'];
       authorId = results[0]['author_id'];
-      rate = results[0]['score'] * 1.0 / results[0]['opinions_count'];
+      rate = results[0]['score'] * 1.0;
       opinions = results[0]['opinions'];
     });
 

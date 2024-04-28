@@ -139,12 +139,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: ElevatedButton(
                     child: Text(clickToRegisterButton),
                     onPressed: () async {
-                      _formKey.currentState!.validate();
-                      await signUp(
-                          usernameController.text,
-                          passwordController.text,
-                          repeatPasswordController.text,
-                          emailController.text);
+                      if(_formKey.currentState!.validate()){
+                        await signUp(
+                            usernameController.text,
+                            passwordController.text,
+                            repeatPasswordController.text,
+                            emailController.text);
+                      };
                     },
                   ),
                 ),

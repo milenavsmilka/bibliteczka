@@ -116,9 +116,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ElevatedButton(
                   child: Text(clickToLoginButton),
                   onPressed: () async {
-                    _formKey.currentState!.validate();
+                    if(_formKey.currentState!.validate()){
                       await signIn(
                           emailController.text, passwordController.text);
+                    };
                   },
                 ),
                 SizedBox(height: 15),

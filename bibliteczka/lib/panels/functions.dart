@@ -12,6 +12,45 @@ import 'LoginScreen.dart';
 import 'MainPanelScreen.dart';
 import 'main.dart';
 
+Future<void> sendOpinion(String comment, int starsRating,
+    String bookId) async {
+  var sharedPreferences = await SharedPreferences.getInstance();
+  String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
+
+  const String apiUrl = apiURLGetOpinion;
+  final Map<String, dynamic> requestBody = {
+    'book_id': bookId,
+    'stars_count': starsRating,
+    'comment': comment
+  };
+  String requestBodyJson = jsonEncode(requestBody);
+
+  final response = await http.post(
+    Uri.parse(apiUrl),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $actualToken',
+    },
+    body: requestBodyJson,
+  );
+
+  print(requestBody);
+
+  Map<String, dynamic> data = jsonDecode(response.body);
+  var message = data['message'];
+  print(message);
+  if (message == 'object_created') {
+    print("Okej :D");
+  } else if (message == 'opinion_already_exists') {
+    message = 'Możesz wystawić tylko jedną opinię dla danej książki';
+    throw http.ClientException(message);
+  } else if (message['comment'] ==
+      'Value must be a str with length in range [0, 1000]') {
+    message = 'Komentarz może mieć max 1000 znaków';
+    throw http.ClientException(message);
+  }
+}
+
 Future<Map<String, dynamic>> getSthById(String url, String token, String key, String value) async {
   final params = {key: value};
   final response = await http

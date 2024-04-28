@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:biblioteczka/panels/CategoryBooks/DetailsOfBookScreen.dart';
 import 'package:biblioteczka/panels/functions.dart';
 import 'package:biblioteczka/styles/LightTheme.dart';
@@ -10,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
 import '../Tools/ShowAndHideMoreText.dart';
+import '../Tools/Triangle.dart';
 import '../main.dart';
 
 class OpinionScreen extends StatefulWidget {
@@ -30,6 +29,7 @@ class OpinionScreen extends StatefulWidget {
 }
 
 class _OpinionScreenState extends State<OpinionScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Map<String, dynamic> opinionResponse = {'': ''};
 
   int index = -1;
@@ -37,8 +37,17 @@ class _OpinionScreenState extends State<OpinionScreen> {
   String comment = '';
   String profilePicture = '';
   String username = '';
+
   final opinionTextToSend = TextEditingController();
-  bool listen = false;
+  bool listenTextController = false;
+  final Map<int, bool> starsFilledStatus = {
+    1: false,
+    2: false,
+    3: false,
+    4: false,
+    5: false
+  };
+  int starsRating = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -46,135 +55,179 @@ class _OpinionScreenState extends State<OpinionScreen> {
 
     opinionTextToSend.addListener(() {
       if (opinionTextToSend.text.isNotEmpty) {
-        listen = true;
-      } else {
-        listen = false;
+        listenTextController = true;
       }
     });
 
     if (index == -1) {
       return const Row(children: [Text('Loading')]);
     } else {
-      return Column(
-        children: [
-          Row(
-            children: [
-              Flexible(
-                child: Container(
-                  alignment: Alignment.center,
-                  width: screenWidth * 0.25,
-                  child: Column(children: [
-                    Image.network(
+      return Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Flexible(
+                  child: Container(
+                    alignment: Alignment.center,
+                    width: screenWidth * 0.20,
+                    child: Image.network(
                       profilePicture,
                       height: 50,
                       width: 50,
                     ),
-                    Text(username),
-                  ]),
+                  ),
                 ),
-              ),
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      ClipPath(
-                        clipper: Triangle(),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: widget.instruction == OpinionScreen.LOAD
-                                  ? colorAppBar
-                                  : Colors.black12,
-                              borderRadius: BorderRadius.circular(10)),
-                          width: screenWidth * 0.05,
-                          height: screenWidth * 0.08,
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        ClipPath(
+                          clipper: Triangle(),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: widget.instruction == OpinionScreen.LOAD
+                                    ? colorAppBar
+                                    : Colors.black12,
+                                borderRadius: BorderRadius.circular(10)),
+                            width: screenWidth * 0.05,
+                            height: screenWidth * 0.08,
+                          ),
                         ),
-                      ),
-                      Container(
-                          width: screenWidth * 0.65,
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              color: widget.instruction == OpinionScreen.LOAD
-                                  ? colorAppBar
-                                  : Colors.black12,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: widget.instruction == OpinionScreen.LOAD
-                              ? ShowAndHideMoreText(comment: comment)
-                              : TextFormField(
-                                  maxLines: null,
-                                  //todo nie dopuścić do wysyłania komentarza jeżeli jest powyżej 1000 znaków
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  validator: MaxLengthValidator(1000, errorText: 'Max 1000 znaków'),
-                                  onTap: () {
-                                    setState(() {
-                                      listen = true;
-                                    });
-                                  },
-                                  controller: opinionTextToSend,
-                                  decoration: InputDecoration(
-                                      focusedBorder: InputBorder.none,
-                                      enabledBorder: InputBorder.none,
-                                      hintText: 'Napisz swoją opinię...'))),
-                    ],
-                  ),
-                  const Text('')
-                ],
-              ),
-            ],
-          ),
-          Visibility(
-              visible: listen,
-              child: Row(
-                children: [
-                  SizedBox(width: screenWidth * (5 / 12)),
-                  Ink(
-                    decoration: const ShapeDecoration(
-                      color: Colors.black,
-                      shape: CircleBorder(),
+                        Container(
+                            width: screenWidth * 0.70,
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: widget.instruction == OpinionScreen.LOAD
+                                    ? colorAppBar
+                                    : Colors.black12,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: widget.instruction == OpinionScreen.LOAD
+                                ? ShowAndHideMoreText(username: username,starsRating:starsRating, comment: comment)
+                                : TextFormField(
+                                    maxLines: null,
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: MultiValidator([
+                                      MinLengthValidator(2,
+                                          errorText: 'Min 2 znaki'),
+                                      MaxLengthValidator(1000,
+                                          errorText: 'Max 1000 znaków'),
+                                    ]).call,
+                                    onTap: () {
+                                      setState(() {
+                                        listenTextController = true;
+                                      });
+                                    },
+                                    controller: opinionTextToSend,
+                                    decoration: InputDecoration(
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        hintText: 'Napisz swoją opinię...'))),
+                      ],
                     ),
-                    height: 30,
-                    width: 30,
-                    child: IconButton(
-                      icon: Icon(Icons.close),
-                      color: Colors.white,
-                      iconSize: 15,
-                      onPressed: () {
-                        opinionTextToSend.clear();
-                      },
-                    ),
-                  ),
-                  SizedBox(width: screenWidth * (5 / 12) - 60),
-                  Ink(
-                    decoration: const ShapeDecoration(
-                      color: Colors.black,
-                      shape: CircleBorder(),
-                    ),
-                    height: 30,
-                    width: 30,
-                    child: IconButton(
-                      icon: Icon(Icons.check),
-                      color: Colors.white,
-                      iconSize: 15,
-                      onPressed: () async {
-                        try {
-                         await sendOpinion(
-                              opinionTextToSend.text, widget.bookId.toString());
-                          // Navigator.pop(context);
-                          // Navigator.push(context, MaterialPageRoute(builder: (context) =>
-                          //     DetailsOfBookScreen(bookId: widget.bookId, turnOpinions: true)));
-                          // setState(() {
-                          //   opinionTextToSend.clear();
-                          // });
-                        } on http.ClientException catch (e){
-                          showSnackBar(context, e.message, Colors.redAccent);
+                  ],
+                ),
+              ],
+            ),
+            Visibility(
+                visible: listenTextController,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(width: screenWidth * (1 / 3)),
+                        for (int i = 1; i < 6; i++) ...{
+                          IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  starsFilledStatus
+                                      .updateAll((key, value) => false);
+                                  starsFilledStatus.update(i, (value) => true);
+                                  starsRating = starsFilledStatus.keys
+                                      .lastWhere(
+                                          (k) => starsFilledStatus[k] == true);
+                                });
+                              },
+                              icon: (i <= starsRating)
+                                  ? Icon(Icons.star_rounded)
+                                  : Icon(Icons.star_border_rounded))
                         }
-                      },
+                      ],
                     ),
-                  )
-                ],
-              )),
-          Row(children: [Text(' ')])
-        ],
+                    Row(
+                      children: [
+                        SizedBox(width: screenWidth * (5 / 12)),
+                        Ink(
+                          decoration: const ShapeDecoration(
+                            color: Colors.black,
+                            shape: CircleBorder(),
+                          ),
+                          height: 30,
+                          width: 30,
+                          child: IconButton(
+                            icon: Icon(Icons.close),
+                            color: Colors.white,
+                            iconSize: 15,
+                            onPressed: () {
+                              setState(() {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailsOfBookScreen(
+                                                bookId: widget.bookId,
+                                                turnOpinions: true)));
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(width: screenWidth * (5 / 12) - 60),
+                        Ink(
+                          decoration: const ShapeDecoration(
+                            color: Colors.black,
+                            shape: CircleBorder(),
+                          ),
+                          height: 30,
+                          width: 30,
+                          child: IconButton(
+                            icon: Icon(Icons.check),
+                            color: Colors.white,
+                            iconSize: 15,
+                            onPressed: () async {
+                              if (starsRating == 0) {
+                                showSnackBar(
+                                    context,
+                                    'Oceń książkę ilością gwiazdek!',
+                                    Colors.redAccent);
+                              } else if (_formKey.currentState!.validate()) {
+                                try {
+                                  await sendOpinion(opinionTextToSend.text,
+                                      starsRating, widget.bookId.toString());
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetailsOfBookScreen(
+                                                  bookId: widget.bookId,
+                                                  turnOpinions: true)));
+                                  opinionTextToSend.clear();
+                                } on http.ClientException catch (e) {
+                                  showSnackBar(
+                                      context, e.message, Colors.redAccent);
+                                }
+                              }
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                )),
+            Row(children: [Text(' ')])
+          ],
+        ),
       );
     }
   }
@@ -197,7 +250,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
 
       if (widget.instruction == OpinionScreen.LOAD) {
         comment = opinionsDetails[index - 1]['comment'];
-        opinionsDetails = opinionResponse['results'];
+        starsRating = opinionsDetails[index - 1]['stars_count'];
       }
     });
   }
@@ -207,57 +260,4 @@ class _OpinionScreenState extends State<OpinionScreen> {
     super.initState();
     giveMeOpinionBook();
   }
-
-
-  Future<void> sendOpinion(String comment, String bookId) async {
-    var sharedPreferences = await SharedPreferences.getInstance();
-    String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-
-    const String apiUrl = apiURLGetOpinion;
-    final Map<String, dynamic> requestBody = {
-      'book_id': bookId,
-      'stars_count': '4',
-      'comment': comment
-    };
-    String requestBodyJson = jsonEncode(requestBody);
-
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer $actualToken',
-      },
-      body: requestBodyJson,
-    );
-
-    Map<String, dynamic> data = jsonDecode(response.body);
-    var message = data['message'];
-    if (message == 'object_created') {
-      print("Okej :D");
-    } else if(message == 'opinion_already_exists'){
-      message = 'Możesz wystawić tylko jedną opinię dla danej książki';
-      throw http.ClientException(message);
-    }
-    //todo dodać łapanie opinia za długa
-    else if(message == 'opinion_already_exists'){
-      message = 'Komentarz może mieć max 1000 znaków';
-      throw http.ClientException(message);
-    }
-  }
-}
-
-class Triangle extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(0, size.height / 2);
-    path.lineTo(size.width + 15, 0);
-    path.lineTo(size.width + 15, size.height);
-    path.lineTo(0, size.height / 2);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
 }
