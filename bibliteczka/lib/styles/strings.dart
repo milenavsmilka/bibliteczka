@@ -1,4 +1,4 @@
-const String apiURL ='https://10.0.2.2:5000/api/';
+const String apiURL = 'https://10.0.2.2:5000/api/';
 // const String apiURL ='https://192.168.0.3:5000/api/';
 const String apiURLRegister = '${apiURL}account/register';
 const String apiURLLogin = '${apiURL}account/login';
@@ -51,12 +51,15 @@ const String clickToLogOutButton = 'Wyloguj';
 const String haveAccountQuestion1 = 'Masz już konto? Zaloguj się ';
 const String haveOrNotAccountQuestion2 = 'tutaj';
 const String notHaveAccountYetQuestion1 = 'Lub zarejestruj się ';
-const String validatePasswordError = 'Hasło musi zawierać od 10 do 50 znaków, w tym małe i duże litery, cyfry oraz znaki specjalne';
-const String validateUsernameError = 'Nazwa użytkownika musi zawierać od 10 do 50 znaków, w tym małe i duże litery, cyfry oraz znaki specjalne';
+const String validatePasswordError =
+    'Hasło musi zawierać od 10 do 50 znaków, w tym małe i duże litery, cyfry oraz znaki specjalne';
+const String validateUsernameError =
+    'Nazwa użytkownika musi zawierać od 10 do 50 znaków, w tym małe i duże litery, cyfry oraz znaki specjalne';
 const String exitFromAppQuestion = 'Czy chcesz opuścić aplikację?';
 const String exitFromAppTitle = 'Wyjście';
 const String loginSuccessful = 'Zalogowano poprawnie';
-const String loginNoDataError = 'Nieudana próba logowania - brak danych w bazie';
+const String loginNoDataError =
+    'Nieudana próba logowania - brak danych w bazie';
 const String loginEmailError = 'Niepoprawny adres email';
 const String registerSuccessful = 'Zarejestrowano poprawnie';
 const String tooMuchLoginAttemptsError = 'locked_user_login_attempts';
@@ -65,3 +68,21 @@ const String userAlreadyLoggedIn = 'Użytkownik już zalogowany';
 const String userAlreadyExists = 'Użytkownik już istnieje';
 const String changeTheme = 'Zmień motyw';
 const String settings = 'Ustawienia';
+
+//ShowAndHideMoreText
+const String showLess = ' Wyświetl mniej';
+const String showMore = ' Wyświetl więcej';
+const int lengthToShow = 110;
+
+//DetailsOfBookScreen
+const String bookTitle = 'Tytuł: ';
+const String bookAuthor = 'Autor: ';
+const String bookPublishingHouse = 'Wydawnictwo: ';
+const String opinionsAndTalks = "Opinie i dyskusje";
+
+//OpinionScreen
+const String loading = 'Ładowanie';
+const String minLengthForComment = 'Min 2 znaki';
+const String maxLengthForComment = 'Max 1000 znaków';
+const String writeOwnOpinion = 'Napisz swoją opinię...';
+const String rateBookByStars = 'Oceń książkę ilością gwiazdek!';

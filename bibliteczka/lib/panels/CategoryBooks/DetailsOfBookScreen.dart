@@ -2,16 +2,15 @@ import 'dart:convert';
 
 import 'package:biblioteczka/panels/CategoryBooks/OpinionScreen.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../LoadingScreen.dart';
 import '../../styles/strings.dart';
+import '../Tools/HowMuchStars.dart';
 import '../functions.dart';
 import '../main.dart';
-import 'package:http/http.dart' as http;
 
 class DetailsOfBookScreen extends StatefulWidget {
   const DetailsOfBookScreen(
@@ -65,7 +64,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                 children: [
                   Column(
                     children: [
-                      Container(
+                      SizedBox(
                         width: widthScreen / 2.3,
                         height: heightScreen / 2.5,
                         child: Image.network(picture, fit: BoxFit.fill),
@@ -80,7 +79,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('Tytuł: ',
+                                Text(bookTitle,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall)
@@ -91,13 +90,13 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                                 Text(
                                   title,
                                   style:
-                                      Theme.of(context).textTheme.titleMedium,
+                                      Theme.of(context).textTheme.titleSmall,
                                 )
                               ]),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('Autor: ',
+                                Text(bookAuthor,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall)
@@ -108,13 +107,13 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                                 Text(
                                   authorName,
                                   style:
-                                      Theme.of(context).textTheme.titleMedium,
+                                      Theme.of(context).textTheme.titleSmall,
                                 )
                               ]),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('Wydawnictwo: ',
+                                Text(bookPublishingHouse,
                                     style: Theme.of(context)
                                         .textTheme
                                         .headlineSmall)
@@ -125,10 +124,10 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                                 Text(
                                   publishingHouse,
                                   style:
-                                      Theme.of(context).textTheme.titleMedium,
+                                      Theme.of(context).textTheme.titleSmall,
                                 )
                               ]),
-                          Row(children: [Text('')]),
+                          const Row(children: [Text('')]),
                           HowMuchStars(rate: rate.isNaN ? 0 : rate),
                         ],
                       ),
@@ -136,19 +135,19 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                   )
                 ],
               ),
-              Row(children: [Text('')]),
+              const Row(children: [Text('')]),
               Row(
                 children: [
                   Flexible(
                       child: Text(description,
-                          style: Theme.of(context).textTheme.titleMedium)),
+                          style: Theme.of(context).textTheme.titleSmall)),
                 ],
               ),
-              Row(children: [Text('')]),
+              const Row(children: [Text('')]),
               if (widget.turnOpinions == true) ...{
-                Text("Opinie i dyskusje",
+                Text(opinionsAndTalks,
                     style: Theme.of(context).textTheme.headlineSmall),
-                Row(children: [Text('')]),
+                const Row(children: [Text('')]),
                 OpinionScreen(instruction: OpinionScreen.SEND,bookId: widget.bookId),
                 for (int i = 0; i < opinions.length; i++)
                   OpinionScreen(
@@ -201,43 +200,5 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     });
 
     print('Imię autora $authorName i opinie $opinions');
-  }
-}
-
-class HowMuchStars extends StatelessWidget {
-  final double rate;
-
-  const HowMuchStars({super.key, required this.rate});
-
-  @override
-  Widget build(BuildContext context) {
-    String halfStarString = (rate - rate.toInt()).toStringAsPrecision(2);
-    double halfStar = double.parse(halfStarString);
-    print('Ile gwiazdek? $rate, jaki wynik połówki? $halfStar');
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        if (rate == 0.0) ...[
-          for (var i = 0; i < 5; i++)
-            const Icon(Icons.star_border_rounded, color: Colors.yellow),
-        ] else if (rate == 5.0) ...[
-          for (var i = 0; i < 5; i++)
-            const Icon(Icons.star_rounded, color: Colors.yellow),
-        ] else ...[
-          for (var i = 0; i < rate.toInt(); i++)
-            Icon(Icons.star_rounded, color: Colors.yellow),
-          if (halfStar >= 0.35 && halfStar <= 0.65) ...[
-            Icon(Icons.star_half_rounded, color: Colors.yellow)
-          ] else if (halfStar < 0.35) ...[
-            Icon(Icons.star_border_rounded, color: Colors.yellow)
-          ] else if (halfStar > 0.65) ...[
-            Icon(Icons.star_rounded, color: Colors.yellow)
-          ],
-          for (var i = 0; i < 4 - rate.toInt(); i++)
-            Icon(Icons.star_border_rounded, color: Colors.yellow),
-        ],
-        Text(rate.toStringAsPrecision(2), style: Theme.of(context).textTheme.titleMedium),
-      ],
-    );
   }
 }

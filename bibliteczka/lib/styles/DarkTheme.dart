@@ -5,10 +5,13 @@ final Color backgroundScreenDarkColor = Color.fromRGBO(64, 63, 82, 1.0);
 final Color categoryButtonDarkColor = Color.fromRGBO(101, 100, 131, 1.0);
 final Color textMainColor = Color.fromRGBO(211, 207, 207, 1.0);
 final Color borderColor = Colors.grey;
+final Color greyContainerOpinion = Colors.black12;
 
 ThemeData darkTheme = ThemeData(
+  primaryColor: colorAppDarkBar,
+    secondaryHeaderColor: greyContainerOpinion,
     colorScheme: ColorScheme.fromSwatch().copyWith(
-        primary: Colors.white60,
+        primary: colorAppDarkBar,
         secondary: const Color(0xffdfeaf2),
         brightness: Brightness.dark),
     scaffoldBackgroundColor: backgroundScreenDarkColor,
@@ -100,4 +103,21 @@ ThemeData darkTheme = ThemeData(
       centerTitle: true,
       foregroundColor: textMainColor,
       backgroundColor: colorAppDarkBar,
-    ));
+    ),
+  dialogTheme: DialogTheme(
+      backgroundColor: backgroundScreenDarkColor,
+      titleTextStyle: const TextStyle(
+          color: Colors.black,
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.w700,
+          fontStyle: FontStyle.normal,
+          fontSize: 20),
+      contentTextStyle: const TextStyle(
+          color: Colors.black,
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.w700,
+          fontStyle: FontStyle.normal,
+          fontSize: 15),
+      surfaceTintColor: Colors.transparent),
+  iconTheme: IconThemeData(color: textMainColor),
+);

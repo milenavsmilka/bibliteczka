@@ -171,7 +171,6 @@ void showSnackBar(BuildContext context, String text, Color color) {
   final snackBar = SnackBar(
     content: Text(
       text,
-      style: TextStyle(fontSize: 20),
     ),
     backgroundColor: color,
   );

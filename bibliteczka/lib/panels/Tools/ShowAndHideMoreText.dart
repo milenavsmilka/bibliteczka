@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
+import '../../styles/strings.dart';
 
 class ShowAndHideMoreText extends StatefulWidget {
   const ShowAndHideMoreText(
@@ -19,7 +19,7 @@ class ShowAndHideMoreText extends StatefulWidget {
 
 class _ShowAndHideMoreTextState extends State<ShowAndHideMoreText> {
   var showAll = false;
-  final length = 110;
+  final length = lengthToShow;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +28,9 @@ class _ShowAndHideMoreTextState extends State<ShowAndHideMoreText> {
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(widget.username,
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w600)),
+              style: Theme.of(context).textTheme.titleMedium),
           Text('${widget.starsRating}/5',
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w600))
+              style: Theme.of(context).textTheme.titleMedium)
         ]),
         Row(
           children: [
@@ -42,7 +40,7 @@ class _ShowAndHideMoreTextState extends State<ShowAndHideMoreText> {
                   TextSpan(
                       text: widget.comment.length > length && !showAll
                           ? "${widget.comment.substring(0, length)}..."
-                          : widget.comment),
+                          : widget.comment,style: Theme.of(context).textTheme.titleSmall),
                   widget.comment.length > length
                       ? WidgetSpan(
                           child: GestureDetector(
@@ -52,14 +50,12 @@ class _ShowAndHideMoreTextState extends State<ShowAndHideMoreText> {
                               });
                             },
                             child: Text(
-                              showAll ? ' Wyświetl mniej' : 'Wyświetl więcej',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600),
+                              showAll ? showLess : showMore,
+                              style: Theme.of(context).textTheme.titleMedium,
                             ),
                           ),
                         )
-                      : TextSpan(),
+                      : const TextSpan(),
                 ],
               )),
             ),

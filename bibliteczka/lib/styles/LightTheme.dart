@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 final Color colorAppBar = Color.fromRGBO(242, 224, 157, 1);
 final Color backgroundScreenColor = Color.fromRGBO(253, 249, 240, 1);
 final Color categoryButtonCyanColor = Color.fromRGBO(150, 218, 214, 1);
-final Color textMainColor = Colors.black;
+const Color textMainColor = Colors.black;
 final Color borderColor = Colors.grey;
+final Color greyContainerOpinion = Colors.black12;
+final Color errorColor = Colors.redAccent;
 
 ThemeData lightTheme = ThemeData(
+  primaryColor: colorAppBar,
+  secondaryHeaderColor: greyContainerOpinion,
   colorScheme: ColorScheme.fromSwatch()
-      .copyWith(primary: Colors.white60, secondary: const Color(0xffdfeaf2)),
+      .copyWith(primary: colorAppBar, secondary: const Color(0xffdfeaf2)),
   brightness: Brightness.light,
   scaffoldBackgroundColor: Color.fromRGBO(253, 249, 240, 1),
   elevatedButtonTheme: ElevatedButtonThemeData(
@@ -52,51 +56,56 @@ ThemeData lightTheme = ThemeData(
   )),
   buttonTheme: ButtonThemeData(buttonColor: colorAppBar),
   textTheme: TextTheme(
-    displayLarge: TextStyle(
+      displayLarge: TextStyle(
+          color: Colors.black,
+          fontFamily: 'LobsterTwo',
+          fontWeight: FontWeight.w800,
+          fontStyle: FontStyle.italic,
+          fontSize: 55),
+      // displayMedium: TextStyle(
+      //     color: textMainColor,
+      //     fontFamily: 'Merienda',
+      //     fontWeight: FontWeight.w800,
+      //     fontStyle: FontStyle.italic,
+      //     fontSize: 35),
+      displaySmall: TextStyle(
         color: Colors.black,
         fontFamily: 'LobsterTwo',
-        fontWeight: FontWeight.w800,
+        fontWeight: FontWeight.w600,
         fontStyle: FontStyle.italic,
-        fontSize: 55),
-    // displayMedium: TextStyle(
-    //     color: textMainColor,
-    //     fontFamily: 'Merienda',
-    //     fontWeight: FontWeight.w800,
-    //     fontStyle: FontStyle.italic,
-    //     fontSize: 35),
-    displaySmall: TextStyle(
-      color: Colors.black,
-      fontFamily: 'LobsterTwo',
-      fontWeight: FontWeight.w600,
-      fontStyle: FontStyle.italic,
-      fontSize: 36,
-    ),
-    headlineMedium: TextStyle(
+        fontSize: 36,
+      ),
+      headlineMedium: TextStyle(
+          color: textMainColor,
+          fontFamily: 'Merienda',
+          fontWeight: FontWeight.w800,
+          fontStyle: FontStyle.italic,
+          fontSize: 28),
+      headlineSmall: TextStyle(
         color: textMainColor,
         fontFamily: 'Merienda',
         fontWeight: FontWeight.w800,
-        fontStyle: FontStyle.italic,
-        fontSize: 28),
-    headlineSmall: TextStyle(
-      color: textMainColor,
-      fontFamily: 'Merienda',
-      fontWeight: FontWeight.w800,
-      fontStyle: FontStyle.normal,
-      fontSize: 18,
-    ),
-    titleLarge: TextStyle(
-        color: Colors.grey,
-        fontFamily: 'Lato',
-        fontWeight: FontWeight.w700,
         fontStyle: FontStyle.normal,
-        fontSize: 18),
-    titleMedium: TextStyle(
-        color: Colors.black,
-        fontFamily: 'Lato',
-        fontWeight: FontWeight.w500,
-        fontStyle: FontStyle.normal,
-        fontSize: 17),
-  ),
+        fontSize: 18,
+      ),
+      titleLarge: TextStyle(
+          color: Colors.grey,
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.w700,
+          fontStyle: FontStyle.normal,
+          fontSize: 18),
+      titleMedium: TextStyle(
+          color: Colors.black,
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.normal,
+          fontSize: 17),
+      titleSmall: TextStyle(
+          color: Colors.black,
+          fontFamily: 'Lato',
+          fontWeight: FontWeight.w500,
+          fontStyle: FontStyle.normal,
+          fontSize: 16)),
   appBarTheme: AppBarTheme(
     titleTextStyle: TextStyle(
         color: textMainColor,
@@ -123,4 +132,8 @@ ThemeData lightTheme = ThemeData(
           fontStyle: FontStyle.normal,
           fontSize: 15),
       surfaceTintColor: Colors.transparent),
+  snackBarTheme: const SnackBarThemeData(
+    contentTextStyle: TextStyle(fontSize: 20),
+  ),
+  iconTheme: IconThemeData(color: textMainColor),
 );

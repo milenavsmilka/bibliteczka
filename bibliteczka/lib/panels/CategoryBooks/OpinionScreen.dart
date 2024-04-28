@@ -30,15 +30,15 @@ class OpinionScreen extends StatefulWidget {
 
 class _OpinionScreenState extends State<OpinionScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  Map<String, dynamic> opinionResponse = {'': ''};
+  final opinionTextToSend = TextEditingController();
 
+  Map<String, dynamic> opinionResponse = {'': ''};
   int index = -1;
   List<dynamic> opinionsDetails = [];
   String comment = '';
   String profilePicture = '';
   String username = '';
 
-  final opinionTextToSend = TextEditingController();
   bool listenTextController = false;
   final Map<int, bool> starsFilledStatus = {
     1: false,
@@ -60,7 +60,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
     });
 
     if (index == -1) {
-      return const Row(children: [Text('Loading')]);
+      return const Row(children: [Text(loading)]);
     } else {
       return Form(
         key: _formKey,
@@ -74,8 +74,8 @@ class _OpinionScreenState extends State<OpinionScreen> {
                     width: screenWidth * 0.20,
                     child: Image.network(
                       profilePicture,
-                      height: 50,
-                      width: 50,
+                      height: screenWidth * 0.13,
+                      width: screenWidth * 0.13,
                     ),
                   ),
                 ),
@@ -88,8 +88,8 @@ class _OpinionScreenState extends State<OpinionScreen> {
                           child: Container(
                             decoration: BoxDecoration(
                                 color: widget.instruction == OpinionScreen.LOAD
-                                    ? colorAppBar
-                                    : Colors.black12,
+                                    ? Theme.of(context).primaryColor
+                                    : Theme.of(context).secondaryHeaderColor,
                                 borderRadius: BorderRadius.circular(10)),
                             width: screenWidth * 0.05,
                             height: screenWidth * 0.08,
@@ -97,11 +97,11 @@ class _OpinionScreenState extends State<OpinionScreen> {
                         ),
                         Container(
                             width: screenWidth * 0.70,
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                                 color: widget.instruction == OpinionScreen.LOAD
-                                    ? colorAppBar
-                                    : Colors.black12,
+                                    ? Theme.of(context).primaryColor
+                                    : Theme.of(context).secondaryHeaderColor,
                                 borderRadius: BorderRadius.circular(10)),
                             child: widget.instruction == OpinionScreen.LOAD
                                 ? ShowAndHideMoreText(username: username,starsRating:starsRating, comment: comment)
@@ -111,9 +111,9 @@ class _OpinionScreenState extends State<OpinionScreen> {
                                         AutovalidateMode.onUserInteraction,
                                     validator: MultiValidator([
                                       MinLengthValidator(2,
-                                          errorText: 'Min 2 znaki'),
+                                          errorText: minLengthForComment),
                                       MaxLengthValidator(1000,
-                                          errorText: 'Max 1000 znaków'),
+                                          errorText: maxLengthForComment),
                                     ]).call,
                                     onTap: () {
                                       setState(() {
@@ -121,10 +121,10 @@ class _OpinionScreenState extends State<OpinionScreen> {
                                       });
                                     },
                                     controller: opinionTextToSend,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                         focusedBorder: InputBorder.none,
                                         enabledBorder: InputBorder.none,
-                                        hintText: 'Napisz swoją opinię...'))),
+                                        hintText: writeOwnOpinion))),
                       ],
                     ),
                   ],
@@ -151,8 +151,8 @@ class _OpinionScreenState extends State<OpinionScreen> {
                                 });
                               },
                               icon: (i <= starsRating)
-                                  ? Icon(Icons.star_rounded)
-                                  : Icon(Icons.star_border_rounded))
+                                  ? const Icon(Icons.star_rounded)
+                                  : const Icon(Icons.star_border_rounded))
                         }
                       ],
                     ),
@@ -160,15 +160,15 @@ class _OpinionScreenState extends State<OpinionScreen> {
                       children: [
                         SizedBox(width: screenWidth * (5 / 12)),
                         Ink(
-                          decoration: const ShapeDecoration(
-                            color: Colors.black,
-                            shape: CircleBorder(),
+                          decoration: ShapeDecoration(
+                            color: Theme.of(context).iconTheme.color,
+                            shape: const CircleBorder(),
                           ),
                           height: 30,
                           width: 30,
                           child: IconButton(
-                            icon: Icon(Icons.close),
-                            color: Colors.white,
+                            icon: const Icon(Icons.close),
+                            color: Theme.of(context).dialogTheme.backgroundColor,
                             iconSize: 15,
                             onPressed: () {
                               setState(() {
@@ -185,22 +185,22 @@ class _OpinionScreenState extends State<OpinionScreen> {
                         ),
                         SizedBox(width: screenWidth * (5 / 12) - 60),
                         Ink(
-                          decoration: const ShapeDecoration(
-                            color: Colors.black,
-                            shape: CircleBorder(),
+                          decoration: ShapeDecoration(
+                            color: Theme.of(context).iconTheme.color,
+                            shape: const CircleBorder(),
                           ),
                           height: 30,
                           width: 30,
                           child: IconButton(
-                            icon: Icon(Icons.check),
-                            color: Colors.white,
+                            icon: const Icon(Icons.check),
+                            color: Theme.of(context).dialogTheme.backgroundColor,
                             iconSize: 15,
                             onPressed: () async {
                               if (starsRating == 0) {
                                 showSnackBar(
                                     context,
-                                    'Oceń książkę ilością gwiazdek!',
-                                    Colors.redAccent);
+                                    rateBookByStars,
+                                    errorColor);
                               } else if (_formKey.currentState!.validate()) {
                                 try {
                                   await sendOpinion(opinionTextToSend.text,
@@ -215,7 +215,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
                                   opinionTextToSend.clear();
                                 } on http.ClientException catch (e) {
                                   showSnackBar(
-                                      context, e.message, Colors.redAccent);
+                                      context, e.message, errorColor);
                                 }
                               }
                             },
@@ -225,7 +225,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
                     ),
                   ],
                 )),
-            Row(children: [Text(' ')])
+            const Row(children: [Text(' ')])
           ],
         ),
       );
