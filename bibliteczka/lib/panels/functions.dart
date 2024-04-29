@@ -179,3 +179,23 @@ void showSnackBar(BuildContext context, String text, Color color) {
     ..removeCurrentSnackBar()
     ..showSnackBar(snackBar);
 }
+
+setProfilePicture(int profilePicture) {
+  switch(profilePicture){
+    case 1: return 'assets/icons/comic.png';
+    case 2: return 'assets/icons/comic.png';
+    case 3: return 'assets/icons/comic.png';
+    case 4: return 'assets/icons/comic.png';
+    case 5: return 'assets/icons/comic.png';
+    case 6: return 'assets/icons/comic.png';
+    case 7: return 'assets/icons/comic.png';
+    case 8: return 'assets/icons/comic.png';
+    case 9: return 'assets/icons/comic.png';
+    case 10: return 'assets/icons/comic.png';
+    case 11: return 'assets/icons/comic.png';
+    case 12: return 'assets/icons/comic.png';
+    case 13: return 'assets/icons/comic.png';
+    case 14: return 'assets/icons/comic.png';
+    case 15: return 'assets/icons/comic.png';
+  }
+}

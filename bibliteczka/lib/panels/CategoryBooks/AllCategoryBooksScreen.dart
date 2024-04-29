@@ -24,7 +24,9 @@ class AllCategoryBooksScreen extends StatefulWidget {
 }
 
 class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
-  List<dynamic> listOfBooks = [];
+  List<dynamic> listOfBooks = [
+    -1,
+  ];
 
   @override
   void initState() {
@@ -38,48 +40,73 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
     double heightScreen = MediaQuery.of(context).size.height;
 
     print(widget.nameOfCategory);
-    return listOfBooks.isEmpty
-        ? const LoadingScreen()
-        : Scaffold(
-            appBar: DefaultAppBar(
-              title: widget.nameOfCategory,
-              automaticallyImplyLeading: true,
-            ),
-            body: ListView.builder(
-                itemCount: listOfBooks.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        checkIsTokenValid(
-                            context,
-                            DetailsOfBookScreen(
-                              bookId: listOfBooks[index]['id'], turnOpinions: true,
-                            ));
-                      },
-                      child: Row(
-                        children: [
-                          Column(children: [
-                            Container(
-                              width: widthScreen / 2.3,
-                              height: heightScreen / 2.5,
-                              child: Image.network(listOfBooks[index]['picture'], fit: BoxFit.fill),
-                            )
-                          ]),
-                          Column(
-                            children: [
-                              Text(listOfBooks[index]['title']),
-                              Text(listOfBooks[index]['publishing_house']),
-                              Text(listOfBooks[index]['premiere_date'])
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-          );
+    if (listOfBooks.isEmpty) {
+      return Scaffold(
+          appBar: AppBar(title: Text('Nic tu nie ma :(')),
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [Text('Nici :(')],
+              )
+            ],
+          ));
+    } else if (listOfBooks[0] == -1) {
+      return const LoadingScreen();
+    } else {
+      return Scaffold(
+        appBar: DefaultAppBar(
+          title: widget.nameOfCategory,
+          automaticallyImplyLeading: true,
+        ),
+        body: ListView.builder(
+            itemCount: listOfBooks.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    checkIsTokenValid(
+                        context,
+                        DetailsOfBookScreen(
+                          bookId: listOfBooks[index]['id'],
+                          turnOpinions: true,
+                        ));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(children: [
+                        Container(
+                          width: widthScreen / 2.3,
+                          height: heightScreen / 2.5,
+                          child: Image.network(listOfBooks[index]['picture'],
+                              fit: BoxFit.fill),
+                        ),
+                        Text(listOfBooks[index]['title'],
+                            style: Theme.of(context).textTheme.headlineSmall)
+                      ]),
+                      if (listOfBooks.length - 1 > index) ...{
+                        Column(children: [
+                          Container(
+                            width: widthScreen / 2.3,
+                            height: heightScreen / 2.5,
+                            child: Image.network(
+                                listOfBooks[index + 1]['picture'],
+                                fit: BoxFit.fill),
+                          ),
+                          Text(listOfBooks[index + 1]['title'],
+                              style: Theme.of(context).textTheme.headlineSmall)
+                        ])
+                      }
+                    ],
+                  ),
+                ),
+              );
+            }),
+      );
+    }
   }
 
   Future<void> giveMeListsOfBook(String nameOfCategory) async {
@@ -94,7 +121,7 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
       'Authorization': 'Bearer $actualToken',
     });
     Map<String, dynamic> data = jsonDecode(response.body);
-
+    print('jaki rezulat? $data');
     setState(() {
       listOfBooks = data['results'];
     });

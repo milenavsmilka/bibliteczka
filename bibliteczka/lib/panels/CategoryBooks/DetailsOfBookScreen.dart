@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:biblioteczka/panels/CategoryBooks/OpinionScreen.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,9 +33,8 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   String dateOfPremiere = '';
   String publishingHouse = '';
   String picture = '';
-  String authorName = '';
-  int authorId = -1;
   List<dynamic> opinions = [];
+  List<dynamic> authorsNames = [];
   double rate = 1.0;
 
   @override
@@ -47,7 +48,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     double widthScreen = MediaQuery.of(context).size.width;
     double heightScreen = MediaQuery.of(context).size.height;
 
-    if (authorName == '') {
+    if (authorsNames.isEmpty) {
       return const LoadingScreen();
     } else {
       return Scaffold(
@@ -104,11 +105,24 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(
-                                  authorName,
-                                  style:
-                                      Theme.of(context).textTheme.titleSmall,
+                                Column(
+                                  children: [
+                                    for(int i=0;i<authorsNames.length;i++)...{
+                                      if(i==authorsNames.length - 1)...{
+                                        Text(
+                                          authorsNames[i].toString(),
+                                          style: Theme.of(context).textTheme.titleSmall,
+                                        )
+                                      } else...{
+                                        Text(
+                                          '${authorsNames[i]}, ',
+                                          style: Theme.of(context).textTheme.titleSmall,
+                                        )
+                                      }
+                                    }
+                                  ],
                                 )
+
                               ]),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -182,7 +196,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       dateOfPremiere = results[0]['premiere_date'];
       publishingHouse = results[0]['publishing_house'];
       picture = results[0]['picture'];
-      authorId = results[0]['author_id'];
+      authorsNames = results[0]['authors_names'];
       rate = results[0]['score'] * 1.0;
       opinions = results[0]['opinions'];
     });
@@ -192,13 +206,6 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     } else {
       print("Nie okej :(");
     }
-
-    Map<String, dynamic> authorData =
-        await getSthById(apiURLGetAuthor, actualToken!, 'id', authorId.toString());
-    setState(() {
-      authorName = authorData['results'][0]['name'];
-    });
-
-    print('Imię autora $authorName i opinie $opinions');
+    print('Imię autora $authorsNames i opinie $opinions');
   }
 }

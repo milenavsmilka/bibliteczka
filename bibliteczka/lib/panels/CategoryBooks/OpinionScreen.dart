@@ -36,7 +36,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
   int index = -1;
   List<dynamic> opinionsDetails = [];
   String comment = '';
-  String profilePicture = '';
+  int profilePicture = -1;
   String username = '';
 
   bool listenTextController = false;
@@ -72,8 +72,8 @@ class _OpinionScreenState extends State<OpinionScreen> {
                   child: Container(
                     alignment: Alignment.center,
                     width: screenWidth * 0.20,
-                    child: Image.network(
-                      profilePicture,
+                    child: Image.asset(
+                      setProfilePicture(profilePicture),
                       height: screenWidth * 0.13,
                       width: screenWidth * 0.13,
                     ),
