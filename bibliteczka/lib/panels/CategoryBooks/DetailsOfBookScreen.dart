@@ -2,16 +2,13 @@ import 'dart:convert';
 
 import 'package:biblioteczka/panels/CategoryBooks/OpinionScreen.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../LoadingScreen.dart';
 import '../../styles/strings.dart';
 import '../Tools/HowMuchStars.dart';
-import '../functions.dart';
+import '../Tools/LoadingScreen.dart';
 import '../main.dart';
 
 class DetailsOfBookScreen extends StatefulWidget {
@@ -34,7 +31,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   String publishingHouse = '';
   String picture = '';
   List<dynamic> opinions = [];
-  List<dynamic> authorsNames = [];
+  List<dynamic> authorsNames = [nothingHere];
   double rate = 1.0;
 
   @override
@@ -48,8 +45,8 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     double widthScreen = MediaQuery.of(context).size.width;
     double heightScreen = MediaQuery.of(context).size.height;
 
-    if (authorsNames.isEmpty) {
-      return const LoadingScreen();
+    if (title.isEmpty) {
+      return const LoadingScreen(message: loading);
     } else {
       return Scaffold(
         appBar: DefaultAppBar(
@@ -58,7 +55,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(20.0),
             child: Wrap(children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -76,71 +73,54 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                     child: Container(
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(bookTitle,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
+                          Text(bookTitle,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall),
+                          Text(
+                            title,
+                            style:
+                                Theme.of(context).textTheme.titleSmall,
+                          ),
+                          Text(bookAuthor,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall),
+                          Column(
+                            children: [
+                              if (authorsNames.isEmpty) ...{
                                 Text(
-                                  title,
+                                  nothingHere,
                                   style:
-                                      Theme.of(context).textTheme.titleSmall,
+                                  Theme.of(context).textTheme.titleSmall,
                                 )
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(bookAuthor,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  children: [
-                                    for(int i=0;i<authorsNames.length;i++)...{
-                                      if(i==authorsNames.length - 1)...{
-                                        Text(
-                                          authorsNames[i].toString(),
-                                          style: Theme.of(context).textTheme.titleSmall,
-                                        )
-                                      } else...{
-                                        Text(
-                                          '${authorsNames[i]}, ',
-                                          style: Theme.of(context).textTheme.titleSmall,
-                                        )
-                                      }
-                                    }
-                                  ],
-                                )
-
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(bookPublishingHouse,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall)
-                              ]),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  publishingHouse,
-                                  style:
-                                      Theme.of(context).textTheme.titleSmall,
-                                )
-                              ]),
+                              },
+                              for(int i=0;i<authorsNames.length;i++)...{
+                                if(i==authorsNames.length - 1)...{
+                                  Text(
+                                    authorsNames[i].toString(),
+                                    style: Theme.of(context).textTheme.titleSmall,
+                                  )
+                                } else...{
+                                  Text(
+                                    '${authorsNames[i]}, ',
+                                    style: Theme.of(context).textTheme.titleSmall,
+                                  )
+                                }
+                              }
+                            ],
+                          ),
+                          Text(bookPublishingHouse,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall),
+                          Text(
+                            publishingHouse,
+                            style:
+                                Theme.of(context).textTheme.titleSmall,
+                          ),
                           const Row(children: [Text('')]),
                           HowMuchStars(rate: rate.isNaN ? 0 : rate),
                         ],

@@ -68,6 +68,8 @@ const String userAlreadyLoggedIn = 'Użytkownik już zalogowany';
 const String userAlreadyExists = 'Użytkownik już istnieje';
 const String changeTheme = 'Zmień motyw';
 const String settings = 'Ustawienia';
+const String loading = 'Ładowanie';
+const String nothingHere = 'Nic tu nie ma :(';
 
 //ShowAndHideMoreText
 const String showLess = ' Wyświetl mniej';
@@ -75,14 +77,16 @@ const String showMore = ' Wyświetl więcej';
 const int lengthToShow = 110;
 
 //DetailsOfBookScreen
-const String bookTitle = 'Tytuł: ';
-const String bookAuthor = 'Autor: ';
-const String bookPublishingHouse = 'Wydawnictwo: ';
+const String bookTitle = 'Tytuł:';
+const String bookAuthor = 'Autor:';
+const String bookPublishingHouse = 'Wydawnictwo:';
 const String opinionsAndTalks = "Opinie i dyskusje";
 
 //OpinionScreen
-const String loading = 'Ładowanie';
 const String minLengthForComment = 'Min 2 znaki';
 const String maxLengthForComment = 'Max 1000 znaków';
 const String writeOwnOpinion = 'Napisz swoją opinię...';
 const String rateBookByStars = 'Oceń książkę ilością gwiazdek!';
+
+//NewBooksScreen
+const String dateOfPremiere = 'Data premiery:';

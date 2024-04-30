@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:biblioteczka/LoadingScreen.dart';
+import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/panels/functions.dart';
 import 'package:flutter/material.dart';
@@ -41,19 +41,9 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
 
     print(widget.nameOfCategory);
     if (listOfBooks.isEmpty) {
-      return Scaffold(
-          appBar: AppBar(title: Text('Nic tu nie ma :(')),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [Text('Nici :(')],
-              )
-            ],
-          ));
+      return const LoadingScreen(message: nothingHere);
     } else if (listOfBooks[0] == -1) {
-      return const LoadingScreen();
+      return const LoadingScreen(message: loading);
     } else {
       return Scaffold(
         appBar: DefaultAppBar(

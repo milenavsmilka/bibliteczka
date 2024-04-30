@@ -1,8 +1,10 @@
 import 'dart:convert';
 
-import 'package:biblioteczka/LoadingScreen.dart';
+import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
 import 'package:biblioteczka/panels/functions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,15 +20,7 @@ class NewBooksScreen extends StatefulWidget {
 }
 
 class _NewBooksScreenState extends State<NewBooksScreen> {
-  List<dynamic> listOfBooks = [];
-  String title = '';
-  String description = '';
-  String isbn = '';
-  String dateOfPremiere = '';
-  String publishingHouse = '';
-  String picture = '';
-  double score = 0;
-  int opinions_count = 0;
+  List<dynamic> listOfBooks = [-1];
 
   @override
   initState() {
@@ -39,68 +33,131 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
     double widthScreen = MediaQuery.of(context).size.width;
     double heightScreen = MediaQuery.of(context).size.height;
     print(listOfBooks);
-    return listOfBooks.isEmpty
-        ? const LoadingScreen()
-        : Scaffold(
-            appBar: AppBar(
-              title: Text('Nowości'),
-            ),
-            body: ListView.builder(
-                itemCount: listOfBooks.length,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        checkIsTokenValid(
-                            context,
-                            DetailsOfBookScreen(
-                              bookId: index,
-                            ));
-                      },
-                      child: Row(
-                        children: [
-                          Column(children: [
-                            Image.network(listOfBooks[index]['picture'],
-                                width: widthScreen / 2, height: heightScreen / 3)
-                          ]),
-                          Column(
-                            children: [
-                              Text(listOfBooks[index]['title']),
-                              Text(listOfBooks[index]['publishing_house']),
-                              Text(listOfBooks[index]['premiere_date'])
-                            ],
-                          )
-                        ],
+    if (listOfBooks.isEmpty) {
+      return const LoadingScreen(message: nothingHere);
+    } else if (listOfBooks[0] == -1) {
+      return const LoadingScreen(message: loading);
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Nowości'),
+        ),
+        body: ListView.builder(
+            itemCount: listOfBooks.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    checkIsTokenValid(
+                      context,
+                      DetailsOfBookScreen(
+                        bookId: listOfBooks[index]['id'],
                       ),
-                    ),
-                  );
-                }),
-          );
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: widthScreen / 2.3,
+                        height: heightScreen / 2.5,
+                        child: Image.network(listOfBooks[index]['picture'],
+                            fit: BoxFit.fill),
+                      ),
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(bookTitle,
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall,
+                                  textAlign: TextAlign.start),
+                              Text(
+                                (listOfBooks[index]['title']),
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              Text(bookAuthor,
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall),
+                              Column(
+                                children: [
+                                  if (listOfBooks[index]['authors_names']
+                                          .length ==
+                                      0) ...{
+                                    Text(
+                                      nothingHere,
+                                      style:
+                                          Theme.of(context).textTheme.titleSmall,
+                                    )
+                                  },
+                                  for (int i = 0;
+                                      i <
+                                          (listOfBooks[index]['authors_names'])
+                                              .length;
+                                      i++) ...{
+                                    if (i ==
+                                        listOfBooks[index]['authors_names']
+                                                .length -
+                                            1) ...{
+                                      Text(
+                                        listOfBooks[index]['authors_names'][i]
+                                            .toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      )
+                                    } else ...{
+                                      Text(
+                                        '${listOfBooks[index]['authors_names'][i]}, ',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      )
+                                    }
+                                  }
+                                ],
+                              ),
+                              Text(bookPublishingHouse,
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall),
+                              Text(
+                                listOfBooks[index]['publishing_house'],
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              Text(dateOfPremiere,
+                                  style:
+                                      Theme.of(context).textTheme.headlineSmall),
+                              Text(
+                                listOfBooks[index]['premiere_date'],
+                                style: Theme.of(context).textTheme.titleSmall,
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            }),
+      );
+    }
   }
 
   Future<void> giveMeNewBooks() async {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-    const String apiUrl = apiURLGetNewBooks;
 
-    final response = await http
-        .get(Uri.parse(apiUrl), headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer $actualToken',
-    });
-    Map<String, dynamic> data = jsonDecode(response.body);
+    DateTime date = DateTime(
+        DateTime.now().year, DateTime.now().month - 3, DateTime.now().day);
+    Map<String, dynamic> newBooksResponse = await getSthById(
+        apiURLGetNewBooks, actualToken!, 'date_from', date.toString());
 
     setState(() {
-      listOfBooks = data['results'];
+      listOfBooks = newBooksResponse['results'];
     });
     print('number of listOfBooks ${listOfBooks.length}');
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      print(data);
-    } else {
-      print("Nie okej :(");
-    }
   }
 }
