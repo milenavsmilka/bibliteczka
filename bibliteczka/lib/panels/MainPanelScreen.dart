@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'CategoryBooks/ChooseCategoryScreen.dart';
 import 'ChangeThemeScreen.dart';
 import 'LoginScreen.dart';
-import 'SettingsScreen.dart';
+import 'Account/SettingsScreen.dart';
 import 'functions.dart';
 import 'main.dart';
 

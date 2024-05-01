@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../styles/strings.dart';
 import '../ChangeThemeScreen.dart';
-import '../SettingsScreen.dart';
+import '../Account/SettingsScreen.dart';
 import '../functions.dart';
 
 class DefaultAppBar extends StatefulWidget implements PreferredSizeWidget {

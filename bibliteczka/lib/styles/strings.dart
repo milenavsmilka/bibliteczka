@@ -5,6 +5,7 @@ const String apiURLLogin = '${apiURL}account/login';
 const String apiURLLogOut = '${apiURL}account/logout';
 const String apiURLIsTokenValid = '${apiURL}account/check_if_logged_in';
 const String apiURLDeleteAccount = '${apiURL}account/delete_account';
+const String apiURLChangePassword = '${apiURL}account/change_password';
 const String apiURLGetBooksByGenres = '${apiURL}data/book';
 const String apiURLGetNewBooks = '${apiURL}data/new_book';
 const String apiURLGetAuthor = '${apiURL}data/author';

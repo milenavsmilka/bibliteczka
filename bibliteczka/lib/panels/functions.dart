@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:biblioteczka/styles/strings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +10,34 @@ import 'Tools/CustomPageRoute.dart';
 import 'LoginScreen.dart';
 import 'MainPanelScreen.dart';
 import 'main.dart';
+
+Future<void> changePassword(String newPass, String oldPass) async {
+  var sharedPreferences = await SharedPreferences.getInstance();
+  String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
+
+  final Map<String, dynamic> requestBody = {
+    'current_password': oldPass,
+    'new_password': newPass,
+  };
+  String requestBodyJson = jsonEncode(requestBody);
+
+  final response = await http.patch(
+    Uri.parse(apiURLChangePassword),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $actualToken'
+    },
+    body: requestBodyJson,
+  );
+  if (response.statusCode == 200) {
+    print("Okej :D");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    print(data);
+  } else {
+    print("Nie okej :(");
+    throw Exception('Failed to load data');
+  }
+}
 
 Future<void> sendOpinion(String comment, int starsRating,
     String bookId) async {

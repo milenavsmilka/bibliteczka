@@ -14,10 +14,11 @@ import 'package:mailer/smtp_server.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Tools/CustomPageRoute.dart';
-import 'LoginScreen.dart';
-import 'functions.dart';
-import 'main.dart';
+import '../Tools/CustomPageRoute.dart';
+import '../LoginScreen.dart';
+import '../functions.dart';
+import '../main.dart';
+import 'ChangePasswordScreen.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -26,6 +27,8 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final deleteCodeController = TextEditingController();
+  final currentPassController = TextEditingController();
+  final newPassController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +53,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             children: [
               ElevatedButton(
                   onPressed: () {
-                    setState(() {
-                      //TODO zmiana hasła
-                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChangePasswordScreen()),
+                    );
                   },
                   child: Text('Zmień hasło')),
               ElevatedButton(
