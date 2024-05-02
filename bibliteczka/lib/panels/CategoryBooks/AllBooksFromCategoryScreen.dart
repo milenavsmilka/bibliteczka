@@ -1,11 +1,14 @@
 import 'dart:convert';
 
-import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
+import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
 import 'package:biblioteczka/panels/functions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../styles/strings.dart';
 import '../main.dart';
 import 'DetailsOfBookScreen.dart';
@@ -50,49 +53,63 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
           title: widget.nameOfCategory,
           automaticallyImplyLeading: true,
         ),
-        body: ListView.builder(
+        body: GridView.builder(
+            gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, mainAxisExtent: heightScreen / 2.4+30),
+            padding: const EdgeInsets.all(10.0),
+            scrollDirection: Axis.vertical,
             itemCount: listOfBooks.length,
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GestureDetector(
-                  onTap: () {
-                    checkIsTokenValid(
-                        context,
-                        DetailsOfBookScreen(
-                          bookId: listOfBooks[index]['id'],
-                          turnOpinions: true,
-                        ));
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(children: [
-                        Container(
-                          width: widthScreen / 2.3,
-                          height: heightScreen / 2.5,
-                          child: Image.network(listOfBooks[index]['picture'],
-                              fit: BoxFit.fill),
-                        ),
-                        Text(listOfBooks[index]['title'],
-                            style: Theme.of(context).textTheme.headlineSmall)
-                      ]),
-                      if (listOfBooks.length - 1 > index) ...{
-                        Column(children: [
-                          Container(
-                            width: widthScreen / 2.3,
-                            height: heightScreen / 2.5,
-                            child: Image.network(
-                                listOfBooks[index + 1]['picture'],
-                                fit: BoxFit.fill),
-                          ),
-                          Text(listOfBooks[index + 1]['title'],
-                              style: Theme.of(context).textTheme.headlineSmall)
-                        ])
-                      }
-                    ],
-                  ),
-                ),
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(children: [
+                    GestureDetector(
+                      onTap: () {
+                        checkIsTokenValid(
+                            context,
+                            DetailsOfBookScreen(
+                              bookId: listOfBooks[index]['id'],
+                              turnOpinions: true,
+                            ));
+                      },
+                      child: SizedBox(
+                        width: widthScreen / 2.3,
+                        height: heightScreen / 2.5,
+                        child: Image.network(listOfBooks[index]['picture'],
+                            fit: BoxFit.fill),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                      child: Text(listOfBooks[index]['title'],
+                          style: Theme.of(context).textTheme.headlineSmall),
+                    )
+                  ]),
+                  // if (listOfBooks.length - 1 > index) ...{
+                  //   Flexible(child: Column(children: [
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         checkIsTokenValid(
+                  //             context,
+                  //             DetailsOfBookScreen(
+                  //               bookId: listOfBooks[index + 1]['id'],
+                  //               turnOpinions: true,
+                  //             ));
+                  //       },
+                  //       child: SizedBox(
+                  //         width: widthScreen / 2.3,
+                  //         height: heightScreen / 2.5,
+                  //         child: Image.network(
+                  //             listOfBooks[index + 1]['picture'],
+                  //             fit: BoxFit.fill),
+                  //       ),
+                  //     ),
+                  //     Text(listOfBooks[index + 1]['title'],
+                  //         style: Theme.of(context).textTheme.headlineSmall)
+                  //   ]))
+                  // }
+                ],
               );
             }),
       );

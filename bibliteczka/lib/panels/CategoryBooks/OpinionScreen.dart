@@ -137,7 +137,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
                   children: [
                     Row(
                       children: [
-                        SizedBox(width: screenWidth * (1 / 3)),
+                        SizedBox(width: screenWidth * (1 / 4)),
                         for (int i = 1; i < 6; i++) ...{
                           IconButton(
                               onPressed: () {
@@ -158,7 +158,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
                     ),
                     Row(
                       children: [
-                        SizedBox(width: screenWidth * (5 / 12)),
+                        SizedBox(width: screenWidth * (4 / 12)),
                         Ink(
                           decoration: ShapeDecoration(
                             color: Theme.of(context).iconTheme.color,

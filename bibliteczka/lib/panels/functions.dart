@@ -209,20 +209,23 @@ void showSnackBar(BuildContext context, String text, Color color) {
 
 setProfilePicture(int profilePicture) {
   switch(profilePicture){
-    case 1: return 'assets/icons/comic.png';
-    case 2: return 'assets/icons/comic.png';
-    case 3: return 'assets/icons/comic.png';
-    case 4: return 'assets/icons/comic.png';
-    case 5: return 'assets/icons/comic.png';
-    case 6: return 'assets/icons/comic.png';
-    case 7: return 'assets/icons/comic.png';
-    case 8: return 'assets/icons/comic.png';
-    case 9: return 'assets/icons/comic.png';
-    case 10: return 'assets/icons/comic.png';
-    case 11: return 'assets/icons/comic.png';
-    case 12: return 'assets/icons/comic.png';
-    case 13: return 'assets/icons/comic.png';
-    case 14: return 'assets/icons/comic.png';
-    case 15: return 'assets/icons/comic.png';
+    case 1: return 'assets/profile_icons/funny_turtle.png';
+    case 2: return 'assets/profile_icons/aries.png';
+    case 3: return 'assets/profile_icons/camel.png';
+    case 4: return 'assets/profile_icons/cat.png';
+    case 5: return 'assets/profile_icons/chicken.png';
+    case 6: return 'assets/profile_icons/cow.png';
+    case 7: return 'assets/profile_icons/deer.png';
+    case 8: return 'assets/profile_icons/dog.png';
+    case 9: return 'assets/profile_icons/fox.png';
+    case 10: return 'assets/profile_icons/frog.png';
+    case 11: return 'assets/profile_icons/horse.png';
+    case 12: return 'assets/profile_icons/lama.png';
+    case 13: return 'assets/profile_icons/pig.png';
+    case 14: return 'assets/profile_icons/rabbit.png';
+    case 15: return 'assets/profile_icons/sheep.png';
+    case 16: return 'assets/profile_icons/snake.png';
+    case 17: return 'assets/profile_icons/turtle.png';
+    case 18: return 'assets/profile_icons/worm.png';
   }
 }
