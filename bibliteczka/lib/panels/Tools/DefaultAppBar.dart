@@ -1,3 +1,4 @@
+import 'package:biblioteczka/panels/Account/MyProfileScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../styles/strings.dart';
@@ -35,7 +36,7 @@ class _DefaultAppBarState extends State<DefaultAppBar>{
             PopupMenuItem(
               child: Text('Wyświetl profil'),
               onTap: () {
-                // checkIsTokenValid(context, );
+                checkIsTokenValid(context, MyProfileScreen());
               },
             ),
             PopupMenuItem(

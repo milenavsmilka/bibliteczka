@@ -6,11 +6,12 @@ const String apiURLLogOut = '${apiURL}account/logout';
 const String apiURLIsTokenValid = '${apiURL}account/check_if_logged_in';
 const String apiURLDeleteAccount = '${apiURL}account/delete_account';
 const String apiURLChangePassword = '${apiURL}account/change_password';
-const String apiURLGetBooksByGenres = '${apiURL}data/book';
+const String apiURLGetBooks = '${apiURL}data/book';
 const String apiURLGetNewBooks = '${apiURL}data/new_book';
 const String apiURLGetAuthor = '${apiURL}data/author';
 const String apiURLGetOpinion = '${apiURL}data/opinion';
 const String apiURLGetUser = '${apiURL}data/user';
+const String apiURLChangeProfilePicture = '${apiURL}account/change_profile_picture';
 
 const String iconHeart = "assets/icons/hearts.svg";
 const String iconBrainstorming = "assets/icons/brainstorming.svg";

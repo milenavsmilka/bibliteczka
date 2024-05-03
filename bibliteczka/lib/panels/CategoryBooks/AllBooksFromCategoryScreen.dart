@@ -86,29 +86,6 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                           style: Theme.of(context).textTheme.headlineSmall),
                     )
                   ]),
-                  // if (listOfBooks.length - 1 > index) ...{
-                  //   Flexible(child: Column(children: [
-                  //     GestureDetector(
-                  //       onTap: () {
-                  //         checkIsTokenValid(
-                  //             context,
-                  //             DetailsOfBookScreen(
-                  //               bookId: listOfBooks[index + 1]['id'],
-                  //               turnOpinions: true,
-                  //             ));
-                  //       },
-                  //       child: SizedBox(
-                  //         width: widthScreen / 2.3,
-                  //         height: heightScreen / 2.5,
-                  //         child: Image.network(
-                  //             listOfBooks[index + 1]['picture'],
-                  //             fit: BoxFit.fill),
-                  //       ),
-                  //     ),
-                  //     Text(listOfBooks[index + 1]['title'],
-                  //         style: Theme.of(context).textTheme.headlineSmall)
-                  //   ]))
-                  // }
                 ],
               );
             }),
@@ -119,7 +96,7 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
   Future<void> giveMeListsOfBook(String nameOfCategory) async {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-    const String apiUrl = apiURLGetBooksByGenres;
+    const String apiUrl = apiURLGetBooks;
 
     final params = {'genres': nameOfCategory};
     final response = await http

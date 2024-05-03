@@ -11,6 +11,33 @@ import 'LoginScreen.dart';
 import 'MainPanelScreen.dart';
 import 'main.dart';
 
+Future<void> changeProfilePicture(String apiURL, String key, int value) async {
+  var sharedPreferences = await SharedPreferences.getInstance();
+  String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
+
+  final Map<String, dynamic> requestBody = {
+    key: value,
+  };
+  String requestBodyJson = jsonEncode(requestBody);
+
+  final response = await http.patch(
+    Uri.parse(apiURL),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $actualToken'
+    },
+    body: requestBodyJson,
+  );
+  if (response.statusCode == 200) {
+    print("Okej :D");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    print(data);
+  } else {
+    print("Nie okej :(");
+    throw Exception(response.body);
+  }
+}
+
 Future<void> changePassword(String newPass, String oldPass) async {
   var sharedPreferences = await SharedPreferences.getInstance();
   String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
@@ -89,7 +116,7 @@ Future<Map<String, dynamic>> getSthById(String url, String token, String key, St
   if (response.statusCode == 200) {
     print('good');
   } else {
-    print("Nie good");
+    print("Nie good $key");
   }
   return data;
 }

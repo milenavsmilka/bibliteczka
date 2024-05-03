@@ -157,7 +157,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   Future<void> giveMeDetailsOfBook(int bookId) async {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-    String apiUrl = apiURLGetBooksByGenres;
+    String apiUrl = apiURLGetBooks;
 
     final params = {'id': bookId.toString()};
     print(Uri.parse(apiUrl).replace(queryParameters: params));

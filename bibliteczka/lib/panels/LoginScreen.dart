@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:biblioteczka/panels/functions.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -117,8 +118,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text(clickToLoginButton),
                   onPressed: () async {
                     if(_formKey.currentState!.validate()){
-                      await signIn(
-                          emailController.text, passwordController.text);
+                      try{
+                        await signIn(
+                            emailController.text, passwordController.text);
+                      } on Exception catch (e){
+                        showSnackBar(context, 'Błąd logowania - niepoprawny email lub hasło', Colors.redAccent);
+                    }
                     };
                   },
                 ),

@@ -82,9 +82,6 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             'Hasła nie mogą być takie same',
                             currentPasswordController.text)
                       ]).call,
-                      // validator: (repeat) => repeat == currentPasswordController.text
-                      //     ? 'Hasła są takie same'
-                      //     : null, //repeatPassValidator,
                       decoration: InputDecoration(
                           labelText: 'Podaj nowe hasło',
                           prefixIcon: Icon(Icons.lock),

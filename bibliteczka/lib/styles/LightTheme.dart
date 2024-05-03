@@ -77,16 +77,16 @@ ThemeData lightTheme = ThemeData(
       ),
       headlineMedium: TextStyle(
           color: textMainColor,
-          fontFamily: 'Merienda',
+          fontFamily: 'LobsterTwo',
           fontWeight: FontWeight.w800,
-          fontStyle: FontStyle.italic,
+          fontStyle: FontStyle.normal,
           fontSize: 28),
       headlineSmall: TextStyle(
         color: textMainColor,
-        fontFamily: 'Merienda',
+        fontFamily: 'LobsterTwo',
         fontWeight: FontWeight.w800,
         fontStyle: FontStyle.normal,
-        fontSize: 18,
+        fontSize: 23,
       ),
       titleLarge: TextStyle(
           color: Colors.grey,
