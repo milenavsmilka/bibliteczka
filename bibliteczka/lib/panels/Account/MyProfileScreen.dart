@@ -183,7 +183,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               PictureOfBooksInMyLibrary(
                                 bookId: favBooks[i],
                                 isEditingLibrary: isEditing,
-                                categoryUrl: apiURLDeleteBookFromFav,
+                                categoryUrl: apiURLBookFromFav,
                               ),
                           }
                         }
@@ -223,7 +223,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                             PictureOfBooksInMyLibrary(
                               bookId: readBooks[i],
                               isEditingLibrary: isEditing,
-                              categoryUrl: apiURLDeleteBookFromRead,
+                              categoryUrl: apiURLBookFromRead,
                             ),
                           }
                         }

@@ -10,8 +10,8 @@ const String apiURLGetBooks = '${apiURL}data/book';
 const String apiURLGetNewBooks = '${apiURL}data/new_book';
 const String apiURLGetAuthor = '${apiURL}data/author';
 const String apiURLGetOpinion = '${apiURL}data/opinion';
-const String apiURLDeleteBookFromFav = '${apiURL}data/favourite_book';
-const String apiURLDeleteBookFromRead = '${apiURL}data/read_book';
+const String apiURLBookFromFav = '${apiURL}data/favourite_book';
+const String apiURLBookFromRead = '${apiURL}data/read_book';
 const String apiURLGetUser = '${apiURL}data/user';
 const String apiURLChangeProfilePicture = '${apiURL}account/change_profile_picture';
 

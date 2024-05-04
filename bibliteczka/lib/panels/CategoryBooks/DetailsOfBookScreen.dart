@@ -38,12 +38,14 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
 
   bool isHeartAnimating = false;
   bool emptyHeart = false;
+  bool isReadAnimating = false;
+  bool emptyRead = false;
 
   @override
   void initState() {
     super.initState();
     giveMeDetailsOfBook(widget.bookId);
-    isThatBookInMyFav();
+    isThatBookInMyLibrary();
   }
 
   @override
@@ -82,15 +84,36 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                               child: emptyHeart ? Icon(
                                 Icons.favorite_border,
                                 color: Colors.white,
-                                size: 50,
+                                size: 100,
                               ): Icon(Icons.favorite,
                               color: Colors.white,
-                              size: 50,
+                              size: 100,
                               ),
                               isAnimating: isHeartAnimating,
                               onEnd: () => setState(() {
                                 isHeartAnimating = false;
                               }),
+                            ),
+                          ),
+                          Opacity(
+                            opacity: isReadAnimating ? 1 : 0,
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: HeartAnimationWidget(
+                                duration: Duration(milliseconds: 800),
+                                child: emptyRead ? Icon(
+                                  Icons.remove_circle,
+                                  color: Colors.redAccent,
+                                  size: 100,
+                                ): Icon(Icons.add_circle,
+                                  color: Colors.greenAccent,
+                                  size: 100,
+                                ),
+                                isAnimating: isReadAnimating,
+                                onEnd: () => setState(() {
+                                  isReadAnimating = false;
+                                }),
+                              ),
                             ),
                           )
                         ]),
@@ -100,16 +123,29 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             isHeartAnimating = true;
                           });
                           try{
-                            await addToFavourite();
+                            await addToLibrary(apiURLBookFromFav);
                             emptyHeart = true;
                           } on http.ClientException catch(e){
                             print('wcale nie $e');
-                            deleteBooksFromMyLibrary(apiURLDeleteBookFromFav,
+                            deleteBooksFromMyLibrary(apiURLBookFromFav,
                                 'book_id', widget.bookId.toString());
                             emptyHeart=false;
                           }
                         },
-                        onLongPress: () {
+                        onLongPress: () async {
+                          print('dodaje $isReadAnimating');
+                          setState(() {
+                            isReadAnimating = true;
+                          });
+                          try{
+                            await addToLibrary(apiURLBookFromRead);
+                            emptyRead = true;
+                          } on http.ClientException catch(e){
+                            print('wcale nie $e');
+                            deleteBooksFromMyLibrary(apiURLBookFromRead,
+                                'book_id', widget.bookId.toString());
+                            emptyRead=false;
+                          }
                         },
                       ),
                     ],
@@ -230,7 +266,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     print('Imię autora $authorsNames i opinie $opinions');
   }
 
-  Future<void> addToFavourite() async {
+  Future<void> addToLibrary(String apiUrl) async {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
 
@@ -240,7 +276,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     String requestBodyJson = jsonEncode(requestBody);
 
     final response = await http.post(
-      Uri.parse(apiURLDeleteBookFromFav),
+      Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $actualToken'
@@ -257,7 +293,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       throw http.ClientException(jsonDecode(response.body)['message']);
     }
   }
-  Future<void> isThatBookInMyFav() async {
+  Future<void> isThatBookInMyLibrary() async {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
     Map<String, dynamic> getUserResponse =
@@ -265,15 +301,23 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
 
     List<dynamic> userData;
     List<dynamic> favBooks = [-1];
+    List<dynamic> readBooks = [-1];
     setState(() {
       userData = getUserResponse['results'];
       favBooks = userData[0]['library']['favourite_books'];
+      readBooks = userData[0]['library']['read_books'];
     });
 
     if(favBooks.contains(widget.bookId)) {
       emptyHeart= true;
     } else {
       emptyHeart = false;
+    }
+
+    if(readBooks.contains(widget.bookId)) {
+      emptyRead= true;
+    } else {
+      emptyRead = false;
     }
   }
 }
