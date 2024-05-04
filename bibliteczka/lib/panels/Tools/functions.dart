@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Tools/CustomPageRoute.dart';
-import 'LoginScreen.dart';
-import 'MainPanelScreen.dart';
-import 'main.dart';
+import 'CustomPageRoute.dart';
+import '../LoginScreen.dart';
+import '../MainPanelScreen.dart';
+import '../main.dart';
 
 
 Future<void> deleteBooksFromMyLibrary(String apiUrl, String key, String value) async {

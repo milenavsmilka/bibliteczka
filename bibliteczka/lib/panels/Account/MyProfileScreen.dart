@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
 import '../Tools/LoadingScreen.dart';
-import '../functions.dart';
+import '../Tools/functions.dart';
 import '../main.dart';
 import 'PictureOfBooksInMyLibrary.dart';
 

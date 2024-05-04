@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
-import 'package:biblioteczka/panels/functions.dart';
+import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

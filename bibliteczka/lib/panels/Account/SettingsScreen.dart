@@ -16,7 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Tools/CustomPageRoute.dart';
 import '../LoginScreen.dart';
-import '../functions.dart';
+import '../Tools/functions.dart';
 import '../main.dart';
 import 'ChangePasswordScreen.dart';
 

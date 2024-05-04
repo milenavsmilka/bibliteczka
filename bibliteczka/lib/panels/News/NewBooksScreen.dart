@@ -1,5 +1,5 @@
 import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
-import 'package:biblioteczka/panels/functions.dart';
+import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

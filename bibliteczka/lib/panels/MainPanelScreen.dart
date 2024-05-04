@@ -10,10 +10,10 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'CategoryBooks/ChooseCategoryScreen.dart';
-import 'ChangeThemeScreen.dart';
+import 'Account/ChangeThemeScreen.dart';
 import 'LoginScreen.dart';
 import 'Account/SettingsScreen.dart';
-import 'functions.dart';
+import 'Tools/functions.dart';
 import 'main.dart';
 
 class MainPanelScreen extends StatefulWidget {

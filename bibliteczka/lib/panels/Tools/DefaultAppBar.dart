@@ -2,9 +2,9 @@ import 'package:biblioteczka/panels/Account/MyProfileScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../styles/strings.dart';
-import '../ChangeThemeScreen.dart';
+import '../Account/ChangeThemeScreen.dart';
 import '../Account/SettingsScreen.dart';
-import '../functions.dart';
+import 'functions.dart';
 
 class DefaultAppBar extends StatefulWidget implements PreferredSizeWidget {
   DefaultAppBar({super.key, required this.title, required this.automaticallyImplyLeading}) : preferredSize = Size.fromHeight(kToolbarHeight);

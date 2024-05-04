@@ -1,6 +1,6 @@
 import 'package:biblioteczka/panels/CategoryBooks/DetailsOfBookScreen.dart';
 import 'package:biblioteczka/panels/Tools/CustomPageRoute.dart';
-import 'package:biblioteczka/panels/functions.dart';
+import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:biblioteczka/styles/LightTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';

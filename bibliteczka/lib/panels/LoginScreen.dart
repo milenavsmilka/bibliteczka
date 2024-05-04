@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:biblioteczka/panels/functions.dart';
+import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

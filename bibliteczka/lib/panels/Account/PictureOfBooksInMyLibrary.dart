@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
-import '../functions.dart';
+import '../Tools/functions.dart';
 import '../main.dart';
 
 class PictureOfBooksInMyLibrary extends StatefulWidget {
