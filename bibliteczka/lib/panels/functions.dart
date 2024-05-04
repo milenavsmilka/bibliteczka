@@ -11,6 +11,35 @@ import 'LoginScreen.dart';
 import 'MainPanelScreen.dart';
 import 'main.dart';
 
+
+Future<void> deleteBooksFromMyLibrary(String apiUrl, String key, String value) async {
+  var sharedPreferences = await SharedPreferences.getInstance();
+  String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
+
+  final Map<String, dynamic> requestBody = {
+    key: value,
+  };
+  String requestBodyJson = jsonEncode(requestBody);
+
+  final response = await http.delete(
+    Uri.parse(apiUrl),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'Authorization': 'Bearer $actualToken'
+    },
+    body: requestBodyJson,
+  );
+  print('Response: ${requestBody}');
+  if (response.statusCode == 200) {
+    print("Okej :D");
+    Map<String, dynamic> data = jsonDecode(response.body);
+    print(data);
+  } else {
+    print("Nie okej :(");
+    throw Exception(response.body);
+  }
+}
+
 Future<void> changeProfilePicture(String apiURL, String key, int value) async {
   var sharedPreferences = await SharedPreferences.getInstance();
   String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
@@ -93,14 +122,14 @@ Future<void> sendOpinion(String comment, int starsRating,
   Map<String, dynamic> data = jsonDecode(response.body);
   var message = data['message'];
   print(message);
-  if (message == 'object_created') {
+  if (response.statusCode == 200) {
     print("Okej :D");
   } else if (message == 'opinion_already_exists') {
     message = 'Możesz wystawić tylko jedną opinię dla danej książki';
     throw http.ClientException(message);
-  } else if (message['comment'] ==
-      'Value must be a str with length in range [0, 1000]') {
-    message = 'Komentarz może mieć max 1000 znaków';
+  } else if (message ==
+      'length_validation_error') {
+    message = 'Komentarz może mieć min 2 i max 1000 znaków';
     throw http.ClientException(message);
   }
 }
@@ -116,7 +145,7 @@ Future<Map<String, dynamic>> getSthById(String url, String token, String key, St
   if (response.statusCode == 200) {
     print('good');
   } else {
-    print("Nie good $key");
+    print("Nie good $key $value ${response.body}");
   }
   return data;
 }

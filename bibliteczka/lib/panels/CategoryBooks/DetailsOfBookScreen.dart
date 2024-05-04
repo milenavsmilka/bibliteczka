@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:biblioteczka/panels/CategoryBooks/OpinionScreen.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
+import 'package:biblioteczka/panels/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,7 +66,17 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                       SizedBox(
                         width: widthScreen / 2.3,
                         height: heightScreen / 2.5,
-                        child: Image.network(picture, fit: BoxFit.fill),
+                        child: GestureDetector(
+                            child: Image.network(picture, fit: BoxFit.fill),
+                        onDoubleTap: (){
+                              addToFavourite();
+                              print('dodaje');
+                        },
+                        onLongPress: (){
+                              print('wcale nie');
+                              deleteBooksFromMyLibrary(apiURLDeleteBookFromFav, 'book_id', widget.bookId.toString());
+                        },
+                        ),
                       )
                     ],
                   ),
@@ -76,50 +87,43 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(bookTitle,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall),
+                              style: Theme.of(context).textTheme.headlineSmall),
                           Text(
                             title,
-                            style:
-                                Theme.of(context).textTheme.titleSmall,
+                            style: Theme.of(context).textTheme.titleSmall,
                           ),
                           Text(bookAuthor,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall),
+                              style: Theme.of(context).textTheme.headlineSmall),
                           Column(
                             children: [
                               if (authorsNames.isEmpty) ...{
                                 Text(
                                   nothingHere,
-                                  style:
-                                  Theme.of(context).textTheme.titleSmall,
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 )
                               },
-                              for(int i=0;i<authorsNames.length;i++)...{
-                                if(i==authorsNames.length - 1)...{
+                              for (int i = 0; i < authorsNames.length; i++) ...{
+                                if (i == authorsNames.length - 1) ...{
                                   Text(
                                     authorsNames[i].toString(),
-                                    style: Theme.of(context).textTheme.titleSmall,
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
                                   )
-                                } else...{
+                                } else ...{
                                   Text(
                                     '${authorsNames[i]}, ',
-                                    style: Theme.of(context).textTheme.titleSmall,
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
                                   )
                                 }
                               }
                             ],
                           ),
                           Text(bookPublishingHouse,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headlineSmall),
+                              style: Theme.of(context).textTheme.headlineSmall),
                           Text(
                             publishingHouse,
-                            style:
-                                Theme.of(context).textTheme.titleSmall,
+                            style: Theme.of(context).textTheme.titleSmall,
                           ),
                           const Row(children: [Text('')]),
                           HowMuchStars(rate: rate.isNaN ? 0 : rate),
@@ -142,10 +146,13 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                 Text(opinionsAndTalks,
                     style: Theme.of(context).textTheme.headlineSmall),
                 const Row(children: [Text('')]),
-                OpinionScreen(instruction: OpinionScreen.SEND,bookId: widget.bookId),
+                OpinionScreen(
+                    instruction: OpinionScreen.SEND, bookId: widget.bookId),
                 for (int i = 0; i < opinions.length; i++)
                   OpinionScreen(
-                      opinionId: opinions[i], instruction: OpinionScreen.LOAD,bookId: widget.bookId),
+                      opinionId: opinions[i],
+                      instruction: OpinionScreen.LOAD,
+                      bookId: widget.bookId),
               }
             ]),
           ),
@@ -187,5 +194,33 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       print("Nie okej :(");
     }
     print('Imię autora $authorsNames i opinie $opinions');
+  }
+
+  Future<void> addToFavourite() async {
+    var sharedPreferences = await SharedPreferences.getInstance();
+    String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
+
+    final Map<String, dynamic> requestBody = {
+      'book_id': widget.bookId.toString(),
+    };
+    String requestBodyJson = jsonEncode(requestBody);
+
+    final response = await http.post(
+      Uri.parse(apiURLDeleteBookFromFav),
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $actualToken'
+      },
+      body: requestBodyJson,
+    );
+    print('Response: ${requestBody}');
+    if (response.statusCode == 200) {
+      print("Okej :D");
+      Map<String, dynamic> data = jsonDecode(response.body);
+      print(data);
+    } else {
+      print("Nie okej :(");
+      throw Exception(response.body);
+    }
   }
 }
