@@ -105,7 +105,7 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
                                       )
                                     } else ...{
                                       Text(
-                                        '${listOfBooks[index]['authors_names'][i]}, ',
+                                        '${listOfBooks[index]['authors_names'][i]},',
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleSmall,

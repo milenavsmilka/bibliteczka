@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
-import '../CategoryBooks/DetailsOfBookScreen.dart';
 import '../Tools/LoadingScreen.dart';
 import '../functions.dart';
 import '../main.dart';

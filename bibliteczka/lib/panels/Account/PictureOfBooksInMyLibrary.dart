@@ -61,7 +61,7 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            DetailsOfBookScreen(bookId: widget.bookId),
+                            DetailsOfBookScreen(bookId: widget.bookId,turnOpinions: true),
                       ));
                 }),
             Visibility(
