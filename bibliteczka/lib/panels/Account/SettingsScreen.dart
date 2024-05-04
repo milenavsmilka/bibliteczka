@@ -194,7 +194,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           Map<String, dynamic> data = jsonDecode(response.body);
                           print(data);
                           Navigator.push(
-                              context, CustomPageRoute(child: LoginScreen()));
+                              context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE,child: LoginScreen()));
                         } else {
                           print("Nie okej :(");
                           throw Exception('Failed to load data');

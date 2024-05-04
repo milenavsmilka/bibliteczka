@@ -170,7 +170,7 @@ Future<void> logOut(BuildContext context) async {
     sharedPreferences.clear();
     print("Poprawnie wylogowano użytkownika");
     Navigator.push(
-        context, CustomPageRoute(child: LoginScreen()));
+        context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE,child: LoginScreen()));
   } else {
     print("Pojawił się błąd, użytkownik nie został wylogowany");
   }
@@ -197,7 +197,7 @@ void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {
     if (tokenValid == tokenIsValid) {
       if (widgetToRoute != null) {
         //jeżeli token jest ważny
-        Navigator.push(context, CustomPageRoute(child: widgetToRoute));
+        Navigator.push(context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE,child: widgetToRoute));
       }
     } else {
       showDialog(
@@ -208,14 +208,14 @@ void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {
                   TextButton(
                       onPressed: () {
                         Navigator.push(
-                            context, CustomPageRoute(child: LoginScreen()));
+                            context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE,child: LoginScreen()));
                       },
                       child: Text("OK")),
                 ],
               ));
     }
   } else {
-    Navigator.push(context, CustomPageRoute(child: LoginScreen()));
+    Navigator.push(context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE,child: LoginScreen()));
   }
 }
 
@@ -240,12 +240,12 @@ void whereToGo(BuildContext context) async {
       print('Czy token valid? $tokenValid');
       if (tokenValid == tokenIsValid) {
         //jeżeli token jest ważny
-        Navigator.push(context, CustomPageRoute(child: MainPanelScreen()));
+        Navigator.push(context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE,child: MainPanelScreen()));
       } else {
-        Navigator.push(context, CustomPageRoute(child: LoginScreen()));
+        Navigator.push(context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE,child: LoginScreen()));
       }
     } else {
-      Navigator.push(context, CustomPageRoute(child: LoginScreen()));
+      Navigator.push(context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE,child: LoginScreen()));
     }
   });
 }

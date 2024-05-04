@@ -1,4 +1,5 @@
 import 'package:biblioteczka/panels/CategoryBooks/DetailsOfBookScreen.dart';
+import 'package:biblioteczka/panels/Tools/CustomPageRoute.dart';
 import 'package:biblioteczka/panels/functions.dart';
 import 'package:biblioteczka/styles/LightTheme.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +105,10 @@ class _OpinionScreenState extends State<OpinionScreen> {
                                     : Theme.of(context).secondaryHeaderColor,
                                 borderRadius: BorderRadius.circular(10)),
                             child: widget.instruction == OpinionScreen.LOAD
-                                ? ShowAndHideMoreText(username: username,starsRating:starsRating, comment: comment)
+                                ? ShowAndHideMoreText(
+                                    username: username,
+                                    starsRating: starsRating,
+                                    comment: comment)
                                 : TextFormField(
                                     maxLines: null,
                                     autovalidateMode:
@@ -168,17 +172,17 @@ class _OpinionScreenState extends State<OpinionScreen> {
                           width: 30,
                           child: IconButton(
                             icon: const Icon(Icons.close),
-                            color: Theme.of(context).dialogTheme.backgroundColor,
+                            color:
+                                Theme.of(context).dialogTheme.backgroundColor,
                             iconSize: 15,
                             onPressed: () {
                               setState(() {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            DetailsOfBookScreen(
-                                                bookId: widget.bookId,
-                                                turnOpinions: true)));
+                                Navigator.of(context).pushReplacement(
+                                    CustomPageRoute(
+                                        child: DetailsOfBookScreen(
+                                            bookId: widget.bookId,
+                                            turnOpinions: true),
+                                        chooseAnimation: CustomPageRoute.FADE));
                               });
                             },
                           ),
@@ -193,29 +197,27 @@ class _OpinionScreenState extends State<OpinionScreen> {
                           width: 30,
                           child: IconButton(
                             icon: const Icon(Icons.check),
-                            color: Theme.of(context).dialogTheme.backgroundColor,
+                            color:
+                                Theme.of(context).dialogTheme.backgroundColor,
                             iconSize: 15,
                             onPressed: () async {
                               if (starsRating == 0) {
                                 showSnackBar(
-                                    context,
-                                    rateBookByStars,
-                                    errorColor);
+                                    context, rateBookByStars, errorColor);
                               } else if (_formKey.currentState!.validate()) {
                                 try {
                                   await sendOpinion(opinionTextToSend.text,
                                       starsRating, widget.bookId.toString());
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              DetailsOfBookScreen(
-                                                  bookId: widget.bookId,
-                                                  turnOpinions: true)));
+                                  Navigator.of(context).pushReplacement(
+                                      CustomPageRoute(
+                                          child: DetailsOfBookScreen(
+                                              bookId: widget.bookId,
+                                              turnOpinions: true),
+                                          chooseAnimation:
+                                              CustomPageRoute.FADE));
                                   opinionTextToSend.clear();
                                 } on http.ClientException catch (e) {
-                                  showSnackBar(
-                                      context, e.message, errorColor);
+                                  showSnackBar(context, e.message, errorColor);
                                 }
                               }
                             },
