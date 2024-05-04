@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
+import '../Tools/HeartAnimationWidget.dart';
 import '../Tools/HowMuchStars.dart';
 import '../Tools/LoadingScreen.dart';
 import '../main.dart';
@@ -35,10 +36,14 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   List<dynamic> authorsNames = [nothingHere];
   double rate = 1.0;
 
+  bool isHeartAnimating = false;
+  bool emptyHeart = false;
+
   @override
   void initState() {
     super.initState();
     giveMeDetailsOfBook(widget.bookId);
+    isThatBookInMyFav();
   }
 
   @override
@@ -63,21 +68,50 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                 children: [
                   Column(
                     children: [
-                      SizedBox(
-                        width: widthScreen / 2.3,
-                        height: heightScreen / 2.5,
-                        child: GestureDetector(
+                      GestureDetector(
+                        child: Stack(children: [
+                          SizedBox(
+                            width: widthScreen / 2.3,
+                            height: heightScreen / 2.5,
                             child: Image.network(picture, fit: BoxFit.fill),
-                        onDoubleTap: (){
-                              addToFavourite();
-                              print('dodaje');
+                          ),
+                          Opacity(
+                            opacity: isHeartAnimating ? 1 : 0,
+                            child: HeartAnimationWidget(
+                              duration: Duration(milliseconds: 800),
+                              child: emptyHeart ? Icon(
+                                Icons.favorite_border,
+                                color: Colors.white,
+                                size: 50,
+                              ): Icon(Icons.favorite,
+                              color: Colors.white,
+                              size: 50,
+                              ),
+                              isAnimating: isHeartAnimating,
+                              onEnd: () => setState(() {
+                                isHeartAnimating = false;
+                              }),
+                            ),
+                          )
+                        ]),
+                        onDoubleTap: () async {
+                          print('dodaje $isHeartAnimating');
+                          setState(() {
+                            isHeartAnimating = true;
+                          });
+                          try{
+                            await addToFavourite();
+                            emptyHeart = true;
+                          } on http.ClientException catch(e){
+                            print('wcale nie $e');
+                            deleteBooksFromMyLibrary(apiURLDeleteBookFromFav,
+                                'book_id', widget.bookId.toString());
+                            emptyHeart=false;
+                          }
                         },
-                        onLongPress: (){
-                              print('wcale nie');
-                              deleteBooksFromMyLibrary(apiURLDeleteBookFromFav, 'book_id', widget.bookId.toString());
+                        onLongPress: () {
                         },
-                        ),
-                      )
+                      ),
                     ],
                   ),
                   Flexible(
@@ -111,7 +145,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                                   )
                                 } else ...{
                                   Text(
-                                    '${authorsNames[i]}, ',
+                                    '${authorsNames[i]},',
                                     style:
                                         Theme.of(context).textTheme.titleSmall,
                                   )
@@ -220,7 +254,26 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       print(data);
     } else {
       print("Nie okej :(");
-      throw Exception(response.body);
+      throw http.ClientException(jsonDecode(response.body)['message']);
+    }
+  }
+  Future<void> isThatBookInMyFav() async {
+    var sharedPreferences = await SharedPreferences.getInstance();
+    String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
+    Map<String, dynamic> getUserResponse =
+    await getSthById(apiURLGetUser, actualToken!, 'get_self', 'true');
+
+    List<dynamic> userData;
+    List<dynamic> favBooks = [-1];
+    setState(() {
+      userData = getUserResponse['results'];
+      favBooks = userData[0]['library']['favourite_books'];
+    });
+
+    if(favBooks.contains(widget.bookId)) {
+      emptyHeart= true;
+    } else {
+      emptyHeart = false;
     }
   }
 }

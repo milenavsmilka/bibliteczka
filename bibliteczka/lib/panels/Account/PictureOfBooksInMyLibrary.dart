@@ -79,7 +79,6 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
                     setState(() {
                       deleteBooksFromMyLibrary(widget.categoryUrl, 'book_id',
                           widget.bookId.toString());
-                      // Get.to(() => MyProfileScreen(), transition: Transition.fade);
                       Navigator.of(context).pushReplacement(
                           CustomPageRoute(child: MyProfileScreen(), chooseAnimation: CustomPageRoute.FADE));
                     });
