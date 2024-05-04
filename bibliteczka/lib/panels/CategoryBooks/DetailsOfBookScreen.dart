@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
-import '../Tools/HeartAnimationWidget.dart';
+import '../Tools/IconsAnimation.dart';
 import '../Tools/HowMuchStars.dart';
 import '../Tools/LoadingScreen.dart';
 import '../main.dart';
@@ -79,7 +79,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                           ),
                           Opacity(
                             opacity: isHeartAnimating ? 1 : 0,
-                            child: HeartAnimationWidget(
+                            child: IconsAnimation(
                               duration: Duration(milliseconds: 800),
                               child: emptyHeart ? Icon(
                                 Icons.favorite_border,
@@ -99,7 +99,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             opacity: isReadAnimating ? 1 : 0,
                             child: Align(
                               alignment: Alignment.bottomRight,
-                              child: HeartAnimationWidget(
+                              child: IconsAnimation(
                                 duration: Duration(milliseconds: 800),
                                 child: emptyRead ? Icon(
                                   Icons.remove_circle,

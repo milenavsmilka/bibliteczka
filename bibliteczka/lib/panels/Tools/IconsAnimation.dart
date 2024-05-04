@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
-class HeartAnimationWidget extends StatefulWidget {
+class IconsAnimation extends StatefulWidget {
   final Widget child;
   final bool isAnimating;
   final Duration duration;
   final VoidCallback? onEnd;
 
-  const HeartAnimationWidget({
+  const IconsAnimation({
     Key? key,
     required this.child,
     required this.isAnimating,
@@ -15,10 +15,10 @@ class HeartAnimationWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _HeartAnimationWidgetState createState() => _HeartAnimationWidgetState();
+  _IconsAnimationState createState() => _IconsAnimationState();
 }
 
-class _HeartAnimationWidgetState extends State<HeartAnimationWidget>
+class _IconsAnimationState extends State<IconsAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation<double> scale;
@@ -36,7 +36,7 @@ class _HeartAnimationWidgetState extends State<HeartAnimationWidget>
 
 
   @override
-  void didUpdateWidget(HeartAnimationWidget oldWidget) {
+  void didUpdateWidget(IconsAnimation oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if(widget.isAnimating != oldWidget.isAnimating){
