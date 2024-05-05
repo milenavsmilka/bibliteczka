@@ -30,8 +30,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    double widthScreen = MediaQuery.of(context).size.width;
+    double heightScreen = MediaQuery.of(context).size.height;
 
     if (userData.isEmpty) {
       return const LoadingScreen(message: nothingHere);
@@ -57,8 +57,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       },
                       icon: Image.asset(
                         setProfilePicture(userData[0]['profile_picture']),
-                        height: screenWidth * 0.35,
-                        width: screenWidth * 0.35,
+                        height: widthScreen * 0.35,
+                        width: widthScreen * 0.35,
                       ),
                     ),
                     Flexible(
@@ -162,19 +162,19 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: SizedBox(
-                    height: screenHeight / 4,
+                    height: heightScreen / 4,
                     child: GridView(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,
-                          mainAxisExtent: screenHeight / 5,
+                          mainAxisExtent: heightScreen / 5,
                           mainAxisSpacing: 20),
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       children: [
                         if (favBooks.isEmpty) ...{
                           SizedBox(
-                            width: screenWidth / 5,
-                            height: screenHeight / 5,
+                            width: widthScreen / 5,
+                            height: heightScreen / 5,
                             child: Text(nothingHere),
                           )
                         } else ...{
@@ -202,19 +202,19 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: SizedBox(
-                    height: screenHeight / 4,
+                    height: heightScreen / 4,
                     child: GridView(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,
-                          mainAxisExtent: screenHeight / 5,
+                          mainAxisExtent: heightScreen / 5,
                           mainAxisSpacing: 20),
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       children: [
                         if (readBooks.isEmpty) ...{
                           SizedBox(
-                            width: screenWidth / 5,
-                            height: screenHeight / 5,
+                            width: widthScreen / 5,
+                            height: heightScreen / 5,
                             child: Text(nothingHere),
                           )
                         } else ...{
@@ -250,14 +250,14 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   }
 
   showChangeProfilePictureDialog() {
-    double screenHeight = MediaQuery.of(context).size.height;
+    double heightScreen = MediaQuery.of(context).size.height;
     showCupertinoDialog(
         context: context,
         builder: (context) {
           return GridView(
             scrollDirection: Axis.vertical,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, mainAxisExtent: screenHeight / 4),
+                crossAxisCount: 2, mainAxisExtent: heightScreen / 4),
             children: [
               for (int i = 1; i < 19; i++) ...{
                 IconButton(

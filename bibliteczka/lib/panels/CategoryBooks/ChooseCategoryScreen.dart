@@ -14,9 +14,11 @@ class ChooseCategoryScreen extends StatefulWidget {
 }
 
 class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
-
   @override
   Widget build(BuildContext context) {
+    double widthScreen = MediaQuery.of(context).size.width;
+    double heightScreen = MediaQuery.of(context).size.height;
+
     return Scaffold(
         appBar: DefaultAppBar(
           title: 'Kategoria',
@@ -28,7 +30,8 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
             SliverFillRemaining(
               hasScrollBody: false,
               child: Wrap(children: [
-                SizedBox(height: 20, width: 20),
+                SizedBox(
+                    height: heightScreen * 0.025, width: widthScreen * 0.18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -44,7 +47,8 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20, width: 20),
+                SizedBox(
+                    height: heightScreen * 0.025, width: widthScreen * 0.18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -53,7 +57,6 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                       nameOfCategoryEN: 'History',
                       pathToImage: iconSwords,
                     ),
-                    // SizedBox(width: MediaQuery.of(context).size.width * 0.06),
                     CategoryButton(
                       nameOfCategory: 'Nauka',
                       nameOfCategoryEN: 'Popular Science',
@@ -61,7 +64,8 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20, width: 20),
+                SizedBox(
+                    height: heightScreen * 0.025, width: widthScreen * 0.18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -77,7 +81,8 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                     )
                   ],
                 ),
-                SizedBox(height: 20, width: 20),
+                SizedBox(
+                    height: heightScreen * 0.025, width: widthScreen * 0.18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -93,7 +98,8 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                     )
                   ],
                 ),
-                SizedBox(height: 20, width: 20),
+                SizedBox(
+                    height: heightScreen * 0.025, width: widthScreen * 0.18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -109,13 +115,15 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                     )
                   ],
                 ),
-                SizedBox(height: 20, width: 20),
+                SizedBox(
+                    height: heightScreen * 0.025, width: widthScreen * 0.18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
                       nameOfCategory: 'Thrillery',
-                      nameOfCategoryEN: 'Thriller, Horror, Mystery and detective stories',
+                      nameOfCategoryEN:
+                          'Thriller, Horror, Mystery and detective stories',
                       pathToImage: iconDetective,
                     ),
                     CategoryButton(
@@ -125,7 +133,8 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                     )
                   ],
                 ),
-                SizedBox(height: 20, width: 20),
+                SizedBox(
+                    height: heightScreen * 0.025, width: widthScreen * 0.18),
               ]),
             )
           ],
@@ -139,26 +148,42 @@ class CategoryButton extends StatelessWidget {
   final String pathToImage;
 
   const CategoryButton(
-      {super.key, required this.nameOfCategory, required this.pathToImage, required this.nameOfCategoryEN});
+      {super.key,
+      required this.nameOfCategory,
+      required this.pathToImage,
+      required this.nameOfCategoryEN});
 
   @override
   Widget build(BuildContext context) {
+    double widthScreen = MediaQuery.of(context).size.width;
+    double heightScreen = MediaQuery.of(context).size.height;
+
     return ElevatedButton(
         onPressed: () {
           checkIsTokenValid(
-              context, AllCategoryBooksScreen(nameOfCategory: nameOfCategory,nameOfCategoryEN: nameOfCategoryEN,));
+              context,
+              AllCategoryBooksScreen(
+                nameOfCategory: nameOfCategory,
+                nameOfCategoryEN: nameOfCategoryEN,
+              ));
         },
         style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(23.0)))),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.asset(pathToImage,
-                height: MediaQuery.of(context).size.width * 0.3),
-            Text(nameOfCategory)
-          ],
+        child: SizedBox(
+          height: widthScreen * 0.3 + widthScreen * 0.1,
+          width: widthScreen * 0.3,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(pathToImage, height: widthScreen * 0.3),
+              Text(
+                nameOfCategory,
+                overflow: TextOverflow.ellipsis,
+              )
+            ],
+          ),
         ));
   }
 }

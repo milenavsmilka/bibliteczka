@@ -1,5 +1,6 @@
 import 'package:biblioteczka/styles/DarkTheme.dart';
 import 'package:biblioteczka/styles/LightTheme.dart';
+import 'package:biblioteczka/styles/ScpecialTheme.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ class ThemeManager {
     switch(howIsTheme){
       case light: return lightTheme;
       case dark: return darkTheme;
+      case special: return specialTheme;
       default: return lightTheme;
     }
   }

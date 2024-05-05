@@ -52,7 +52,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    double widthScreen = MediaQuery.of(context).size.width;
 
     opinionTextToSend.addListener(() {
       if (opinionTextToSend.text.isNotEmpty) {
@@ -72,11 +72,11 @@ class _OpinionScreenState extends State<OpinionScreen> {
                 Flexible(
                   child: Container(
                     alignment: Alignment.center,
-                    width: screenWidth * 0.20,
+                    width: widthScreen * 0.20,
                     child: Image.asset(
                       setProfilePicture(profilePicture),
-                      height: screenWidth * 0.13,
-                      width: screenWidth * 0.13,
+                      height: widthScreen * 0.13,
+                      width: widthScreen * 0.13,
                     ),
                   ),
                 ),
@@ -92,12 +92,12 @@ class _OpinionScreenState extends State<OpinionScreen> {
                                     ? Theme.of(context).primaryColor
                                     : Theme.of(context).secondaryHeaderColor,
                                 borderRadius: BorderRadius.circular(10)),
-                            width: screenWidth * 0.05,
-                            height: screenWidth * 0.08,
+                            width: widthScreen * 0.05,
+                            height: widthScreen * 0.08,
                           ),
                         ),
                         Container(
-                            width: screenWidth * 0.70,
+                            width: widthScreen * 0.70,
                             padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                                 color: widget.instruction == OpinionScreen.LOAD
@@ -141,7 +141,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
                   children: [
                     Row(
                       children: [
-                        SizedBox(width: screenWidth * (1 / 4)),
+                        SizedBox(width: widthScreen * (1 / 4)),
                         for (int i = 1; i < 6; i++) ...{
                           IconButton(
                               onPressed: () {
@@ -162,7 +162,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
                     ),
                     Row(
                       children: [
-                        SizedBox(width: screenWidth * (4 / 12)),
+                        SizedBox(width: widthScreen * (4 / 12)),
                         Ink(
                           decoration: ShapeDecoration(
                             color: Theme.of(context).iconTheme.color,
@@ -187,7 +187,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
                             },
                           ),
                         ),
-                        SizedBox(width: screenWidth * (5 / 12) - 60),
+                        SizedBox(width: widthScreen * (5 / 12) - 60),
                         Ink(
                           decoration: ShapeDecoration(
                             color: Theme.of(context).iconTheme.color,

@@ -44,6 +44,13 @@ class _ChangeThemeScreenState extends State<ChangeThemeScreen> {
                     });
                   },
                   child: Text(changeToDarkTheme)),
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      themeState.setAnotherTheme = special;
+                    });
+                  },
+                  child: Text(changeToSpecialTheme)),
             ],
           ),
         ),

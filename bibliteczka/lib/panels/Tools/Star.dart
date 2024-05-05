@@ -17,11 +17,11 @@ class Star extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    double widthScreen = MediaQuery.of(context).size.width;
 
     return Row(
       children: [
-        SizedBox(width: screenWidth * (1 / 3)),
+        SizedBox(width: widthScreen * (1 / 3)),
         for(int i=1;i<6;i++)...{
           IconButton(
               onPressed: () {
@@ -67,12 +67,12 @@ class Star extends StatelessWidget {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     double screenWidth = MediaQuery.of(context).size.width;
+//     double widthScreen = MediaQuery.of(context).size.width;
 //
 //     return Row(
 //       key: widget.key,
 //       children: [
-//         SizedBox(width: screenWidth * (1 / 3)),
+//         SizedBox(width: widthScreen * (1 / 3)),
 //         for(int i=1;i<6;i++)...{
 //           IconButton(
 //               onPressed: () {

@@ -1,20 +1,12 @@
-import 'dart:convert';
-
-import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
-import 'package:biblioteczka/panels/Tools/CustomPageRoute.dart';
 import 'package:biblioteczka/panels/News/NewBooksScreen.dart';
+import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'CategoryBooks/ChooseCategoryScreen.dart';
-import 'Account/ChangeThemeScreen.dart';
-import 'LoginScreen.dart';
-import 'Account/SettingsScreen.dart';
 import 'Tools/functions.dart';
-import 'main.dart';
+import 'TopOfTheTop/TopScreen.dart';
 
 class MainPanelScreen extends StatefulWidget {
   const MainPanelScreen({Key? key}) : super(key: key);
@@ -65,8 +57,8 @@ class _MainPanelScreen extends State<MainPanelScreen> {
                       nameOfOptionFromMenu: "Nowości",
                       widgetToRoute: NewBooksScreen()),
                   ChooseOptionFromMenuButton(
-                      nameOfOptionFromMenu: "Top 100",
-                      widgetToRoute: ChooseCategoryScreen()),
+                      nameOfOptionFromMenu: "Top 10 w kategorii",
+                      widgetToRoute: TopScreen()),
                   ChooseOptionFromMenuButton(
                       nameOfOptionFromMenu: "Autorzy",
                       widgetToRoute: ChooseCategoryScreen()),

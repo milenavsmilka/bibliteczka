@@ -37,8 +37,10 @@ const String yes = 'Tak';
 const String no = 'Nie';
 const String light = 'light';
 const String dark = 'dark';
+const String special = 'special';
 const String changeToLightTheme = 'Jasny';
 const String changeToDarkTheme = 'Ciemny';
+const String changeToSpecialTheme = 'Specjalny';
 const String titleOfApp = 'Biblioteczka';
 const String tokenIsValid = 'token_valid';
 const String giveMeUserNameError = 'Podaj nazwę użytkownika';
@@ -94,3 +96,17 @@ const String rateBookByStars = 'Oceń książkę ilością gwiazdek!';
 
 //NewBooksScreen
 const String dateOfPremiere = 'Data premiery:';
+
+//Categories
+const String romanceG = 'Romans';
+const String childrenG = 'Dziecięce';
+const String historyG = 'Historia';
+const String scienceG = 'Nauka';
+const String poetryG = 'Wiersze';
+const String youngAdultG = 'Młodzieżowe';
+const String fantasyG = 'Fantasy';
+const String bioG = 'Biografie';
+const String adventureG = 'Przygodowe';
+const String comicsG = 'Komiksy';
+const String thrillerG = 'Thrillery';
+const String allG = 'Wszystko';
