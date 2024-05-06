@@ -3,9 +3,7 @@ import 'dart:convert';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -77,7 +75,23 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                         width: widthScreen / 2.3,
                         height: heightScreen / 2.5,
                         child: Image.network(listOfBooks[index]['picture'],
-                            fit: BoxFit.fill),
+                            fit: BoxFit.fill,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                                'assets/images/brak_ksiazki.png',
+                                fit: BoxFit.fill);
+                          },
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                    loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                            );
+                          },),
                       ),
                     ),
                     SizedBox(

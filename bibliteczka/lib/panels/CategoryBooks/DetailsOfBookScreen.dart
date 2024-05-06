@@ -75,7 +75,23 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                           SizedBox(
                             width: widthScreen / 2.3,
                             height: heightScreen / 2.5,
-                            child: Image.network(picture, fit: BoxFit.fill),
+                            child: Image.network(picture, fit: BoxFit.fill,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                    'assets/images/brak_ksiazki.png',
+                                    fit: BoxFit.fill);
+                              },
+                              loadingBuilder: (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes != null
+                                        ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                );
+                              },),
                           ),
                           Opacity(
                             opacity: isHeartAnimating ? 1 : 0,

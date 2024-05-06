@@ -55,7 +55,23 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
                 icon: Image.network(bookPicture,
                     fit: BoxFit.fill,
                     width: widthScreen / 3,
-                    height: heightScreen / 4),
+                    height: heightScreen / 4,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                        'assets/images/brak_ksiazki.png',
+                        fit: BoxFit.fill);
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
+                    );
+                  },),
                 onPressed: () {
                   Navigator.push(
                       context,
