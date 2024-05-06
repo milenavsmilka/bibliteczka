@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../CategoryBooks/DetailsOfBookScreen.dart';
 import '../Tools/Genres.dart';
@@ -12,10 +8,9 @@ import '../Tools/HowMuchStars.dart';
 import '../Tools/LoadingScreen.dart';
 import '../Tools/NetworkLoadingImage.dart';
 import '../Tools/functions.dart';
-import '../main.dart';
 
 class TopScreen extends StatefulWidget {
-  const TopScreen({Key? key}) : super(key: key);
+  const TopScreen({super.key});
 
   @override
   _TopScreen createState() => _TopScreen();
@@ -29,7 +24,7 @@ class _TopScreen extends State<TopScreen> {
   @override
   void initState() {
     super.initState();
-    giveMeListsOfBook(Genres.all.nameEN);
+    giveMeListsOfBookToTop(Genres.all.nameEN);
   }
 
   @override
@@ -62,7 +57,7 @@ class _TopScreen extends State<TopScreen> {
                                 onTap: () {
                                   setState(() {
                                     current = index;
-                                    giveMeListsOfBook(Genres.values[index].nameEN);
+                                    giveMeListsOfBookToTop(Genres.values[index].nameEN);
                                   });
                                 },
                                 child: AnimatedContainer(
@@ -176,7 +171,8 @@ class _TopScreen extends State<TopScreen> {
                                         for (int i = 0;
                                             i < listOfBooks[index]['authors_names'].length;
                                             i++) ...{
-                                          if (i == listOfBooks[index]['authors_names'].length - 1) ...{
+                                          if (i ==
+                                              listOfBooks[index]['authors_names'].length - 1) ...{
                                             Text(
                                               listOfBooks[index]['authors_names'][i].toString(),
                                               style: Theme.of(context).textTheme.titleSmall,
@@ -222,39 +218,30 @@ class _TopScreen extends State<TopScreen> {
     }
   }
 
-  Future<void> giveMeListsOfBook(String nameOfCategory) async {
-    var sharedPreferences = await SharedPreferences.getInstance();
-    String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-    const String apiUrl = apiURLGetBooks;
-
-    var params = {'': ''};
+  Future<void> giveMeListsOfBookToTop(String nameOfCategory) async {
+    Map<String, dynamic> data;
     if (nameOfCategory != Genres.all.nameEN) {
-      params = {
-        'genres': nameOfCategory,
-        'per_page': '10',
-        'minimum_score': '4',
-        'sorts': '-opinions_count,-score'
-      };
+      data = await getSthById(
+          apiURLGetBooks,
+          Map.of({
+            'genres': nameOfCategory,
+            'per_page': '10',
+            'minimum_score': '4',
+            'sorts': '-opinions_count,-score'
+          }));
     } else {
-      params = {'per_page': '10', 'minimum_score': '4', 'sorts': '-opinions_count,-score'};
+      data = await getSthById(
+          apiURLGetBooks,
+          Map.of({
+            'per_page': '10',
+            'minimum_score': '4',
+            'sorts': '-opinions_count,-score'
+          }));
     }
-    final response = await http.get(Uri.parse(apiUrl).replace(queryParameters: params), headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer $actualToken',
-    });
-    Map<String, dynamic> data = jsonDecode(response.body);
-    print('jaki rezulat? $data');
     setState(() {
       listOfBooks = data['results'];
     });
-
+    print('jaki rezulat? $data');
     print('number of books ${listOfBooks.length}');
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      print(data);
-    } else {
-      print("Nie okej :(");
-    }
   }
 }

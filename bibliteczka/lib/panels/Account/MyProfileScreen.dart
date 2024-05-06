@@ -237,10 +237,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   }
 
   Future<void> giveMeUserData() async {
-    var sharedPreferences = await SharedPreferences.getInstance();
-    String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
     Map<String, dynamic> getUserResponse =
-        await getSthById(apiURLGetUser, actualToken!, 'get_self', 'true');
+        await getSthById(apiURLGetUser,Map.of({'get_self':'true'}));
 
     setState(() {
       userData = getUserResponse['results'];

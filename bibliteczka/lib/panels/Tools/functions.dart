@@ -95,17 +95,10 @@ Future<void> changePassword(String newPass, String oldPass) async {
   }
 }
 
-Future<void> sendOpinion(String comment, int starsRating,
-    String bookId) async {
+Future<void> sendRequest(String apiUrl, Map<String,dynamic> requestBody, [BuildContext? context]) async {
   var sharedPreferences = await SharedPreferences.getInstance();
   String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
 
-  const String apiUrl = apiURLGetOpinion;
-  final Map<String, dynamic> requestBody = {
-    'book_id': bookId,
-    'stars_count': starsRating,
-    'comment': comment
-  };
   String requestBodyJson = jsonEncode(requestBody);
 
   final response = await http.post(
@@ -122,7 +115,13 @@ Future<void> sendOpinion(String comment, int starsRating,
   Map<String, dynamic> data = jsonDecode(response.body);
   var message = data['message'];
   print(message);
-  if (response.statusCode == 200) {
+  if(message=='logged_out'){
+    sharedPreferences.clear();
+    print("Poprawnie wylogowano użytkownika");
+    Navigator.push(
+        context!, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE,child: LoginScreen()));
+  }
+  else if (response.statusCode == 200) {
     print("Okej :D");
   } else if (message == 'opinion_already_exists') {
     message = 'Możesz wystawić tylko jedną opinię dla danej książki';
@@ -131,49 +130,27 @@ Future<void> sendOpinion(String comment, int starsRating,
       'length_validation_error') {
     message = 'Komentarz może mieć min 2 i max 1000 znaków';
     throw http.ClientException(message);
+  } else {
+    print("Nie okej :(");
+    throw http.ClientException(message);
   }
 }
 
-Future<Map<String, dynamic>> getSthById(String url, String token, String key, String value) async {
-  final params = {key: value};
+Future<Map<String, dynamic>> getSthById(String url, Map<String,dynamic> params) async {
+  var sharedPreferences = await SharedPreferences.getInstance();
+  String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
   final response = await http
       .get(Uri.parse(url).replace(queryParameters: params), headers: {
     'Content-Type': 'application/json; charset=UTF-8',
-    'Authorization': 'Bearer $token',
+    'Authorization': 'Bearer $actualToken',
   });
   Map<String, dynamic> data = jsonDecode(response.body);
   if (response.statusCode == 200) {
     print('good');
   } else {
-    print("Nie good $key $value ${response.body}");
+    print("Nie good $params ${response.body}");
   }
   return data;
-}
-
-Future<void> logOut(BuildContext context) async {
-  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-
-  const String apiUrl = apiURLLogOut;
-  final Map<String, dynamic> requestBody = {
-  };
-  String requestBodyJson = jsonEncode(requestBody);
-
-  final response = await http.post(Uri.parse(apiUrl), headers: {
-    'Content-Type': 'application/json; charset=UTF-8',
-    'Authorization': 'Bearer $actualToken'
-  }, body: requestBodyJson);
-  Map<String, dynamic> data = jsonDecode(response.body);
-  String message = data['message'];
-  print('Otrzymana wiadomość po wylogowaniu: $message $actualToken');
-  if (response.statusCode == 200) {
-    sharedPreferences.clear();
-    print("Poprawnie wylogowano użytkownika");
-    Navigator.push(
-        context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE,child: LoginScreen()));
-  } else {
-    print("Pojawił się błąd, użytkownik nie został wylogowany");
-  }
 }
 
 void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {
@@ -185,7 +162,6 @@ void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {
       "W pliku functions.dart wypisuję ważność tokenu i jego zawartość $isLoggedIn $actualToken");
 
   if (actualToken != null) {
-    //pobranie ważności tokena
     const String apiUrl = apiURLIsTokenValid;
     final response = await http.get(Uri.parse(apiUrl), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
@@ -196,7 +172,6 @@ void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {
     print('Czy token valid? $tokenValid');
     if (tokenValid == tokenIsValid) {
       if (widgetToRoute != null) {
-        //jeżeli token jest ważny
         Navigator.push(context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE,child: widgetToRoute));
       }
     } else {
@@ -222,7 +197,6 @@ void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {
 void whereToGo(BuildContext context) async {
   var sharedPreferences = await SharedPreferences.getInstance();
   String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-  // String? isLoggedIn = sharedPreferences.getString(isLogged);
   var isLoggedIn = sharedPreferences.getBool('isLogged') ?? false;
 
   print("Wypiszę $isLoggedIn $actualToken");

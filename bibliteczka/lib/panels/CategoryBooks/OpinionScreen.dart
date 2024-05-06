@@ -13,11 +13,7 @@ import '../Tools/Triangle.dart';
 import '../main.dart';
 
 class OpinionScreen extends StatefulWidget {
-  const OpinionScreen(
-      {super.key,
-      this.opinionId,
-      required this.instruction,
-      required this.bookId});
+  const OpinionScreen({super.key, this.opinionId, required this.instruction, required this.bookId});
 
   final int? opinionId;
   final int bookId;
@@ -41,13 +37,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
   String username = '';
 
   bool listenTextController = false;
-  final Map<int, bool> starsFilledStatus = {
-    1: false,
-    2: false,
-    3: false,
-    4: false,
-    5: false
-  };
+  final Map<int, bool> starsFilledStatus = {1: false, 2: false, 3: false, 4: false, 5: false};
   int starsRating = 0;
 
   @override
@@ -106,18 +96,13 @@ class _OpinionScreenState extends State<OpinionScreen> {
                                 borderRadius: BorderRadius.circular(10)),
                             child: widget.instruction == OpinionScreen.LOAD
                                 ? ShowAndHideMoreText(
-                                    username: username,
-                                    starsRating: starsRating,
-                                    comment: comment)
+                                    username: username, starsRating: starsRating, comment: comment)
                                 : TextFormField(
                                     maxLines: null,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
+                                    autovalidateMode: AutovalidateMode.onUserInteraction,
                                     validator: MultiValidator([
-                                      MinLengthValidator(2,
-                                          errorText: minLengthForComment),
-                                      MaxLengthValidator(1000,
-                                          errorText: maxLengthForComment),
+                                      MinLengthValidator(2, errorText: minLengthForComment),
+                                      MaxLengthValidator(1000, errorText: maxLengthForComment),
                                     ]).call,
                                     onTap: () {
                                       setState(() {
@@ -146,12 +131,10 @@ class _OpinionScreenState extends State<OpinionScreen> {
                           IconButton(
                               onPressed: () {
                                 setState(() {
-                                  starsFilledStatus
-                                      .updateAll((key, value) => false);
+                                  starsFilledStatus.updateAll((key, value) => false);
                                   starsFilledStatus.update(i, (value) => true);
                                   starsRating = starsFilledStatus.keys
-                                      .lastWhere(
-                                          (k) => starsFilledStatus[k] == true);
+                                      .lastWhere((k) => starsFilledStatus[k] == true);
                                 });
                               },
                               icon: (i <= starsRating)
@@ -172,17 +155,14 @@ class _OpinionScreenState extends State<OpinionScreen> {
                           width: 30,
                           child: IconButton(
                             icon: const Icon(Icons.close),
-                            color:
-                                Theme.of(context).dialogTheme.backgroundColor,
+                            color: Theme.of(context).dialogTheme.backgroundColor,
                             iconSize: 15,
                             onPressed: () {
                               setState(() {
-                                Navigator.of(context).pushReplacement(
-                                    CustomPageRoute(
-                                        child: DetailsOfBookScreen(
-                                            bookId: widget.bookId,
-                                            turnOpinions: true),
-                                        chooseAnimation: CustomPageRoute.FADE));
+                                Navigator.of(context).pushReplacement(CustomPageRoute(
+                                    child: DetailsOfBookScreen(
+                                        bookId: widget.bookId, turnOpinions: true),
+                                    chooseAnimation: CustomPageRoute.FADE));
                               });
                             },
                           ),
@@ -197,24 +177,24 @@ class _OpinionScreenState extends State<OpinionScreen> {
                           width: 30,
                           child: IconButton(
                             icon: const Icon(Icons.check),
-                            color:
-                                Theme.of(context).dialogTheme.backgroundColor,
+                            color: Theme.of(context).dialogTheme.backgroundColor,
                             iconSize: 15,
                             onPressed: () async {
                               if (starsRating == 0) {
-                                showSnackBar(
-                                    context, rateBookByStars, errorColor);
+                                showSnackBar(context, rateBookByStars, errorColor);
                               } else if (_formKey.currentState!.validate()) {
                                 try {
-                                  await sendOpinion(opinionTextToSend.text,
-                                      starsRating, widget.bookId.toString());
-                                  Navigator.of(context).pushReplacement(
-                                      CustomPageRoute(
-                                          child: DetailsOfBookScreen(
-                                              bookId: widget.bookId,
-                                              turnOpinions: true),
-                                          chooseAnimation:
-                                              CustomPageRoute.FADE));
+                                  await sendRequest(
+                                      apiURLGetOpinion,
+                                      Map.of({
+                                        'book_id': widget.bookId.toString(),
+                                        'stars_count': starsRating,
+                                        'comment': opinionTextToSend.text
+                                      }));
+                                  Navigator.of(context).pushReplacement(CustomPageRoute(
+                                      child: DetailsOfBookScreen(
+                                          bookId: widget.bookId, turnOpinions: true),
+                                      chooseAnimation: CustomPageRoute.FADE));
                                   opinionTextToSend.clear();
                                 } on http.ClientException catch (e) {
                                   showSnackBar(context, e.message, errorColor);
@@ -235,14 +215,11 @@ class _OpinionScreenState extends State<OpinionScreen> {
   }
 
   Future<void> giveMeOpinionBook() async {
-    var sharedPreferences = await SharedPreferences.getInstance();
-    String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-
     widget.instruction == OpinionScreen.LOAD
-        ? opinionResponse = await getSthById(
-            apiURLGetOpinion, actualToken!, 'id', widget.opinionId.toString())
-        : opinionResponse = await getSthById(
-            apiURLGetUser, actualToken!, 'get_self', true.toString());
+        ? opinionResponse =
+            await getSthById(apiURLGetOpinion, Map.of({'id': widget.opinionId.toString()}))
+        : opinionResponse =
+            await getSthById(apiURLGetUser, Map.of({'get_self': true.toString()}));
 
     setState(() {
       index = opinionResponse['pagination']['count'];

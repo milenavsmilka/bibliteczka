@@ -55,7 +55,7 @@ class _DefaultAppBarState extends State<DefaultAppBar>{
                 child: Text(clickToLogOutButton),
                 onTap: () async {
                   checkIsTokenValid(context);
-                  await logOut(context);
+                  await sendRequest(apiURLLogOut,Map(),context);
                 })
           ],
         )

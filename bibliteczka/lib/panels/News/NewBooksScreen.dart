@@ -57,7 +57,7 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
                       SizedBox(
                         width: widthScreen / 2.3,
                         height: heightScreen / 2.5,
-                        child: NetworkLoadingImage(pathToImage: listOfBooks[index]['picture'],),
+                        child: NetworkLoadingImage(pathToImage: listOfBooks[index]['picture']),
                       ),
                       Flexible(
                         child: Padding(
@@ -142,13 +142,10 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
   }
 
   Future<void> giveMeNewBooks() async {
-    var sharedPreferences = await SharedPreferences.getInstance();
-    String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-
     DateTime date = DateTime(
         DateTime.now().year, DateTime.now().month - 3, DateTime.now().day);
     Map<String, dynamic> newBooksResponse = await getSthById(
-        apiURLGetNewBooks, actualToken!, 'date_from', date.toString());
+        apiURLGetNewBooks, Map.of({'date_from': date.toString()}));
 
     setState(() {
       listOfBooks = newBooksResponse['results'];

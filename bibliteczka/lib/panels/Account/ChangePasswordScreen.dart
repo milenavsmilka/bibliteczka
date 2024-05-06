@@ -80,7 +80,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         RequiredValidator(errorText: 'Pole nie może być puste'),
                         DifferentPasswordValidator(
                             'Hasła nie mogą być takie same',
-                            currentPasswordController.text)
+                            currentPasswordController.text),
+                        // validatePassword todo dodać jeszcze tą walidację
                       ]).call,
                       decoration: InputDecoration(
                           labelText: 'Podaj nowe hasło',

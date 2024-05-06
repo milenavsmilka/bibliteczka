@@ -97,11 +97,8 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
   }
 
   Future<void> giveMeBookData() async {
-    var sharedPreferences = await SharedPreferences.getInstance();
-    String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-
     bookResponse = await getSthById(
-        apiURLGetBooks, actualToken!, 'id', widget.bookId.toString());
+        apiURLGetBooks, Map.of({'id': widget.bookId.toString()}));
 
     setState(() {
       bookDetails = bookResponse['results'];

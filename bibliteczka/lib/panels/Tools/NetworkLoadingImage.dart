@@ -10,6 +10,7 @@ class NetworkLoadingImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(context.widget.key);
     return Image.network(
       pathToImage,
       fit: BoxFit.fill,

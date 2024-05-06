@@ -1,19 +1,14 @@
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:biblioteczka/panels/CategoryBooks/OpinionScreen.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/panels/Tools/NetworkLoadingImage.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
-import '../Tools/IconsAnimation.dart';
 import '../Tools/HowMuchStars.dart';
+import '../Tools/IconsAnimation.dart';
 import '../Tools/LoadingScreen.dart';
-import '../main.dart';
 
 class DetailsOfBookScreen extends StatefulWidget {
   const DetailsOfBookScreen(
@@ -54,6 +49,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
     double heightScreen = MediaQuery.of(context).size.height;
+    print('Picture $picture');
 
     if (title.isEmpty) {
       return const LoadingScreen(message: loading);
@@ -77,7 +73,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                           SizedBox(
                             width: widthScreen / 2.3,
                             height: heightScreen / 2.5,
-                            child: NetworkLoadingImage(pathToImage: picture),
+                            child: NetworkLoadingImage(pathToImage: picture),//todo problem z wywalaniem błędu
                           ),
                           Opacity(
                             opacity: isHeartAnimating ? 1 : 0,
@@ -125,7 +121,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             isHeartAnimating = true;
                           });
                           try{
-                            await addToLibrary(apiURLBookFromFav);
+                            await sendRequest(apiURLBookFromFav, Map.of({'book_id': widget.bookId.toString()}));
                             emptyHeart = true;
                           } on http.ClientException catch(e){
                             print('wcale nie $e');
@@ -140,7 +136,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             isReadAnimating = true;
                           });
                           try{
-                            await addToLibrary(apiURLBookFromRead);
+                            await sendRequest(apiURLBookFromRead,Map.of({'book_id': widget.bookId.toString()}));
                             emptyRead = true;
                           } on http.ClientException catch(e){
                             print('wcale nie $e');
@@ -234,18 +230,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   }
 
   Future<void> giveMeDetailsOfBook(int bookId) async {
-    var sharedPreferences = await SharedPreferences.getInstance();
-    String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-    String apiUrl = apiURLGetBooks;
-
-    final params = {'id': bookId.toString()};
-    print(Uri.parse(apiUrl).replace(queryParameters: params));
-    final response = await http
-        .get(Uri.parse(apiUrl).replace(queryParameters: params), headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer $actualToken',
-    });
-    Map<String, dynamic> data = jsonDecode(response.body);
+    Map<String, dynamic> data = await getSthById(apiURLGetBooks, Map.of({'id':bookId.toString()}));
 
     setState(() {
       final results = data['results'];
@@ -259,47 +244,13 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       rate = results[0]['score'] * 1.0;
       opinions = results[0]['opinions'];
     });
-
-    if (response.statusCode == 200) {
-      print(data);
-    } else {
-      print("Nie okej :(");
-    }
     print('Imię autora $authorsNames i opinie $opinions');
   }
 
-  Future<void> addToLibrary(String apiUrl) async {
-    var sharedPreferences = await SharedPreferences.getInstance();
-    String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
 
-    final Map<String, dynamic> requestBody = {
-      'book_id': widget.bookId.toString(),
-    };
-    String requestBodyJson = jsonEncode(requestBody);
-
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer $actualToken'
-      },
-      body: requestBodyJson,
-    );
-    print('Response: ${requestBody}');
-    if (response.statusCode == 200) {
-      print("Okej :D");
-      Map<String, dynamic> data = jsonDecode(response.body);
-      print(data);
-    } else {
-      print("Nie okej :(");
-      throw http.ClientException(jsonDecode(response.body)['message']);
-    }
-  }
   Future<void> isThatBookInMyLibrary() async {
-    var sharedPreferences = await SharedPreferences.getInstance();
-    String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
     Map<String, dynamic> getUserResponse =
-    await getSthById(apiURLGetUser, actualToken!, 'get_self', 'true');
+    await getSthById(apiURLGetUser, Map.of({'get_self': 'true'}));
 
     List<dynamic> userData;
     List<dynamic> favBooks = [-1];

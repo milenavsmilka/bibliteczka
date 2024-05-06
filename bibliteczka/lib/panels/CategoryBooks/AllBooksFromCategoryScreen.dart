@@ -92,29 +92,12 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
   }
 
   Future<void> giveMeListsOfBook(String nameOfCategory) async {
-    var sharedPreferences = await SharedPreferences.getInstance();
-    String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-    const String apiUrl = apiURLGetBooks;
-
-    final params = {'genres': nameOfCategory};
-    final response = await http
-        .get(Uri.parse(apiUrl).replace(queryParameters: params), headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer $actualToken',
-    });
-    Map<String, dynamic> data = jsonDecode(response.body);
+    Map<String, dynamic> data = await getSthById(apiURLGetBooks, Map.of({'genres':nameOfCategory}));
     print('jaki rezulat? $data');
+
     setState(() {
       listOfBooks = data['results'];
     });
-
     print('number of books ${listOfBooks.length}');
-
-    if (response.statusCode == 200) {
-      Map<String, dynamic> data = jsonDecode(response.body);
-      print(data);
-    } else {
-      print("Nie okej :(");
-    }
   }
 }
