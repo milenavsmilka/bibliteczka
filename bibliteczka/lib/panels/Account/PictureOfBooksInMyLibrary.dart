@@ -1,10 +1,12 @@
 import 'package:biblioteczka/panels/Account/MyProfileScreen.dart';
 import 'package:biblioteczka/panels/CategoryBooks/DetailsOfBookScreen.dart';
 import 'package:biblioteczka/panels/Tools/CustomPageRoute.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
+import '../Tools/NetworkLoadingImage.dart';
 import '../Tools/functions.dart';
 import '../main.dart';
 
@@ -51,35 +53,23 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
           width: widthScreen / 5,
           height: heightScreen / 5,
           child: Stack(children: [
-            IconButton(
-                icon: Image.network(bookPicture,
-                    fit: BoxFit.fill,
-                    width: widthScreen / 3,
-                    height: heightScreen / 4,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Image.asset(
-                        'assets/images/brak_ksiazki.png',
-                        fit: BoxFit.fill);
-                  },
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                            loadingProgress.expectedTotalBytes!
-                            : null,
-                      ),
-                    );
-                  },),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            DetailsOfBookScreen(bookId: widget.bookId,turnOpinions: true),
-                      ));
-                }),
+            SizedBox(
+              width: widthScreen/3,
+              height: heightScreen/4,
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: IconButton(
+                    icon: NetworkLoadingImage(pathToImage: bookPicture),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                DetailsOfBookScreen(bookId: widget.bookId,turnOpinions: true),
+                          ));
+                    }),
+              ),
+            ),
             Visibility(
               visible: widget.isEditingLibrary,
               child: Align(alignment: Alignment.topRight,

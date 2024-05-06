@@ -1,4 +1,5 @@
 import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
+import 'package:biblioteczka/panels/Tools/NetworkLoadingImage.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,24 +57,7 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
                       SizedBox(
                         width: widthScreen / 2.3,
                         height: heightScreen / 2.5,
-                        child: Image.network(listOfBooks[index]['picture'],
-                            fit: BoxFit.fill,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Image.asset(
-                                'assets/images/brak_ksiazki.png',
-                                fit: BoxFit.fill);
-                          },
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes != null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                    : null,
-                              ),
-                            );
-                          },),
+                        child: NetworkLoadingImage(pathToImage: listOfBooks[index]['picture'],),
                       ),
                       Flexible(
                         child: Padding(

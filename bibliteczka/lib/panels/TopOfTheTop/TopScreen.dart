@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import '../CategoryBooks/DetailsOfBookScreen.dart';
 import '../Tools/Genres.dart';
 import '../Tools/LoadingScreen.dart';
+import '../Tools/NetworkLoadingImage.dart';
 import '../Tools/functions.dart';
 import '../main.dart';
 
@@ -159,26 +160,8 @@ class _TopScreen extends State<TopScreen> {
                               child: SizedBox(
                                   width: widthScreen / 2.3,
                                   height: heightScreen / 2.5,
-                                  child: Image.network(
-                                    listOfBooks[index]['picture'],
-                                    fit: BoxFit.fill,
-                                    errorBuilder: (context, error, stackTrace) {
-                                      return Image.asset(
-                                          'assets/images/brak_ksiazki.png',
-                                          fit: BoxFit.fill);
-                                    },
-                                    loadingBuilder: (context, child, loadingProgress) {
-                                      if (loadingProgress == null) return child;
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          value: loadingProgress.expectedTotalBytes != null
-                                              ? loadingProgress.cumulativeBytesLoaded /
-                                              loadingProgress.expectedTotalBytes!
-                                              : null,
-                                        ),
-                                      );
-                                    },
-                                  )),
+                                  child: NetworkLoadingImage(pathToImage: listOfBooks[index]['picture'])
+                              ),
                             ),
                             SizedBox(
                               height: 30,

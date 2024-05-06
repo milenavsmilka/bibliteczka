@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
+import '../Tools/NetworkLoadingImage.dart';
 import '../main.dart';
 import 'DetailsOfBookScreen.dart';
 
@@ -74,24 +75,7 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                       child: SizedBox(
                         width: widthScreen / 2.3,
                         height: heightScreen / 2.5,
-                        child: Image.network(listOfBooks[index]['picture'],
-                            fit: BoxFit.fill,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Image.asset(
-                                'assets/images/brak_ksiazki.png',
-                                fit: BoxFit.fill);
-                          },
-                          loadingBuilder: (context, child, loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Center(
-                              child: CircularProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes != null
-                                    ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                    : null,
-                              ),
-                            );
-                          },),
+                        child: NetworkLoadingImage(pathToImage: listOfBooks[index]['picture'])
                       ),
                     ),
                     SizedBox(

@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:biblioteczka/panels/CategoryBooks/OpinionScreen.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
+import 'package:biblioteczka/panels/Tools/NetworkLoadingImage.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -75,23 +77,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                           SizedBox(
                             width: widthScreen / 2.3,
                             height: heightScreen / 2.5,
-                            child: Image.network(picture, fit: BoxFit.fill,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Image.asset(
-                                    'assets/images/brak_ksiazki.png',
-                                    fit: BoxFit.fill);
-                              },
-                              loadingBuilder: (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    value: loadingProgress.expectedTotalBytes != null
-                                        ? loadingProgress.cumulativeBytesLoaded /
-                                        loadingProgress.expectedTotalBytes!
-                                        : null,
-                                  ),
-                                );
-                              },),
+                            child: NetworkLoadingImage(pathToImage: picture),
                           ),
                           Opacity(
                             opacity: isHeartAnimating ? 1 : 0,
