@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../CategoryBooks/DetailsOfBookScreen.dart';
 import '../Tools/Genres.dart';
+import '../Tools/HowMuchStars.dart';
 import '../Tools/LoadingScreen.dart';
 import '../Tools/NetworkLoadingImage.dart';
 import '../Tools/functions.dart';
@@ -41,8 +41,7 @@ class _TopScreen extends State<TopScreen> {
       return const LoadingScreen(message: loading);
     } else {
       return Scaffold(
-        appBar:
-            DefaultAppBar(title: titleOfApp, automaticallyImplyLeading: true),
+        appBar: DefaultAppBar(title: titleOfApp, automaticallyImplyLeading: true),
         body: SingleChildScrollView(
           physics: ScrollPhysics(),
           child: Column(
@@ -63,8 +62,7 @@ class _TopScreen extends State<TopScreen> {
                                 onTap: () {
                                   setState(() {
                                     current = index;
-                                    giveMeListsOfBook(
-                                        Genres.values[index].nameEN);
+                                    giveMeListsOfBook(Genres.values[index].nameEN);
                                   });
                                 },
                                 child: AnimatedContainer(
@@ -95,21 +93,16 @@ class _TopScreen extends State<TopScreen> {
                                   ),
                                   child: Center(
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           Genres.values[index].name,
                                           style: TextStyle(
                                               color: current == index
-                                                  ? Theme.of(context)
-                                                      .appBarTheme
-                                                      .foregroundColor
+                                                  ? Theme.of(context).appBarTheme.foregroundColor
                                                   : Colors.grey,
-                                              fontSize: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium
-                                                  ?.fontSize,
+                                              fontSize:
+                                                  Theme.of(context).textTheme.titleMedium?.fontSize,
                                               fontFamily: current == index
                                                   ? Theme.of(context)
                                                       .textTheme
@@ -132,22 +125,21 @@ class _TopScreen extends State<TopScreen> {
                 ],
               ),
               if (listOfBooks.isEmpty) ...{
-                Container(child: Text(nothingHere))
+                const Text(nothingHere)
               } else ...{
                 GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1,
-                        mainAxisExtent: heightScreen / 2.4 + 30),
-                    padding: const EdgeInsets.all(10.0),
+                        crossAxisCount: 1, mainAxisExtent: heightScreen / 2.3),
                     scrollDirection: Axis.vertical,
                     physics: const ScrollPhysics(),
                     itemCount: listOfBooks.length,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(children: [
+                      return Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
                             GestureDetector(
                               onTap: () {
                                 checkIsTokenValid(
@@ -160,18 +152,66 @@ class _TopScreen extends State<TopScreen> {
                               child: SizedBox(
                                   width: widthScreen / 2.3,
                                   height: heightScreen / 2.5,
-                                  child: NetworkLoadingImage(pathToImage: listOfBooks[index]['picture'])
-                              ),
+                                  child: NetworkLoadingImage(
+                                      pathToImage: listOfBooks[index]['picture'])),
                             ),
-                            SizedBox(
-                              height: 30,
-                              child: Text(listOfBooks[index]['title'],
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineSmall),
-                            )
-                          ]),
-                        ],
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  child: Container(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(listOfBooks[index]['title'],
+                                            style: Theme.of(context).textTheme.headlineSmall),
+                                        if (listOfBooks[index]['authors_names'].isEmpty) ...{
+                                          Text(
+                                            nothingHere,
+                                            style: Theme.of(context).textTheme.titleSmall,
+                                          )
+                                        },
+                                        for (int i = 0;
+                                            i < listOfBooks[index]['authors_names'].length;
+                                            i++) ...{
+                                          if (i == listOfBooks[index]['authors_names'].length - 1) ...{
+                                            Text(
+                                              listOfBooks[index]['authors_names'][i].toString(),
+                                              style: Theme.of(context).textTheme.titleSmall,
+                                            )
+                                          } else ...{
+                                            Text(
+                                              '${listOfBooks[index]['authors_names'][i]},',
+                                              style: Theme.of(context).textTheme.titleSmall,
+                                            )
+                                          }
+                                        },
+                                        Text(''),
+                                        HowMuchStars(
+                                            rate: (listOfBooks[index]['score'] * 1.0).isNaN
+                                                ? 0
+                                                : (listOfBooks[index]['score'] * 1.0)),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(15.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text('Ilość opinii: ${listOfBooks[index]['opinions_count']}',
+                                          style: Theme.of(context).textTheme.titleSmall),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       );
                     }),
               }
@@ -196,14 +236,9 @@ class _TopScreen extends State<TopScreen> {
         'sorts': '-opinions_count,-score'
       };
     } else {
-      params = {
-        'per_page': '10',
-        'minimum_score': '4',
-        'sorts': '-opinions_count,-score'
-      };
+      params = {'per_page': '10', 'minimum_score': '4', 'sorts': '-opinions_count,-score'};
     }
-    final response = await http
-        .get(Uri.parse(apiUrl).replace(queryParameters: params), headers: {
+    final response = await http.get(Uri.parse(apiUrl).replace(queryParameters: params), headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $actualToken',
     });
