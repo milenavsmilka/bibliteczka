@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
+import '../CategoryBooks/DetailsOfBookScreen.dart';
 import '../Tools/LoadingScreen.dart';
 import '../Tools/functions.dart';
-import '../main.dart';
 import 'PictureOfBooksInMyLibrary.dart';
 
 class MyProfileScreen extends StatefulWidget {
@@ -183,6 +182,15 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 bookId: favBooks[i],
                                 isEditingLibrary: isEditing,
                                 categoryUrl: apiURLBookFromFav,
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailsOfBookScreen(bookId: favBooks[i],turnOpinions: true),
+                                            )).then((value) => setState(() {
+                                              giveMeUserData();
+                                            }));
+                                },
                               ),
                           }
                         }
@@ -223,6 +231,15 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               bookId: readBooks[i],
                               isEditingLibrary: isEditing,
                               categoryUrl: apiURLBookFromRead,
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailsOfBookScreen(bookId: readBooks[i],turnOpinions: true),
+                                          )).then((value) => setState(() {
+                                            giveMeUserData();
+                                          }));
+                              },
                             ),
                           }
                         }

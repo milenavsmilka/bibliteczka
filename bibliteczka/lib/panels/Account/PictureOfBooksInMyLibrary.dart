@@ -12,11 +12,12 @@ import '../main.dart';
 
 class PictureOfBooksInMyLibrary extends StatefulWidget {
   const PictureOfBooksInMyLibrary(
-      {super.key, required this.bookId, required this.isEditingLibrary, required this.categoryUrl});
+      {super.key, required this.bookId, required this.isEditingLibrary, required this.categoryUrl, required this.onPressed});
 
   final int bookId;
   final bool isEditingLibrary;
   final String categoryUrl;
+  final VoidCallback onPressed;
 
   @override
   State<PictureOfBooksInMyLibrary> createState() =>
@@ -60,14 +61,8 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
                 fit: BoxFit.fill,
                 child: IconButton(
                     icon: NetworkLoadingImage(pathToImage: bookPicture),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                DetailsOfBookScreen(bookId: widget.bookId,turnOpinions: true),
-                          ));
-                    }),
+                    onPressed: widget.onPressed
+                    ),
               ),
             ),
             Visibility(

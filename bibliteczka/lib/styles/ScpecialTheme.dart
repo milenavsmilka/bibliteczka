@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final Color colorAppBar = Color.fromRGBO(242, 224, 157, 1);
-final Color backgroundScreenColor = Color.fromRGBO(253, 249, 240, 1);
-final Color categoryButtonCyanColor = Color.fromRGBO(150, 218, 214, 1);
+final Color colorAppBar = Color.fromRGBO(0, 191, 178, 1);
+final Color backgroundScreenColor = Colors.white;
+final Color categoryButtonCyanColor = Color.fromRGBO(0, 191, 178, 1);
 const Color textMainColor = Colors.black;
 final Color borderColor = Colors.grey;
 final Color greyContainerOpinion = Colors.black12;
@@ -13,9 +13,9 @@ ThemeData specialTheme = ThemeData(
   primaryColor: colorAppBar,
   secondaryHeaderColor: greyContainerOpinion,
   colorScheme: ColorScheme.fromSwatch()
-      .copyWith(primary: colorAppBar, secondary: const Color(0xffdfeaf2)),
+      .copyWith(primary: colorAppBar, secondary: backgroundScreenColor),
   brightness: Brightness.light,
-  scaffoldBackgroundColor: Color.fromRGBO(253, 249, 240, 1),
+  scaffoldBackgroundColor: backgroundScreenColor,
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
         textStyle: TextStyle(
