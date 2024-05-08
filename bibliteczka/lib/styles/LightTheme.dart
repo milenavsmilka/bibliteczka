@@ -82,7 +82,7 @@ ThemeData lightTheme = ThemeData(
         fontSize: 36,
       ),
       headlineMedium: TextStyle(
-          color: textMainColor,
+          color: Colors.black,
           fontFamily: 'LobsterTwo',
           fontWeight: FontWeight.w800,
           fontStyle: FontStyle.normal,

@@ -66,8 +66,7 @@ const String validateUsernameError =
 const String exitFromAppQuestion = 'Czy chcesz opuścić aplikację?';
 const String exitFromAppTitle = 'Wyjście';
 const String loginSuccessful = 'Zalogowano poprawnie';
-const String loginNoDataError =
-    'Nieudana próba logowania - brak danych w bazie';
+const String loginNoDataError = 'Nieudana próba logowania - brak danych w bazie';
 const String loginEmailError = 'Niepoprawny adres email';
 const String registerSuccessful = 'Zarejestrowano poprawnie';
 const String tooMuchLoginAttemptsError = 'locked_user_login_attempts';
@@ -112,15 +111,44 @@ const String adventureG = 'Przygodowe';
 const String comicsG = 'Komiksy';
 const String thrillerG = 'Thrillery';
 const String allG = 'Wszystko';
-const String allGEN= 'All';
-const String romanceGEN= 'Romance';
-const String childrenGEN= "Children's";
-const String historyGEN= 'History';
-const String scienceGEN= 'Popular Science';
-const String poetryGEN= 'Poetry, Plays';
-const String youngAdultGEN= 'Young Adult';
-const String fantasyGEN= 'Fantasy, Science fiction';
-const String bioGEN= 'Biography';
-const String adventureGEN= 'Action & Adventure';
-const String comicsGEN= 'Comic books';
-const String thrillerGEN= 'Thriller, Horror, Mystery and detective stories';
+const String allGEN = 'All';
+const String romanceGEN = 'Romance';
+const String childrenGEN = "Children's";
+const String historyGEN = 'History';
+const String scienceGEN = 'Popular Science';
+const String poetryGEN = 'Poetry, Plays';
+const String youngAdultGEN = 'Young Adult';
+const String fantasyGEN = 'Fantasy, Science fiction';
+const String bioGEN = 'Biography';
+const String adventureGEN = 'Action & Adventure';
+const String comicsGEN = 'Comic books';
+const String thrillerGEN = 'Thriller, Horror, Mystery and detective stories';
+
+const List<String> listOfAlphabet = [
+  'A',
+  'B',
+  'C',
+  'D',
+  'E',
+  'F',
+  'G',
+  'H',
+  'I',
+  'J',
+  'K',
+  'L',
+  'M',
+  'N',
+  'O',
+  'P',
+  'Q',
+  'R',
+  'S',
+  'T',
+  'U',
+  'V',
+  'W',
+  'X',
+  'Y',
+  'Z'
+];

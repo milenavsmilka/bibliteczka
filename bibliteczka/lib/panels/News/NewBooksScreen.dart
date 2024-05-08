@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
 import '../CategoryBooks/DetailsOfBookScreen.dart';
+import '../Tools/DefaultAppBar.dart';
 import '../main.dart';
 
 class NewBooksScreen extends StatefulWidget {
@@ -35,9 +36,7 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
       return const LoadingScreen(message: loading);
     } else {
       return Scaffold(
-        appBar: AppBar(
-          title: Text('Nowości'),
-        ),
+        appBar: DefaultAppBar(title: 'Nowości', automaticallyImplyLeading: true),
         body: ListView.builder(
             itemCount: listOfBooks.length,
             itemBuilder: (context, index) {
