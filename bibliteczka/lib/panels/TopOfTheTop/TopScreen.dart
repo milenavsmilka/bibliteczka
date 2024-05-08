@@ -1,5 +1,6 @@
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/styles/strings.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../CategoryBooks/DetailsOfBookScreen.dart';
@@ -95,7 +96,7 @@ class _TopScreen extends State<TopScreen> {
                                           style: TextStyle(
                                               color: current == index
                                                   ? Theme.of(context).appBarTheme.foregroundColor
-                                                  : Colors.grey,
+                                                  : Theme.of(context).inputDecorationTheme.labelStyle?.color,
                                               fontSize:
                                                   Theme.of(context).textTheme.titleMedium?.fontSize,
                                               fontFamily: current == index
@@ -150,61 +151,63 @@ class _TopScreen extends State<TopScreen> {
                                   child: NetworkLoadingImage(
                                       pathToImage: listOfBooks[index]['picture'])),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Flexible(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(15.0),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Flexible(
+                                    child: Container(
+                                      padding: const EdgeInsets.all(15.0),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(listOfBooks[index]['title'],
+                                              style: Theme.of(context).textTheme.headlineSmall),
+                                          if (listOfBooks[index]['authors_names'].isEmpty) ...{
+                                            Text(
+                                              nothingHere,
+                                              style: Theme.of(context).textTheme.titleSmall,
+                                            )
+                                          },
+                                          for (int i = 0;
+                                              i < listOfBooks[index]['authors_names'].length;
+                                              i++) ...{
+                                            if (i ==
+                                                listOfBooks[index]['authors_names'].length - 1) ...{
+                                              Text(
+                                                listOfBooks[index]['authors_names'][i].toString(),
+                                                style: Theme.of(context).textTheme.titleSmall,
+                                              )
+                                            } else ...{
+                                              Text(
+                                                '${listOfBooks[index]['authors_names'][i]},',
+                                                style: Theme.of(context).textTheme.titleSmall,
+                                              )
+                                            }
+                                          },
+                                          Text(''),
+                                          HowMuchStars(
+                                              rate: (listOfBooks[index]['score'] * 1.0).isNaN
+                                                  ? 0
+                                                  : (listOfBooks[index]['score'] * 1.0)),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(15.0),
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.start,
                                       crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Text(listOfBooks[index]['title'],
-                                            style: Theme.of(context).textTheme.headlineSmall),
-                                        if (listOfBooks[index]['authors_names'].isEmpty) ...{
-                                          Text(
-                                            nothingHere,
-                                            style: Theme.of(context).textTheme.titleSmall,
-                                          )
-                                        },
-                                        for (int i = 0;
-                                            i < listOfBooks[index]['authors_names'].length;
-                                            i++) ...{
-                                          if (i ==
-                                              listOfBooks[index]['authors_names'].length - 1) ...{
-                                            Text(
-                                              listOfBooks[index]['authors_names'][i].toString(),
-                                              style: Theme.of(context).textTheme.titleSmall,
-                                            )
-                                          } else ...{
-                                            Text(
-                                              '${listOfBooks[index]['authors_names'][i]},',
-                                              style: Theme.of(context).textTheme.titleSmall,
-                                            )
-                                          }
-                                        },
-                                        Text(''),
-                                        HowMuchStars(
-                                            rate: (listOfBooks[index]['score'] * 1.0).isNaN
-                                                ? 0
-                                                : (listOfBooks[index]['score'] * 1.0)),
+                                        Text('Ilość opinii: ${listOfBooks[index]['opinions_count']}',
+                                            style: Theme.of(context).textTheme.titleSmall),
                                       ],
                                     ),
                                   ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(15.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text('Ilość opinii: ${listOfBooks[index]['opinions_count']}',
-                                          style: Theme.of(context).textTheme.titleSmall),
-                                    ],
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),

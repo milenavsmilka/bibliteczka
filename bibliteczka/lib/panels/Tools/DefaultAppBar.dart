@@ -29,7 +29,6 @@ class _DefaultAppBarState extends State<DefaultAppBar>{
         PopupMenuButton(
           icon: Icon(
             Icons.account_circle,
-            color: Colors.black,
             size: 35,
           ),
           itemBuilder: (BuildContext context) => [

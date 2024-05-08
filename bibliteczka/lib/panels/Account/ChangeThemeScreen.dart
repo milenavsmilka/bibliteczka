@@ -51,6 +51,13 @@ class _ChangeThemeScreenState extends State<ChangeThemeScreen> {
                     });
                   },
                   child: Text(changeToSpecialTheme)),
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      themeState.setAnotherTheme = daltonism;
+                    });
+                  },
+                  child: Text(changeToDaltonismTheme))
             ],
           ),
         ),

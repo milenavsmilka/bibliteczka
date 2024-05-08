@@ -110,7 +110,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
                                       });
                                     },
                                     controller: opinionTextToSend,
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
                                         focusedBorder: InputBorder.none,
                                         enabledBorder: InputBorder.none,
                                         hintText: writeOwnOpinion))),

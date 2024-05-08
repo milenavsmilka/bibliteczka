@@ -28,8 +28,14 @@ ThemeData lightTheme = ThemeData(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
   ),
   inputDecorationTheme: InputDecorationTheme(
+    hintStyle: TextStyle(
+        color: borderColor,
+        fontFamily: 'Lato',
+        fontWeight: FontWeight.w700,
+        fontStyle: FontStyle.normal,
+        fontSize: 18),
     labelStyle: TextStyle(
-        color: Colors.grey,
+        color: borderColor,
         fontFamily: 'Lato',
         fontWeight: FontWeight.w700,
         fontStyle: FontStyle.normal,
@@ -89,7 +95,7 @@ ThemeData lightTheme = ThemeData(
         fontSize: 23,
       ),
       titleLarge: TextStyle(
-          color: Colors.grey,
+          color: borderColor,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w700,
           fontStyle: FontStyle.normal,

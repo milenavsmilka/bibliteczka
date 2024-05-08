@@ -177,7 +177,7 @@ class CategoryButton extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(pathToImage, height: widthScreen * 0.3),
+              SvgPicture.asset(pathToImage, height: widthScreen * 0.3,color: Theme.of(context).textTheme.titleSmall?.color),
               Text(
                 nameOfCategory,
                 overflow: TextOverflow.ellipsis,

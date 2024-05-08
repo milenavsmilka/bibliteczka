@@ -1,3 +1,4 @@
+import 'package:biblioteczka/styles/DaltonismTheme.dart';
 import 'package:biblioteczka/styles/DarkTheme.dart';
 import 'package:biblioteczka/styles/LightTheme.dart';
 import 'package:biblioteczka/styles/ScpecialTheme.dart';
@@ -10,6 +11,7 @@ class ThemeManager {
       case light: return lightTheme;
       case dark: return darkTheme;
       case special: return specialTheme;
+      case daltonism: return daltonismTheme;
       default: return lightTheme;
     }
   }

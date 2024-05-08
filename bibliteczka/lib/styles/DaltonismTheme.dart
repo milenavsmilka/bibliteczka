@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final Color colorAppBar = Color.fromRGBO(0, 191, 178, 1);
-final Color backgroundScreenColor = Colors.white;
-final Color categoryButtonCyanColor = Color.fromRGBO(0, 191, 178, 1);
-const Color textMainColor = Colors.black;
+final Color colorAppBar = Color.fromRGBO(44,40,156, 1);
+final Color backgroundScreenColor = Colors.black;
+final Color categoryButtonCyanColor = Color.fromRGBO(44,40,156, 1);
+const Color textMainColor = Colors.white;
 final Color borderColor = Colors.grey;
 final Color greyContainerOpinion = Colors.black12;
 final Color errorColor = Colors.redAccent;
 
-ThemeData specialTheme = ThemeData(
+ThemeData daltonismTheme = ThemeData(
   primaryColor: colorAppBar,
-  secondaryHeaderColor: greyContainerOpinion,
+  secondaryHeaderColor: colorAppBar,
   colorScheme: ColorScheme.fromSwatch()
-      .copyWith(primary: colorAppBar, secondary: backgroundScreenColor),
+      .copyWith(primary: colorAppBar, secondary: textMainColor),
   brightness: Brightness.light,
   scaffoldBackgroundColor: backgroundScreenColor,
   elevatedButtonTheme: ElevatedButtonThemeData(
@@ -29,17 +29,23 @@ ThemeData specialTheme = ThemeData(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
   ),
   inputDecorationTheme: InputDecorationTheme(
-    labelStyle: TextStyle(
-        color: Colors.grey,
+    hintStyle: TextStyle(
+        color: textMainColor,
         fontFamily: 'Lato',
         fontWeight: FontWeight.w700,
         fontStyle: FontStyle.normal,
         fontSize: 18),
-    errorStyle: TextStyle(fontSize: 14.0, color: Colors.red),
+    labelStyle: TextStyle(
+        color: textMainColor,
+        fontFamily: 'Lato',
+        fontWeight: FontWeight.w700,
+        fontStyle: FontStyle.normal,
+        fontSize: 18),
+    errorStyle: TextStyle(fontSize: 14.0, color: Colors.white),
     errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.red, width: 1.0)),
+        borderSide: BorderSide(color: Colors.white, width: 1.0)),
     focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.red, width: 1.5)),
+        borderSide: BorderSide(color: Colors.white, width: 1.5)),
     focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: categoryButtonCyanColor, width: 2.0)),
     enabledBorder: OutlineInputBorder(
@@ -58,7 +64,7 @@ ThemeData specialTheme = ThemeData(
   buttonTheme: ButtonThemeData(buttonColor: colorAppBar),
   textTheme: TextTheme(
       displayLarge: TextStyle(
-          color: Colors.black,
+          color: textMainColor,
           fontFamily: GoogleFonts.getFont('Proza Libre').fontFamily,
           fontWeight: FontWeight.w800,
           fontStyle: FontStyle.normal,
@@ -70,7 +76,7 @@ ThemeData specialTheme = ThemeData(
       //     fontStyle: FontStyle.italic,
       //     fontSize: 35),
       displaySmall: TextStyle(
-        color: Colors.black,
+        color: textMainColor,
         fontFamily: GoogleFonts.getFont('Proza Libre').fontFamily,
         fontWeight: FontWeight.w600,
         fontStyle: FontStyle.normal,
@@ -96,13 +102,13 @@ ThemeData specialTheme = ThemeData(
           fontStyle: FontStyle.normal,
           fontSize: 18),
       titleMedium: TextStyle(
-          color: Colors.black,
+          color: textMainColor,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w600,
           fontStyle: FontStyle.normal,
           fontSize: 17),
       titleSmall: TextStyle(
-          color: Colors.black,
+          color: textMainColor,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w500,
           fontStyle: FontStyle.normal,
@@ -121,13 +127,13 @@ ThemeData specialTheme = ThemeData(
   dialogTheme: DialogTheme(
       backgroundColor: backgroundScreenColor,
       titleTextStyle: const TextStyle(
-          color: Colors.black,
+          color: textMainColor,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w700,
           fontStyle: FontStyle.normal,
           fontSize: 20),
       contentTextStyle: const TextStyle(
-          color: Colors.black,
+          color: textMainColor,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w700,
           fontStyle: FontStyle.normal,
