@@ -11,9 +11,10 @@ final Color errorColor = Colors.redAccent;
 ThemeData lightTheme = ThemeData(
   primaryColor: colorAppBar,
   secondaryHeaderColor: greyContainerOpinion,
-  colorScheme: ColorScheme.fromSwatch()
-      .copyWith(primary: colorAppBar, secondary: const Color(0xffdfeaf2)),
+  colorScheme:
+      ColorScheme.fromSwatch().copyWith(primary: colorAppBar, secondary: const Color(0xffdfeaf2)),
   brightness: Brightness.light,
+  cardColor: Colors.orange,
   scaffoldBackgroundColor: Color.fromRGBO(253, 249, 240, 1),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
@@ -41,12 +42,10 @@ ThemeData lightTheme = ThemeData(
         fontStyle: FontStyle.normal,
         fontSize: 18),
     errorStyle: TextStyle(fontSize: 14.0, color: Colors.red),
-    errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.red, width: 1.0)),
-    focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.red, width: 1.5)),
-    focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: categoryButtonCyanColor, width: 2.0)),
+    errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1.0)),
+    focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1.5)),
+    focusedBorder:
+        OutlineInputBorder(borderSide: BorderSide(color: categoryButtonCyanColor, width: 2.0)),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(color: categoryButtonCyanColor),
     ),
@@ -54,13 +53,16 @@ ThemeData lightTheme = ThemeData(
   textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
     textStyle: TextStyle(
-        fontFamily: 'Lato',
-        fontWeight: FontWeight.w800,
-        fontStyle: FontStyle.normal,
-        fontSize: 18),
+        fontFamily: 'Lato', fontWeight: FontWeight.w800, fontStyle: FontStyle.normal, fontSize: 18),
     foregroundColor: textMainColor,
   )),
-  buttonTheme: ButtonThemeData(buttonColor: colorAppBar),
+  buttonTheme: ButtonThemeData(
+    buttonColor: Colors.orange,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(0.0),
+      side: BorderSide(color: backgroundScreenColor, width: 2),
+    ),
+  ),
   textTheme: TextTheme(
       displayLarge: TextStyle(
           color: Colors.black,

@@ -27,6 +27,7 @@ class _PictureOfAuthorState extends State<PictureOfAuthor> {
   Map<String, dynamic> authorResponse = {'': ''};
   List<dynamic> authorDetails = [];
   String authorPicture = '-1';
+  String authorName = '-1';
 
   @override
   void initState() {
@@ -48,22 +49,15 @@ class _PictureOfAuthorState extends State<PictureOfAuthor> {
     if (authorPicture == '-1') {
       return Text('czekamy na reklamy');
     } else {
-      return SizedBox(
-          width: widthScreen / 5,
-          height: heightScreen / 5,
-          child: Stack(children: [
-            SizedBox(
-              width: widthScreen/3,
-              height: heightScreen/4,
-              child: FittedBox(
-                fit: BoxFit.fill,
-                child: IconButton(
-                    icon: NetworkLoadingImage(pathToImage: authorPicture),
-                    onPressed: widget.onPressed
-                ),
-              ),
-            ),
-          ])
+      return FittedBox(
+        fit: BoxFit.fill,
+        child: SizedBox(
+          height: heightScreen/4,
+          child: IconButton(
+              icon: NetworkLoadingImage(pathToImage: authorPicture),
+              onPressed: widget.onPressed
+          ),
+        ),
       );
     }
   }
@@ -75,6 +69,7 @@ class _PictureOfAuthorState extends State<PictureOfAuthor> {
     setState(() {
       authorDetails = authorResponse['results'];
       authorPicture = authorDetails[0]['picture'];
+      authorName = authorDetails[0]['name'];
     });
   }
 }

@@ -85,7 +85,7 @@ const int lengthToShow = 110;
 
 //DetailsOfBookScreen
 const String bookTitle = 'Tytuł:';
-const String bookAuthor = 'Autor:';
+const String bookAuthor = 'Autorzy:'; //lub autor
 const String bookPublishingHouse = 'Wydawnictwo:';
 const String opinionsAndTalks = "Opinie i dyskusje";
 
@@ -93,7 +93,7 @@ const String opinionsAndTalks = "Opinie i dyskusje";
 const String minLengthForComment = 'Min 2 znaki';
 const String maxLengthForComment = 'Max 1000 znaków';
 const String writeOwnOpinion = 'Napisz swoją opinię...';
-const String rateBookByStars = 'Oceń książkę ilością gwiazdek!';
+const String rateBookByStars = 'Oceń książkę liczbą gwiazdek!';
 
 //NewBooksScreen
 const String dateOfPremiere = 'Data premiery:';
@@ -123,6 +123,10 @@ const String bioGEN = 'Biography';
 const String adventureGEN = 'Action & Adventure';
 const String comicsGEN = 'Comic books';
 const String thrillerGEN = 'Thriller, Horror, Mystery and detective stories';
+
+const List<String> listOfPolishSpecialChars = ['Ą', 'Ć', 'Ę', 'Ł', 'Ń', 'Ó', 'Ś', 'Ź', 'Ż'];
+const List<String> listOfCzechSpecialChars = ['Á','Č','Ď','É','Ě','Í','Ň','Ó','Ř','Š','Ť','Ú','Ů','Ý','Ž',];
+const List<String> listOfGermanySpecialChars = ['Ä', 'Ö', 'Ü', 'ß'];
 
 const List<String> listOfAlphabet = [
   'A',

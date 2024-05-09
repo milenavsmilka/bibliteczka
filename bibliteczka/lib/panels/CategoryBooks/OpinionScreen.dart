@@ -11,7 +11,7 @@ import '../../styles/strings.dart';
 import '../Tools/ShowAndHideMoreText.dart';
 import '../Tools/Triangle.dart';
 import '../main.dart';
-
+//todo edycja i usuwanie komentarze
 class OpinionScreen extends StatefulWidget {
   const OpinionScreen({super.key, this.opinionId, required this.instruction, required this.bookId});
 
