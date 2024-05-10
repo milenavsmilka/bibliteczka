@@ -8,11 +8,14 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Account/ChangePassword.dart';
 import 'MainPanel.dart';
 import 'Register.dart';
 import 'main.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -94,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: passwordController,
                   autocorrect: false,
                   obscureText: !passVisible,
-                  validator: validatePassword,
+                  validator: PasswordMustContainValidator(validatePasswordError, passwordController.text).call,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                       labelText: giveMePassword,
@@ -157,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> signIn(String email, String password) async {
-    const String apiUrl = apiURLLogin; //apiURLLogin;
+    const String apiUrl = apiURLLogin;
     final Map<String, dynamic> requestBody = {
       'email': email,
       'password': password,

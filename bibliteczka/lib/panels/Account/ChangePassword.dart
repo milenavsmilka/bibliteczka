@@ -45,7 +45,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       autocorrect: false,
                       controller: currentPasswordController,
                       obscureText: !passVisible,
-                      validator: validatePassword,
+                      validator: PasswordMustContainValidator(validatePasswordError,currentPasswordController.text).call,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                           labelText: 'Podaj obecne hasło',
@@ -76,11 +76,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         RequiredValidator(errorText: 'Pole nie może być puste'),
                         DifferentPasswordValidator(
                             'Hasła nie mogą być takie same', currentPasswordController.text),
-                        // validatePassword todo dodać jeszcze tą walidację
+                        PasswordMustContainValidator(validatePasswordError, newPasswordController.text)
                       ]).call,
                       decoration: InputDecoration(
                           labelText: 'Podaj nowe hasło',
                           prefixIcon: Icon(Icons.lock),
+                          errorMaxLines: 3,
                           suffix: InkWell(
                             onTap: () {
                               setState(() {
@@ -118,16 +119,21 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       );
 }
 
-String? validatePassword(String? password) {
-  RegExp passReg =
-      RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{10,50}$');
-  final isPassReg = passReg.hasMatch(password ?? '');
-  if (!isPassReg) {
-    return validatePasswordError;
-  }
-  return null;
-}
+class PasswordMustContainValidator extends TextFieldValidator {
+  PasswordMustContainValidator(super.errorText, this.password);
+  final String password;
 
+  RegExp passReg = RegExp(
+      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{10,50}$');
+
+  @override
+  bool get ignoreEmptyValues => true;
+
+  @override
+  bool isValid(String? value) {
+    return passReg.hasMatch(value ?? '');
+  }
+}
 class DifferentPasswordValidator extends TextFieldValidator {
   DifferentPasswordValidator(super.errorText, this.textToCompare);
 

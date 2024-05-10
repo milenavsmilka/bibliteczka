@@ -10,7 +10,7 @@ import 'package:mailer/smtp_server.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../LoginScreen.dart';
+import '../Login.dart';
 import '../Tools/CustomPageRoute.dart';
 import '../Tools/functions.dart';
 import '../main.dart';

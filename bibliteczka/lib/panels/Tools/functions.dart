@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'CustomPageRoute.dart';
-import '../LoginScreen.dart';
+import '../Login.dart';
 import '../MainPanel.dart';
 import '../main.dart';
 

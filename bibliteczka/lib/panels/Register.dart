@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
 
-import 'LoginScreen.dart';
+import 'Account/ChangePassword.dart';
+import 'Login.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -84,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       autocorrect: false,
                       controller: passwordController,
                       obscureText: !passVisible,
-                      validator: validatePassword,
+                      validator: PasswordMustContainValidator(validatePasswordError, passwordController.text).call,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                           labelText: giveMePassword,
@@ -231,14 +232,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
     });
   }
-}
-
-String? validatePassword(String? password) {
-  RegExp passReg = RegExp(
-  r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{10,50}$');
-  final isPassReg = passReg.hasMatch(password ?? '');
-  if (!isPassReg) {
-    return validatePasswordError;
-  }
-  return null;
 }
