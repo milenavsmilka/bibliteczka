@@ -59,6 +59,8 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       GestureDetector(
                         child: Stack(children: [
@@ -98,6 +100,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                             // await sendRequest(apiURLBookFromFav, Map.of({'author_id': widget.authorId.toString()}));
                             // emptyHeart = true;
                           } on http.ClientException catch (e) {
+                            //todo dodanie do ulubionych autorów
                             // print('wcale nie $e');
                             // deleteBooksFromMyLibrary(apiURLBookFromFav,
                             //     'book_id', widget.authorId.toString());
@@ -112,6 +115,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                       padding: const EdgeInsets.all(15.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text('Autor: ', style: Theme.of(context).textTheme.headlineSmall),
                           Text(
@@ -126,6 +130,8 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                           ),
                           Text('Pisze: ', style: Theme.of(context).textTheme.headlineSmall),
                           Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               if (genres.isEmpty) ...{
                                 Text(

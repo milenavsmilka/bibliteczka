@@ -2,7 +2,9 @@ import 'package:biblioteczka/panels/Authors/DetailsOfAutors.dart';
 import 'package:biblioteczka/panels/Authors/PictureOfAuthor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:number_paginator/number_paginator.dart';
 
 import '../../styles/strings.dart';
 import '../Tools/DefaultAppBar.dart';
@@ -27,8 +29,10 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
   ];
   List<dynamic> currentList = listOfAlphabet;
   int index = 0;
-  int pages = -1;
+  int pagesCount = -1;
+  int currentPage = -1;
   String letterThatWasClicked = 'A';
+  List<dynamic> pages = [-1];
 
   @override
   void initState() {
@@ -123,7 +127,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                   height: heightScreen / 3,
                   child: GridView(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 5, mainAxisExtent: heightScreen / 4, mainAxisSpacing: 10),
+                        crossAxisCount: 5, mainAxisExtent: heightScreen / 4),
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
                     children: [
@@ -131,23 +135,35 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                         emptyBox(widthScreen, heightScreen),
                       } else ...{
                         for (int i = 0; i < listOfAuthors.length; i++) ...{
-                          TextButton(child: Text(listOfAuthors[i]['name']), onPressed: () {}),
+                          TextButton(
+                              child: Text(listOfAuthors[i]['name']),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      DetailsOfAuthorsScreen(authorId: listOfAuthors[i]['id']),
+                                ));
+                              }),
                         }
                       }
                     ],
                   ),
                 ),
-                Row(children: [
-                  if (pages != -1 && pages != 0) ...{
-                    for (int i = 0; i < pages; i++) ...{
-                      TextButton(
-                          child: Text((i + 1).toString()),
-                          onPressed: () {
-                            giveMeListsOfAuthors(i + 1, letterThatWasClicked);
-                          }),
-                    }
-                  }
-                ]),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (pagesCount != -1 && pagesCount != 0) ...{
+                        NumberPaginator(
+                          numberPages: pagesCount,
+                          onPageChange: (index) {
+                            setState(() {
+                              currentPage = index;
+                              giveMeListsOfAuthors(currentPage + 1, letterThatWasClicked);
+                            });
+                          },
+                        )
+                      }
+                    ]),
               ],
             ),
           ));
@@ -167,9 +183,14 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
 
     setState(() {
       listOfAuthors = data['results'];
-      pages = data['pagination']['pages'];
+      pagesCount = data['pagination']['pages'];
+      if (pagesCount != -1 && pagesCount != 0) {
+        currentPage = 1;
+        pages =
+            List.generate(pagesCount, (index) => Center(child: Text('Page number:${index + 1}')));
+      }
     });
-    print('hej autorzy! $listOfAuthors');
+    print('hej autorzy! ${listOfAuthors.length}');
   }
 
   Future<void> giveMeListsOfTopAuthors() async {
