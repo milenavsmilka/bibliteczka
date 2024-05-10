@@ -1,5 +1,5 @@
 import 'package:biblioteczka/panels/Account/MyProfileScreen.dart';
-import 'package:biblioteczka/panels/CategoryBooks/DetailsOfBookScreen.dart';
+import 'package:biblioteczka/panels/CategoryBooks/DetailsOfBook.dart';
 import 'package:biblioteczka/panels/Tools/CustomPageRoute.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

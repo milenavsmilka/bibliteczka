@@ -1,11 +1,11 @@
 import 'package:biblioteczka/panels/Authors/ChooseAutor.dart';
-import 'package:biblioteczka/panels/News/NewBooksScreen.dart';
+import 'package:biblioteczka/panels/News/NewBooks.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'CategoryBooks/ChooseCategoryScreen.dart';
+import 'CategoryBooks/ChooseCategory.dart';
 import 'Tools/functions.dart';
 import 'TopOfTheTop/TopScreen.dart';
 

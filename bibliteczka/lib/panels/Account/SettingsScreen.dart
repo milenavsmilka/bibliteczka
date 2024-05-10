@@ -14,7 +14,7 @@ import '../LoginScreen.dart';
 import '../Tools/CustomPageRoute.dart';
 import '../Tools/functions.dart';
 import '../main.dart';
-import 'ChangePasswordScreen.dart';
+import 'ChangePassword.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override

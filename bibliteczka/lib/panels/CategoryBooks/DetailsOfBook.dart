@@ -1,4 +1,4 @@
-import 'package:biblioteczka/panels/CategoryBooks/OpinionScreen.dart';
+import 'package:biblioteczka/panels/CategoryBooks/Opinion.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/panels/Tools/NetworkLoadingImage.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
@@ -72,7 +72,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             width: widthScreen / 2.3,
                             height: heightScreen / 2.5,
                             child: NetworkLoadingImage(
-                                pathToImage: picture), //todo problem z wywalaniem błędu
+                                pathToImage: picture),
                           ),
                           Opacity(
                             opacity: isHeartAnimating ? 1 : 0,

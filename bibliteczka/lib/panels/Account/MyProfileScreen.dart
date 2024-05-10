@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../styles/strings.dart';
-import '../CategoryBooks/DetailsOfBookScreen.dart';
+import '../CategoryBooks/DetailsOfBook.dart';
 import '../Tools/LoadingScreen.dart';
 import '../Tools/functions.dart';
 import 'PictureOfBooksInMyLibrary.dart';
@@ -216,11 +216,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       shrinkWrap: true,
                       children: [
                         if (readBooks.isEmpty) ...{
-                          SizedBox(
-                            width: widthScreen / 5,
-                            height: heightScreen / 5,
-                            child: Text(nothingHere),
-                          )
+                          emptyBox(widthScreen, heightScreen),
                         } else ...{
                           for (int i = 0; i < readBooks.length; i++) ...{
                             PictureOfBooksInMyLibrary(

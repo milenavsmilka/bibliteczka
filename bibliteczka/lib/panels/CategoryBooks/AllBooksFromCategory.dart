@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../styles/strings.dart';
 import '../Tools/NetworkLoadingImage.dart';
 import '../main.dart';
-import 'DetailsOfBookScreen.dart';
+import 'DetailsOfBook.dart';
 
 class AllCategoryBooksScreen extends StatefulWidget {
   const AllCategoryBooksScreen(

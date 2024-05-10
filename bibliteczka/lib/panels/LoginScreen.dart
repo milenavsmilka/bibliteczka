@@ -8,8 +8,8 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'MainPanelScreen.dart';
-import 'RegisterScreen.dart';
+import 'MainPanel.dart';
+import 'Register.dart';
 import 'main.dart';
 
 class LoginScreen extends StatefulWidget {

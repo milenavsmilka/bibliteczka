@@ -3,7 +3,7 @@ import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../CategoryBooks/DetailsOfBookScreen.dart';
+import '../CategoryBooks/DetailsOfBook.dart';
 import '../Tools/Genres.dart';
 import '../Tools/HowMuchStars.dart';
 import '../Tools/LoadingScreen.dart';

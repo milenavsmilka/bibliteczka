@@ -8,14 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'CustomPageRoute.dart';
 import '../LoginScreen.dart';
-import '../MainPanelScreen.dart';
+import '../MainPanel.dart';
 import '../main.dart';
 
 Widget emptyBox(double widthScreen, double heightScreen){
   return SizedBox(
     width: widthScreen / 5,
     height: heightScreen / 5,
-    child: const Text(nothingHere),
+    child: Center(child: const Text(nothingHere)),
   );
 }
 

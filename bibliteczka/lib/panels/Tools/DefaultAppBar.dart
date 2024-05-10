@@ -2,7 +2,7 @@ import 'package:biblioteczka/panels/Account/MyProfileScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../styles/strings.dart';
-import '../Account/ChangeThemeScreen.dart';
+import '../Account/ChangeTheme.dart';
 import '../Account/SettingsScreen.dart';
 import 'functions.dart';
 

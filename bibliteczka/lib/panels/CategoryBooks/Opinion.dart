@@ -1,4 +1,4 @@
-import 'package:biblioteczka/panels/CategoryBooks/DetailsOfBookScreen.dart';
+import 'package:biblioteczka/panels/CategoryBooks/DetailsOfBook.dart';
 import 'package:biblioteczka/panels/Tools/CustomPageRoute.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:biblioteczka/styles/LightTheme.dart';

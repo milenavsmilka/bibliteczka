@@ -200,7 +200,6 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
     setState(() {
       listOfPopularAuthors = data['results'];
     });
-    print('jaki rezulat? ${listOfPopularAuthors}');
     print('number of books ${listOfPopularAuthors.length}');
   }
 }

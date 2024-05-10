@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../styles/strings.dart';
-import '../CategoryBooks/DetailsOfBookScreen.dart';
+import '../CategoryBooks/DetailsOfBook.dart';
 import '../Tools/IconsAnimation.dart';
 import '../Tools/LoadingScreen.dart';
 
