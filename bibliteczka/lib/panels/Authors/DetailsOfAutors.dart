@@ -173,11 +173,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                     shrinkWrap: true,
                     children: [
                       if (releasedBooks.isEmpty) ...{
-                        SizedBox(
-                          width: widthScreen / 5,
-                          height: heightScreen / 5,
-                          child: Text(nothingHere),
-                        )
+                        emptyBox(widthScreen, heightScreen),
                       } else ...{
                         for (int i = 0; i < releasedBooks.length; i++) ...{
                           PictureOfBooksInMyLibrary(

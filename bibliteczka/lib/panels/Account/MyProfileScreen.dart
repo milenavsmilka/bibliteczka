@@ -171,11 +171,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       shrinkWrap: true,
                       children: [
                         if (favBooks.isEmpty) ...{
-                          SizedBox(
-                            width: widthScreen / 5,
-                            height: heightScreen / 5,
-                            child: Text(nothingHere),
-                          )
+                          emptyBox(widthScreen, heightScreen),
                         } else ...{
                           for (int i = 0; i < favBooks.length; i++) ...{
                               PictureOfBooksInMyLibrary(

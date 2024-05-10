@@ -68,11 +68,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                       shrinkWrap: true,
                       children: [
                         if (listOfPopularAuthors.isEmpty) ...{
-                          SizedBox(
-                            width: widthScreen / 5,
-                            height: heightScreen / 5,
-                            child: Text(nothingHere),
-                          )
+                          emptyBox(widthScreen, heightScreen),
                         } else ...{
                           for (int i = 0; i < listOfPopularAuthors.length; i++) ...{
                             PictureOfAuthor(
@@ -133,11 +129,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                     shrinkWrap: true,
                     children: [
                       if (listOfAuthors.isEmpty) ...{
-                        SizedBox(
-                          width: widthScreen / 5,
-                          height: heightScreen / 5,
-                          child: Text(nothingHere),
-                        )
+                        emptyBox(widthScreen, heightScreen),
                       } else ...{
                         for (int i = 0; i < listOfAuthors.length; i++) ...{
                           TextButton(child: Text(listOfAuthors[i]['name']), onPressed: () {

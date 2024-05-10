@@ -11,6 +11,13 @@ import '../LoginScreen.dart';
 import '../MainPanelScreen.dart';
 import '../main.dart';
 
+Widget emptyBox(double widthScreen, double heightScreen){
+  return SizedBox(
+    width: widthScreen / 5,
+    height: heightScreen / 5,
+    child: const Text(nothingHere),
+  );
+}
 
 Future<void> deleteBooksFromMyLibrary(String apiUrl, String key, String value) async {
   var sharedPreferences = await SharedPreferences.getInstance();
