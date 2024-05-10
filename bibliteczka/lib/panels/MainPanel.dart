@@ -4,7 +4,9 @@ import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
+import '../styles/ThemeProvider.dart';
 import 'CategoryBooks/ChooseCategory.dart';
 import 'Tools/functions.dart';
 import 'TopOfTheTop/TopScreen.dart';
@@ -17,6 +19,7 @@ class MainPanelScreen extends StatefulWidget {
 }
 
 class _MainPanelScreen extends State<MainPanelScreen> {
+
   @override
   Widget build(BuildContext context) => PopScope(
         canPop: false,
@@ -70,6 +73,20 @@ class _MainPanelScreen extends State<MainPanelScreen> {
               ),
             )),
       );
+
+  @override
+  void initState() {
+    super.initState();
+    setTheme();
+  }
+
+  Future<void> setTheme() async {
+    Map<String, dynamic> themeData = await getSthById(apiURLGetUser, Map.of({"get_self":true.toString()}));
+    final themeState = Provider.of<ThemeProvider>(context,listen: false);
+    setState(() {
+      themeState.setAnotherTheme = themeData['results'][0]['theme'];
+    });
+  }
 }
 
 class ChooseOptionFromMenuButton extends StatelessWidget {

@@ -4,7 +4,6 @@ import 'package:form_field_validator/form_field_validator.dart';
 
 import '../Tools/functions.dart';
 
-
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
 
@@ -59,9 +58,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               });
                             },
                             child: Icon(
-                              passVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                              passVisible ? Icons.visibility : Icons.visibility_off,
                             ),
                           )),
                     ),
@@ -78,8 +75,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       validator: MultiValidator([
                         RequiredValidator(errorText: 'Pole nie może być puste'),
                         DifferentPasswordValidator(
-                            'Hasła nie mogą być takie same',
-                            currentPasswordController.text),
+                            'Hasła nie mogą być takie same', currentPasswordController.text),
                         // validatePassword todo dodać jeszcze tą walidację
                       ]).call,
                       decoration: InputDecoration(
@@ -92,9 +88,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                               });
                             },
                             child: Icon(
-                              passRepVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                              passRepVisible ? Icons.visibility : Icons.visibility_off,
                             ),
                           )),
                     ),
@@ -106,8 +100,12 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     child: Text('Zmień hasło'),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        changePassword(currentPasswordController.text,
-                            newPasswordController.text);
+                        changeSthInMyAccount(
+                            apiURLChangePassword,
+                            Map.of({
+                              'current_password': currentPasswordController.text,
+                              'new_password': newPasswordController.text
+                            }));
                         Navigator.pop(context);
                       }
                     },
@@ -121,8 +119,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
 }
 
 String? validatePassword(String? password) {
-  RegExp passReg = RegExp(
-      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{10,50}$');
+  RegExp passReg =
+      RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{10,50}$');
   final isPassReg = passReg.hasMatch(password ?? '');
   if (!isPassReg) {
     return validatePasswordError;
@@ -132,6 +130,7 @@ String? validatePassword(String? password) {
 
 class DifferentPasswordValidator extends TextFieldValidator {
   DifferentPasswordValidator(super.errorText, this.textToCompare);
+
   final String textToCompare;
 
   @override

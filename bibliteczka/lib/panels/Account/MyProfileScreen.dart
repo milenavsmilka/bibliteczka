@@ -271,8 +271,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   onPressed: () {
                     setState(() {
                       userData[0]['profile_picture'] = i;
-                      changeProfilePicture(
-                          apiURLChangeProfilePicture, 'profile_picture', i);
+                      changeSthInMyAccount(
+                          apiURLChangeProfilePicture, Map.of({'profile_picture': i}));
                       Navigator.pop(context);
                     });
                   },

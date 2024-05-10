@@ -2,7 +2,10 @@ import 'package:biblioteczka/styles/ThemeProvider.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+
+import '../Tools/functions.dart';
 
 class ChangeThemeScreen extends StatefulWidget {
   @override
@@ -35,6 +38,7 @@ class _ChangeThemeScreenState extends State<ChangeThemeScreen> {
                     setState(() {
                       themeState.setAnotherTheme = light;
                     });
+                    changeSthInMyAccount(apiURLChangeTheme,Map.of({"theme": "light"}));
                   },
                   child: Text(changeToLightTheme)),
               ElevatedButton(
@@ -42,6 +46,7 @@ class _ChangeThemeScreenState extends State<ChangeThemeScreen> {
                     setState(() {
                       themeState.setAnotherTheme = dark;
                     });
+                    changeSthInMyAccount(apiURLChangeTheme,Map.of({"theme": "dark"}));
                   },
                   child: Text(changeToDarkTheme)),
               ElevatedButton(
@@ -49,13 +54,20 @@ class _ChangeThemeScreenState extends State<ChangeThemeScreen> {
                     setState(() {
                       themeState.setAnotherTheme = special;
                     });
+                    changeSthInMyAccount(apiURLChangeTheme,Map.of({"theme": "special"}));
                   },
                   child: Text(changeToSpecialTheme)),
               ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     setState(() {
                       themeState.setAnotherTheme = daltonism;
                     });
+                    try{
+                      await changeSthInMyAccount(apiURLChangeTheme,Map.of({"theme": "daltonism"}));
+                    }on http.ClientException catch (e) {
+                      showSnackBar(context, 'Wybrano obecny motyw', Theme.of(context).cardColor);
+                    }
+                    
                   },
                   child: Text(changeToDaltonismTheme))
             ],
