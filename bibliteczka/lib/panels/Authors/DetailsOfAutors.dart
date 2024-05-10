@@ -13,7 +13,7 @@ import '../Tools/LoadingScreen.dart';
 class DetailsOfAuthorsScreen extends StatefulWidget {
   const DetailsOfAuthorsScreen({super.key, required this.authorId});
 
-  final int authorId;
+  final String authorId;
 
   @override
   State<DetailsOfAuthorsScreen> createState() => _DetailsOfAuthorsScreenState();
@@ -183,7 +183,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                             onPressed: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => DetailsOfBookScreen(
-                                    bookId: releasedBooks[i], turnOpinions: true),
+                                    bookId: releasedBooks[i]),
                               ));
                             },
                           ),
@@ -200,9 +200,9 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
     }
   }
 
-  Future<void> giveMeDetailsOfAuthors(int authorId) async {
+  Future<void> giveMeDetailsOfAuthors(String authorId) async {
     Map<String, dynamic> data =
-        await getSthById(apiURLGetAuthor, Map.of({'id': authorId.toString()}));
+        await getSthById(apiURLGetAuthor, Map.of({'id': authorId}));
 
     setState(() {
       final results = data['results'];

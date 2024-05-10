@@ -182,7 +182,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                   Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  DetailsOfBookScreen(bookId: favBooks[i],turnOpinions: true),
+                                                  DetailsOfBookScreen(bookId: favBooks[i]),
                                             )).then((value) => setState(() {
                                               giveMeUserData();
                                             }));
@@ -231,7 +231,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                 Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                DetailsOfBookScreen(bookId: readBooks[i],turnOpinions: true),
+                                                DetailsOfBookScreen(bookId: readBooks[i]),
                                           )).then((value) => setState(() {
                                             giveMeUserData();
                                           }));

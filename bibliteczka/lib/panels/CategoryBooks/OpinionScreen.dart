@@ -16,7 +16,7 @@ class OpinionScreen extends StatefulWidget {
   const OpinionScreen({super.key, this.opinionId, required this.instruction, required this.bookId});
 
   final int? opinionId;
-  final int bookId;
+  final String bookId;
   final String instruction;
   static const String SEND = 'SEND';
   static const String LOAD = 'LOAD';
@@ -161,7 +161,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
                               setState(() {
                                 Navigator.of(context).pushReplacement(CustomPageRoute(
                                     child: DetailsOfBookScreen(
-                                        bookId: widget.bookId, turnOpinions: true),
+                                        bookId: widget.bookId),
                                     chooseAnimation: CustomPageRoute.FADE));
                               });
                             },
@@ -187,13 +187,13 @@ class _OpinionScreenState extends State<OpinionScreen> {
                                   await sendRequest(
                                       apiURLGetOpinion,
                                       Map.of({
-                                        'book_id': widget.bookId.toString(),
+                                        'book_id': widget.bookId,
                                         'stars_count': starsRating,
                                         'comment': opinionTextToSend.text
                                       }));
                                   Navigator.of(context).pushReplacement(CustomPageRoute(
                                       child: DetailsOfBookScreen(
-                                          bookId: widget.bookId, turnOpinions: true),
+                                          bookId: widget.bookId),
                                       chooseAnimation: CustomPageRoute.FADE));
                                   opinionTextToSend.clear();
                                 } on http.ClientException catch (e) {

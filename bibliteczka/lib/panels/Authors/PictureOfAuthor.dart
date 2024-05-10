@@ -14,7 +14,7 @@ class PictureOfAuthor extends StatefulWidget {
   const PictureOfAuthor(
       {super.key, required this.authorId, required this.onPressed});
 
-  final int authorId;
+  final String authorId;
   final VoidCallback onPressed;
 
   @override
@@ -64,7 +64,7 @@ class _PictureOfAuthorState extends State<PictureOfAuthor> {
 
   Future<void> giveMeAuthorData() async {
     authorResponse = await getSthById(
-        apiURLGetAuthor, Map.of({'id': widget.authorId.toString()}));
+        apiURLGetAuthor, Map.of({'id': widget.authorId}));
 
     setState(() {
       authorDetails = authorResponse['results'];

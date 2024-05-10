@@ -11,11 +11,9 @@ import '../Tools/IconsAnimation.dart';
 import '../Tools/LoadingScreen.dart';
 
 class DetailsOfBookScreen extends StatefulWidget {
-  const DetailsOfBookScreen(
-      {super.key, required this.bookId, this.turnOpinions});
+  const DetailsOfBookScreen({super.key, required this.bookId});
 
-  final int bookId;
-  final bool? turnOpinions;
+  final String bookId;
 
   @override
   State<DetailsOfBookScreen> createState() => _DetailsOfBookScreenState();
@@ -73,20 +71,24 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                           SizedBox(
                             width: widthScreen / 2.3,
                             height: heightScreen / 2.5,
-                            child: NetworkLoadingImage(pathToImage: picture),//todo problem z wywalaniem błędu
+                            child: NetworkLoadingImage(
+                                pathToImage: picture), //todo problem z wywalaniem błędu
                           ),
                           Opacity(
                             opacity: isHeartAnimating ? 1 : 0,
                             child: IconsAnimation(
                               duration: Duration(milliseconds: 800),
-                              child: emptyHeart ? Icon(
-                                Icons.favorite_border,
-                                color: Colors.white,
-                                size: 100,
-                              ): Icon(Icons.favorite,
-                              color: Colors.white,
-                              size: 100,
-                              ),
+                              child: emptyHeart
+                                  ? Icon(
+                                      Icons.favorite_border,
+                                      color: Colors.white,
+                                      size: 100,
+                                    )
+                                  : Icon(
+                                      Icons.favorite,
+                                      color: Colors.white,
+                                      size: 100,
+                                    ),
                               isAnimating: isHeartAnimating,
                               onEnd: () => setState(() {
                                 isHeartAnimating = false;
@@ -99,14 +101,17 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                               alignment: Alignment.bottomRight,
                               child: IconsAnimation(
                                 duration: Duration(milliseconds: 800),
-                                child: emptyRead ? Icon(
-                                  Icons.remove_circle,
-                                  color: Colors.redAccent,
-                                  size: 100,
-                                ): Icon(Icons.add_circle,
-                                  color: Colors.greenAccent,
-                                  size: 100,
-                                ),
+                                child: emptyRead
+                                    ? Icon(
+                                        Icons.remove_circle,
+                                        color: Colors.redAccent,
+                                        size: 100,
+                                      )
+                                    : Icon(
+                                        Icons.add_circle,
+                                        color: Colors.greenAccent,
+                                        size: 100,
+                                      ),
                                 isAnimating: isReadAnimating,
                                 onEnd: () => setState(() {
                                   isReadAnimating = false;
@@ -120,14 +125,15 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                           setState(() {
                             isHeartAnimating = true;
                           });
-                          try{
-                            await sendRequest(apiURLBookFromFav, Map.of({'book_id': widget.bookId.toString()}));
+                          try {
+                            await sendRequest(
+                                apiURLBookFromFav, Map.of({'book_id': widget.bookId.toString()}));
                             emptyHeart = true;
-                          } on http.ClientException catch(e){
+                          } on http.ClientException catch (e) {
                             print('wcale nie $e');
-                            deleteBooksFromMyLibrary(apiURLBookFromFav,
-                                'book_id', widget.bookId.toString());
-                            emptyHeart=false;
+                            deleteBooksFromMyLibrary(
+                                apiURLBookFromFav, 'book_id', widget.bookId.toString());
+                            emptyHeart = false;
                           }
                         },
                         onLongPress: () async {
@@ -135,14 +141,15 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                           setState(() {
                             isReadAnimating = true;
                           });
-                          try{
-                            await sendRequest(apiURLBookFromRead,Map.of({'book_id': widget.bookId.toString()}));
+                          try {
+                            await sendRequest(
+                                apiURLBookFromRead, Map.of({'book_id': widget.bookId.toString()}));
                             emptyRead = true;
-                          } on http.ClientException catch(e){
+                          } on http.ClientException catch (e) {
                             print('wcale nie $e');
-                            deleteBooksFromMyLibrary(apiURLBookFromRead,
-                                'book_id', widget.bookId.toString());
-                            emptyRead=false;
+                            deleteBooksFromMyLibrary(
+                                apiURLBookFromRead, 'book_id', widget.bookId.toString());
+                            emptyRead = false;
                           }
                         },
                       ),
@@ -154,14 +161,12 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(bookTitle,
-                              style: Theme.of(context).textTheme.headlineSmall),
+                          Text(bookTitle, style: Theme.of(context).textTheme.headlineSmall),
                           Text(
                             title,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
-                          Text(bookAuthor,
-                              style: Theme.of(context).textTheme.headlineSmall),
+                          Text(bookAuthor, style: Theme.of(context).textTheme.headlineSmall),
                           Column(
                             children: [
                               if (authorsNames.isEmpty) ...{
@@ -174,14 +179,12 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                                 if (i == authorsNames.length - 1) ...{
                                   Text(
                                     authorsNames[i].toString(),
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall,
+                                    style: Theme.of(context).textTheme.titleSmall,
                                   )
                                 } else ...{
                                   Text(
                                     '${authorsNames[i]},',
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall,
+                                    style: Theme.of(context).textTheme.titleSmall,
                                   )
                                 }
                               }
@@ -204,24 +207,16 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
               const Row(children: [Text('')]),
               Row(
                 children: [
-                  Flexible(
-                      child: Text(description,
-                          style: Theme.of(context).textTheme.titleSmall)),
+                  Flexible(child: Text(description, style: Theme.of(context).textTheme.titleSmall)),
                 ],
               ),
               const Row(children: [Text('')]),
-              if (widget.turnOpinions == true) ...{
-                Text(opinionsAndTalks,
-                    style: Theme.of(context).textTheme.headlineSmall),
-                const Row(children: [Text('')]),
+              Text(opinionsAndTalks, style: Theme.of(context).textTheme.headlineSmall),
+              const Row(children: [Text('')]),
+              OpinionScreen(instruction: OpinionScreen.SEND, bookId: widget.bookId),
+              for (int i = 0; i < opinions.length; i++)
                 OpinionScreen(
-                    instruction: OpinionScreen.SEND, bookId: widget.bookId),
-                for (int i = 0; i < opinions.length; i++)
-                  OpinionScreen(
-                      opinionId: opinions[i],
-                      instruction: OpinionScreen.LOAD,
-                      bookId: widget.bookId),
-              }
+                    opinionId: opinions[i], instruction: OpinionScreen.LOAD, bookId: widget.bookId),
             ]),
           ),
         ),
@@ -229,8 +224,8 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     }
   }
 
-  Future<void> giveMeDetailsOfBook(int bookId) async {
-    Map<String, dynamic> data = await getSthById(apiURLGetBooks, Map.of({'id':bookId.toString()}));
+  Future<void> giveMeDetailsOfBook(String bookId) async {
+    Map<String, dynamic> data = await getSthById(apiURLGetBooks, Map.of({'id': bookId}));
 
     setState(() {
       final results = data['results'];
@@ -247,10 +242,9 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     print('Imię autora $authorsNames i opinie $opinions');
   }
 
-
   Future<void> isThatBookInMyLibrary() async {
     Map<String, dynamic> getUserResponse =
-    await getSthById(apiURLGetUser, Map.of({'get_self': 'true'}));
+        await getSthById(apiURLGetUser, Map.of({'get_self': 'true'}));
 
     List<dynamic> userData;
     List<dynamic> favBooks = [-1];
@@ -261,14 +255,14 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       readBooks = userData[0]['library']['read_books'];
     });
 
-    if(favBooks.contains(widget.bookId)) {
-      emptyHeart= true;
+    if (favBooks.contains(widget.bookId)) {
+      emptyHeart = true;
     } else {
       emptyHeart = false;
     }
 
-    if(readBooks.contains(widget.bookId)) {
-      emptyRead= true;
+    if (readBooks.contains(widget.bookId)) {
+      emptyRead = true;
     } else {
       emptyRead = false;
     }

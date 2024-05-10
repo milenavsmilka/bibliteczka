@@ -68,8 +68,7 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                         checkIsTokenValid(
                             context,
                             DetailsOfBookScreen(
-                              bookId: listOfBooks[index]['id'],
-                              turnOpinions: true,
+                              bookId: listOfBooks[index]['id']
                             ));
                       },
                       child: SizedBox(

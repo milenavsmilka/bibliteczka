@@ -14,7 +14,7 @@ class PictureOfBooksInMyLibrary extends StatefulWidget {
   const PictureOfBooksInMyLibrary(
       {super.key, required this.bookId, required this.isEditingLibrary, required this.categoryUrl, required this.onPressed});
 
-  final int bookId;
+  final String bookId;
   final bool isEditingLibrary;
   final String categoryUrl;
   final VoidCallback onPressed;
@@ -79,7 +79,7 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
                   onPressed: () {
                     setState(() {
                       deleteBooksFromMyLibrary(widget.categoryUrl, 'book_id',
-                          widget.bookId.toString());
+                          widget.bookId);
                       Navigator.of(context).pushReplacement(
                           CustomPageRoute(child: MyProfileScreen(), chooseAnimation: CustomPageRoute.FADE));
                     });
@@ -93,7 +93,7 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
 
   Future<void> giveMeBookData() async {
     bookResponse = await getSthById(
-        apiURLGetBooks, Map.of({'id': widget.bookId.toString()}));
+        apiURLGetBooks, Map.of({'id': widget.bookId}));
 
     setState(() {
       bookDetails = bookResponse['results'];

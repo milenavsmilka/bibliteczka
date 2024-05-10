@@ -34,7 +34,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
   void initState() {
     super.initState();
     giveMeListsOfTopAuthors();
-    giveMeListsOfAuthors(1,'A');
+    giveMeListsOfAuthors(1, 'A');
   }
 
   @override
@@ -42,9 +42,8 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
     double widthScreen = MediaQuery.of(context).size.width;
     double heightScreen = MediaQuery.of(context).size.height;
 
-    if (listOfPopularAuthors.isEmpty || listOfAuthors.isEmpty) {
-      return const LoadingScreen(message: nothingHere);
-    } else if (listOfPopularAuthors[0] == -1 || listOfAuthors[0] == -1) {
+    if ((listOfPopularAuthors.isNotEmpty && listOfPopularAuthors[0] == -1) ||
+        (listOfAuthors.isNotEmpty && listOfAuthors[0] == -1)) {
       return const LoadingScreen(message: loading);
     } else {
       return Scaffold(
@@ -95,7 +94,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                         width: widthScreen * 0.1,
                         child: TextButton(
                           onPressed: () {
-                            giveMeListsOfAuthors(1,currentList[i]);
+                            giveMeListsOfAuthors(1, currentList[i]);
                             letterThatWasClicked = currentList[i];
                           },
                           style: ButtonStyle(
@@ -132,8 +131,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                         emptyBox(widthScreen, heightScreen),
                       } else ...{
                         for (int i = 0; i < listOfAuthors.length; i++) ...{
-                          TextButton(child: Text(listOfAuthors[i]['name']), onPressed: () {
-                          }),
+                          TextButton(child: Text(listOfAuthors[i]['name']), onPressed: () {}),
                         }
                       }
                     ],
@@ -145,7 +143,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                       TextButton(
                           child: Text((i + 1).toString()),
                           onPressed: () {
-                            giveMeListsOfAuthors(i + 1,letterThatWasClicked);
+                            giveMeListsOfAuthors(i + 1, letterThatWasClicked);
                           }),
                     }
                   }
@@ -156,9 +154,16 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
     }
   }
 
-  Future<void> giveMeListsOfAuthors(int page,String letter) async {
-    Map<String, dynamic> data = await getSthById(apiURLGetAuthor,
-        Map.of({'per_page': '10', 'sorts': 'name','name':letter, 'page': page.toString(), 'name_is_startswith':true.toString()}));
+  Future<void> giveMeListsOfAuthors(int page, String letter) async {
+    Map<String, dynamic> data = await getSthById(
+        apiURLGetAuthor,
+        Map.of({
+          'per_page': '10',
+          'sorts': 'name',
+          'name': letter,
+          'page': page.toString(),
+          'name_is_startswith': true.toString()
+        }));
 
     setState(() {
       listOfAuthors = data['results'];
