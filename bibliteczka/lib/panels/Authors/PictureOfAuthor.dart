@@ -1,4 +1,4 @@
-import 'package:biblioteczka/panels/Account/MyProfileScreen.dart';
+import 'package:biblioteczka/panels/Account/MyProfile.dart';
 import 'package:biblioteczka/panels/CategoryBooks/DetailsOfBook.dart';
 import 'package:biblioteczka/panels/Tools/CustomPageRoute.dart';
 import 'package:flutter/cupertino.dart';

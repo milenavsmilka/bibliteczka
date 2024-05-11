@@ -10,7 +10,8 @@ class ChangePasswordScreen extends StatefulWidget {
   @override
   _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
 }
-
+//todo dodanie do każdego przejścia między screenami sprawdzenie ważności tokenu
+//todo wyskoczenie komunikatu jeżeli nie ma internetu
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final currentPasswordController = TextEditingController();

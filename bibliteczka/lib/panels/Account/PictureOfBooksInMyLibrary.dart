@@ -1,4 +1,4 @@
-import 'package:biblioteczka/panels/Account/MyProfileScreen.dart';
+import 'package:biblioteczka/panels/Account/MyProfile.dart';
 import 'package:biblioteczka/panels/CategoryBooks/DetailsOfBook.dart';
 import 'package:biblioteczka/panels/Tools/CustomPageRoute.dart';
 import 'package:flutter/cupertino.dart';
@@ -78,7 +78,7 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
                       .primaryColor),
                   onPressed: () {
                     setState(() {
-                      deleteBooksFromMyLibrary(widget.categoryUrl, 'book_id',
+                      deleteSth(widget.categoryUrl, 'book_id',
                           widget.bookId);
                       Navigator.of(context).pushReplacement(
                           CustomPageRoute(child: MyProfileScreen(), chooseAnimation: CustomPageRoute.FADE));

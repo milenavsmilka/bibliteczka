@@ -1,4 +1,4 @@
-import 'package:biblioteczka/panels/Account/MyProfileScreen.dart';
+import 'package:biblioteczka/panels/Account/MyProfile.dart';
 import 'package:flutter/material.dart';
 
 import '../../styles/strings.dart';

@@ -19,7 +19,7 @@ Widget emptyBox(double widthScreen, double heightScreen) {
   );
 }
 
-Future<void> deleteBooksFromMyLibrary(String apiUrl, String key, String value) async {
+Future<void> deleteSth(String apiUrl, String key, String value) async {
   var sharedPreferences = await SharedPreferences.getInstance();
   String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
 
@@ -37,13 +37,12 @@ Future<void> deleteBooksFromMyLibrary(String apiUrl, String key, String value) a
     body: requestBodyJson,
   );
   print('Response: ${requestBody}');
+  Map<String, dynamic> data = jsonDecode(response.body);
   if (response.statusCode == 200) {
     print("Okej :D");
-    Map<String, dynamic> data = jsonDecode(response.body);
-    print(data);
   } else {
     print("Nie okej :(");
-    throw Exception(response.body);
+    throw http.ClientException(response.body);
   }
 }
 

@@ -36,6 +36,8 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   bool isReadAnimating = false;
   bool emptyRead = false;
 
+  String username = '-1';
+
   @override
   void initState() {
     super.initState();
@@ -131,7 +133,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             emptyHeart = true;
                           } on http.ClientException catch (e) {
                             print('wcale nie $e');
-                            deleteBooksFromMyLibrary(
+                            deleteSth(
                                 apiURLBookFromFav, 'book_id', widget.bookId.toString());
                             emptyHeart = false;
                           }
@@ -147,7 +149,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             emptyRead = true;
                           } on http.ClientException catch (e) {
                             print('wcale nie $e');
-                            deleteBooksFromMyLibrary(
+                            deleteSth(
                                 apiURLBookFromRead, 'book_id', widget.bookId.toString());
                             emptyRead = false;
                           }
@@ -216,7 +218,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
               OpinionScreen(instruction: OpinionScreen.SEND, bookId: widget.bookId),
               for (int i = 0; i < opinions.length; i++)
                 OpinionScreen(
-                    opinionId: opinions[i], instruction: OpinionScreen.LOAD, bookId: widget.bookId),
+                    opinionId: opinions[i], instruction: OpinionScreen.LOAD, bookId: widget.bookId, currentUsername:username),
             ]),
           ),
         ),
@@ -253,6 +255,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       userData = getUserResponse['results'];
       favBooks = userData[0]['library']['favourite_books'];
       readBooks = userData[0]['library']['read_books'];
+      username = userData[0]['username'];
     });
 
     if (favBooks.contains(widget.bookId)) {

@@ -139,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(notHaveAccountYetQuestion1,
-                        style: Theme.of(context).textTheme.headline6),
+                        style: Theme.of(context).textTheme.titleLarge),
                     TextButton(
                         onPressed: () {
                           Navigator.push(
