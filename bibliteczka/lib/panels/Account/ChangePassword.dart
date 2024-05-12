@@ -25,7 +25,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back_ios_sharp),
+            icon: const Icon(Icons.arrow_back_ios_sharp),
           ),
         ),
         body: Form(
@@ -49,7 +49,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       decoration: InputDecoration(
                           labelText: 'Podaj obecne hasło',
                           errorMaxLines: 3,
-                          prefixIcon: Icon(Icons.lock),
+                          prefixIcon: const Icon(Icons.lock),
                           suffix: InkWell(
                             onTap: () {
                               setState(() {
@@ -79,7 +79,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       ]).call,
                       decoration: InputDecoration(
                           labelText: 'Podaj nowe hasło',
-                          prefixIcon: Icon(Icons.lock),
+                          prefixIcon: const Icon(Icons.lock),
                           errorMaxLines: 3,
                           suffix: InkWell(
                             onTap: () {

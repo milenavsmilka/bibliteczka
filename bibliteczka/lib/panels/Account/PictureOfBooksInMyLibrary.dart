@@ -8,7 +8,11 @@ import '../Tools/functions.dart';
 
 class PictureOfBooksInMyLibrary extends StatefulWidget {
   const PictureOfBooksInMyLibrary(
-      {super.key, required this.bookId, required this.isEditingLibrary, required this.categoryUrl, required this.onPressed});
+      {super.key,
+      required this.bookId,
+      required this.isEditingLibrary,
+      required this.categoryUrl,
+      required this.onPressed});
 
   final String bookId;
   final bool isEditingLibrary;
@@ -16,9 +20,7 @@ class PictureOfBooksInMyLibrary extends StatefulWidget {
   final VoidCallback onPressed;
 
   @override
-  State<PictureOfBooksInMyLibrary> createState() =>
-      _PictureOfBooksInMyLibraryState();
-
+  State<PictureOfBooksInMyLibrary> createState() => _PictureOfBooksInMyLibraryState();
 }
 
 class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
@@ -34,14 +36,8 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
 
   @override
   Widget build(BuildContext context) {
-    double widthScreen = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double heightScreen = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double widthScreen = MediaQuery.of(context).size.width;
+    double heightScreen = MediaQuery.of(context).size.height;
 
     if (bookPicture == '-1') {
       return Text('czekamy na reklamy');
@@ -51,46 +47,48 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
           height: heightScreen / 5,
           child: Stack(children: [
             SizedBox(
-              width: widthScreen/3,
-              height: heightScreen/4,
+              width: widthScreen / 3,
+              height: heightScreen / 4,
               child: FittedBox(
                 fit: BoxFit.fill,
                 child: IconButton(
                     icon: NetworkLoadingImage(pathToImage: bookPicture),
-                    onPressed: widget.onPressed
-                    ),
+                    onPressed: widget.onPressed),
               ),
             ),
             Visibility(
               visible: widget.isEditingLibrary,
-              child: Align(alignment: Alignment.topRight,
+              child: Align(
+                alignment: Alignment.topRight,
                 child: FloatingActionButton(
                   heroTag: DateTime.now(),
                   shape: CircleBorder(),
                   mini: true,
                   backgroundColor: Colors.redAccent,
-                  child: Icon(Icons.close, color: Theme
-                      .of(context)
-                      .primaryColor),
+                  child: Icon(Icons.close, color: Theme.of(context).primaryColor),
                   onPressed: () {
                     setState(() {
-                      checkIsTokenValid(context,
-                      deleteSth(context,widget.categoryUrl, 'book_id',
-                          widget.bookId));//todo może jakoś da się obsłużyć ten błąd?
-                      Navigator.of(context).pushReplacement(
-                          CustomPageRoute(child: MyProfileScreen(), chooseAnimation: CustomPageRoute.FADE));
+                      checkIsTokenValid(
+                          context,
+                          deleteSth(
+                              context,
+                              widget.categoryUrl,
+                              Map.of({
+                                'book_id': widget.bookId
+                              }))); //todo może jakoś da się obsłużyć ten błąd?
+                      Navigator.of(context).pushReplacement(CustomPageRoute(
+                          child: MyProfileScreen(), chooseAnimation: CustomPageRoute.FADE));
                     });
                   },
-                ),),
+                ),
+              ),
             )
-          ])
-      );
+          ]));
     }
   }
 
   Future<void> giveMeBookData() async {
-    bookResponse = await getSthById(
-        context, apiURLGetBooks, Map.of({'id': widget.bookId}));
+    bookResponse = await getSthById(context, apiURLGetBooks, Map.of({'id': widget.bookId}));
 
     setState(() {
       bookDetails = bookResponse['results'];

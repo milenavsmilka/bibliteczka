@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final Color colorAppBar = Color.fromRGBO(44,40,156, 1);
-final Color backgroundScreenColor = Colors.black;
-final Color categoryButtonCyanColor = Color.fromRGBO(44,40,156, 1);
+const Color colorAppBar = Color.fromRGBO(44,40,156, 1);
+const Color backgroundScreenColor = Colors.black;
+const Color categoryButtonCyanColor = Color.fromRGBO(44,40,156, 1);
 const Color textMainColor = Colors.white;
-final Color borderColor = Colors.grey;
-final Color greyContainerOpinion = Colors.black12;
-final Color errorColor = Colors.redAccent;
+const Color borderColor = Colors.grey;
+const Color greyContainerOpinion = Colors.black12;
+const Color errorColor = Colors.redAccent;
 
 ThemeData daltonismTheme = ThemeData(
   primaryColor: colorAppBar,
@@ -23,12 +23,12 @@ ThemeData daltonismTheme = ThemeData(
             fontWeight: FontWeight.w700,
             fontStyle: FontStyle.normal,
             fontSize: 22),
-        minimumSize: Size.square(50.0),
+        minimumSize: const Size.square(50.0),
         backgroundColor: categoryButtonCyanColor,
         foregroundColor: textMainColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
   ),
-  inputDecorationTheme: InputDecorationTheme(
+  inputDecorationTheme: const InputDecorationTheme(
     hintStyle: TextStyle(
         color: textMainColor,
         fontFamily: 'Lato',
@@ -54,14 +54,14 @@ ThemeData daltonismTheme = ThemeData(
   ),
   textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-    textStyle: TextStyle(
+    textStyle: const TextStyle(
         fontFamily: 'Lato',
         fontWeight: FontWeight.w800,
         fontStyle: FontStyle.normal,
         fontSize: 18),
     foregroundColor: textMainColor,
   )),
-  buttonTheme: ButtonThemeData(buttonColor: colorAppBar),
+  buttonTheme: const ButtonThemeData(buttonColor: colorAppBar),
   textTheme: TextTheme(
       displayLarge: TextStyle(
           color: textMainColor,
@@ -95,19 +95,19 @@ ThemeData daltonismTheme = ThemeData(
         fontStyle: FontStyle.normal,
         fontSize: 22,
       ),
-      titleLarge: TextStyle(
+      titleLarge: const TextStyle(
           color: Colors.grey,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w700,
           fontStyle: FontStyle.normal,
           fontSize: 18),
-      titleMedium: TextStyle(
+      titleMedium: const TextStyle(
           color: textMainColor,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w600,
           fontStyle: FontStyle.normal,
           fontSize: 17),
-      titleSmall: TextStyle(
+      titleSmall: const TextStyle(
           color: textMainColor,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w500,
@@ -124,15 +124,15 @@ ThemeData daltonismTheme = ThemeData(
     foregroundColor: textMainColor,
     backgroundColor: colorAppBar,
   ),
-  dialogTheme: DialogTheme(
+  dialogTheme: const DialogTheme(
       backgroundColor: backgroundScreenColor,
-      titleTextStyle: const TextStyle(
+      titleTextStyle: TextStyle(
           color: textMainColor,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w700,
           fontStyle: FontStyle.normal,
           fontSize: 20),
-      contentTextStyle: const TextStyle(
+      contentTextStyle: TextStyle(
           color: textMainColor,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w700,
@@ -142,5 +142,5 @@ ThemeData daltonismTheme = ThemeData(
   snackBarTheme: const SnackBarThemeData(
     contentTextStyle: TextStyle(fontSize: 20),
   ),
-  iconTheme: IconThemeData(color: textMainColor),
+  iconTheme: const IconThemeData(color: textMainColor),
 );

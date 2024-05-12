@@ -9,6 +9,7 @@ import '../../styles/strings.dart';
 import '../Account/MyProfile.dart';
 import '../Tools/CustomPageRoute.dart';
 import '../Tools/HowMuchStars.dart';
+import '../Tools/Icons.dart';
 import '../Tools/IconsAnimation.dart';
 import '../Tools/LoadingScreen.dart';
 
@@ -29,6 +30,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   String dateOfPremiere = '';
   String publishingHouse = '';
   String picture = '';
+  int countOfPages = 0;
   List<dynamic> opinions = [];
   List<dynamic> authorsNames = [nothingHere];
   double rate = 1.0;
@@ -58,14 +60,18 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     } else {
       return Scaffold(
         appBar: DefaultAppBar(
-          title: title,
-          automaticallyImplyLeading: true,
-          onTap:() {
-            checkIsTokenValid(context, Navigator.push(
-                context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: MyProfileScreen()))
-                .then((value) => isThatBookInMyLibrary()));
-          }
-        ),
+            title: title,
+            automaticallyImplyLeading: true,
+            onTap: () {
+              checkIsTokenValid(
+                  context,
+                  Navigator.push(
+                          context,
+                          CustomPageRoute(
+                              chooseAnimation: CustomPageRoute.SLIDE,
+                              child: const MyProfileScreen()))
+                      .then((value) => isThatBookInMyLibrary()));
+            }),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -134,8 +140,8 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                                     });
                                   } on http.ClientException catch (e) {
                                     print('wcale nie $e');
-                                    deleteSth(context, apiURLBookFromRead, 'book_id',
-                                        widget.bookId.toString());
+                                    deleteSth(context, apiURLBookFromRead, Map.of({'book_id':
+                                      widget.bookId.toString()}));
                                     setState(() {
                                       emptyRead = false;
                                     });
@@ -160,8 +166,8 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                                       });
                                     } on http.ClientException catch (e) {
                                       print('wcale nie $e');
-                                      deleteSth(context, apiURLBookFromFav, 'book_id',
-                                          widget.bookId.toString());
+                                      deleteSth(context, apiURLBookFromFav,
+                                          Map.of({'book_id': widget.bookId.toString()}));
                                       setState(() {
                                         emptyHeart = false;
                                       });
@@ -182,7 +188,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                           } on http.ClientException catch (e) {
                             print('wcale nie $e');
                             deleteSth(
-                                context, apiURLBookFromFav, 'book_id', widget.bookId.toString());
+                                context, apiURLBookFromFav, Map.of({'book_id': widget.bookId.toString()}));
                             emptyHeart = false;
                           }
                         },
@@ -198,7 +204,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                           } on http.ClientException catch (e) {
                             print('wcale nie $e');
                             deleteSth(
-                                context, apiURLBookFromRead, 'book_id', widget.bookId.toString());
+                                context, apiURLBookFromRead, Map.of({'book_id': widget.bookId.toString()}));
                             emptyRead = false;
                           }
                         },
@@ -246,6 +252,13 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             publishingHouse,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
+                          if (countOfPages != 0) ...{
+                            Text(numberOfPages, style: Theme.of(context).textTheme.headlineSmall),
+                            Text(
+                              countOfPages.toString(),
+                              style: Theme.of(context).textTheme.titleSmall,
+                            )
+                          },
                           const Row(children: [Text('')]),
                           HowMuchStars(rate: rate.isNaN ? 0 : rate),
                         ],
@@ -255,11 +268,14 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                 ],
               ),
               const Row(children: [Text('')]),
-              Row(
-                children: [
-                  Flexible(child: Text(description, style: Theme.of(context).textTheme.titleSmall)),
-                ],
-              ),
+              if (description != '') ...{
+                Row(
+                  children: [
+                    Flexible(
+                        child: Text(description, style: Theme.of(context).textTheme.titleSmall)),
+                  ],
+                )
+              },
               const Row(children: [Text('')]),
               Text(opinionsAndTalks, style: Theme.of(context).textTheme.headlineSmall),
               const Row(children: [Text('')]),
@@ -283,7 +299,6 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     setState(() {
       final results = data['results'];
       title = results[0]['title'];
-      description = results[0]['description'];
       isbn = results[0]['isbn'];
       dateOfPremiere = results[0]['premiere_date'];
       publishingHouse = results[0]['publishing_house'];
@@ -291,6 +306,8 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
       authorsNames = results[0]['authors_names'];
       rate = results[0]['score'] * 1.0;
       opinions = results[0]['opinions'];
+      if (results[0]['description'] != null) description = results[0]['description'];
+      if (results[0]['number_of_pages'] != null) countOfPages = results[0]['number_of_pages'];
     });
     print('Imię autora $authorsNames i opinie $opinions');
   }
@@ -320,37 +337,5 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     } else {
       emptyRead = false;
     }
-  }
-
-  Icon addToFavIcon(double size) {
-    return Icon(
-      Icons.favorite,
-      color: Colors.white,
-      size: size,
-    );
-  }
-
-  Icon deleteFromFavIcon(double size) {
-    return Icon(
-      Icons.favorite_border,
-      color: Colors.white,
-      size: size,
-    );
-  }
-
-  Icon deleteFromReadIcon(double size) {
-    return Icon(
-      Icons.remove_circle,
-      color: Colors.redAccent,
-      size: size,
-    );
-  }
-
-  Icon addToReadIcon(double size) {
-    return Icon(
-      Icons.add_circle,
-      color: Colors.greenAccent,
-      size: size,
-    );
   }
 }

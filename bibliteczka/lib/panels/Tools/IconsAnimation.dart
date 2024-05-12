@@ -7,12 +7,12 @@ class IconsAnimation extends StatefulWidget {
   final VoidCallback? onEnd;
 
   const IconsAnimation({
-    Key? key,
+    super.key,
     required this.child,
     required this.isAnimating,
     this.duration = const Duration(milliseconds: 150),
     this.onEnd,
-  }) : super(key: key);
+  });
 
   @override
   _IconsAnimationState createState() => _IconsAnimationState();

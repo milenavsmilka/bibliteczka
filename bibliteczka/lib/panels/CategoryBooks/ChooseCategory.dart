@@ -3,7 +3,6 @@ import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../Account/MyProfile.dart';
 import '../Tools/CustomPageRoute.dart';
 import '../Tools/DefaultAppBar.dart';
 import 'AllBooksFromCategory.dart';

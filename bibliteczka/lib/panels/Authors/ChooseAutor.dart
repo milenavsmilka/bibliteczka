@@ -60,7 +60,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                   Navigator.push(
                           context,
                           CustomPageRoute(
-                              chooseAnimation: CustomPageRoute.SLIDE, child: MyProfileScreen()))
+                              chooseAnimation: CustomPageRoute.SLIDE, child: const MyProfileScreen()))
                       .then((value) => giveMeListsOfAuthors(currentPage, letterThatWasClicked)));
             },
           ),
@@ -87,6 +87,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                         } else ...{
                           for (int i = 0; i < listOfPopularAuthors.length; i++) ...{
                             PictureOfAuthor(
+                              isEditingLibrary: false,
                               authorId: listOfPopularAuthors[i]['id'],
                               onPressed: () {
                                 checkIsTokenValid(
@@ -103,7 +104,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                     ),
                   ),
                 ),
-                Text(''),
+                const Text(''),
                 Text('Alfabetycznie', style: Theme.of(context).textTheme.headlineMedium),
                 Wrap(children: [
                   for (int i = 0; i < currentList.length; i++) ...{
@@ -135,7 +136,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                           currentList = listOfKeyboard[++index % listOfKeyboard.length];
                         });
                       },
-                      icon: Icon(Icons.language, size: 30)),
+                      icon: const Icon(Icons.language, size: 30)),
                 ]),
                 SizedBox(
                   height: heightScreen / 3,

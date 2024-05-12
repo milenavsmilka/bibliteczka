@@ -13,7 +13,7 @@ import 'Tools/functions.dart';
 import 'TopOfTheTop/TopScreen.dart';
 
 class MainPanelScreen extends StatefulWidget {
-  const MainPanelScreen({Key? key}) : super(key: key);
+  const MainPanelScreen({super.key});
 
   @override
   _MainPanelScreen createState() => _MainPanelScreen();
@@ -90,10 +90,10 @@ class ChooseOptionFromMenuButton extends StatelessWidget {
   final Widget widgetToRoute;
 
   const ChooseOptionFromMenuButton({
-    Key? key,
+    super.key,
     required this.nameOfOptionFromMenu,
     required this.widgetToRoute,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

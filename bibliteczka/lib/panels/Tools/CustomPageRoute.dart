@@ -10,7 +10,7 @@ class CustomPageRoute extends PageRouteBuilder {
     required this.chooseAnimation
     // this.direction = AxisDirection.right,
   }) : super(transitionDuration: const Duration(milliseconds: 500),
-      reverseTransitionDuration: Duration(milliseconds: 500),
+      reverseTransitionDuration: const Duration(milliseconds: 500),
       pageBuilder: (context, animation, secondaryAnimation) => child);
 
   static const String SLIDE = 'SLIDE';

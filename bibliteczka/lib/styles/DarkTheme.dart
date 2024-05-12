@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-final Color colorAppDarkBar = Color.fromRGBO(0, 0, 0, 1.0);
-final Color backgroundScreenDarkColor = Color.fromRGBO(64, 63, 82, 1.0);
-final Color categoryButtonDarkColor = Color.fromRGBO(101, 100, 131, 1.0);
-final Color textMainColor = Color.fromRGBO(211, 207, 207, 1.0);
-final Color borderColor = Colors.grey;
-final Color greyContainerOpinion = Colors.black12;
+const Color colorAppDarkBar = Color.fromRGBO(0, 0, 0, 1.0);
+const Color backgroundScreenDarkColor = Color.fromRGBO(64, 63, 82, 1.0);
+const Color categoryButtonDarkColor = Color.fromRGBO(101, 100, 131, 1.0);
+const Color textMainColor = Color.fromRGBO(211, 207, 207, 1.0);
+const Color borderColor = Colors.grey;
+const Color greyContainerOpinion = Colors.black12;
 
 ThemeData darkTheme = ThemeData(
   primaryColor: colorAppDarkBar,
@@ -17,18 +17,18 @@ ThemeData darkTheme = ThemeData(
     scaffoldBackgroundColor: backgroundScreenDarkColor,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
               fontFamily: 'LobsterTwo',
               fontWeight: FontWeight.w700,
               fontStyle: FontStyle.normal,
               fontSize: 25),
-          minimumSize: Size.square(50.0),
+          minimumSize: const Size.square(50.0),
           backgroundColor: categoryButtonDarkColor,
           foregroundColor: textMainColor,
           shape:
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
     ),
-    inputDecorationTheme: InputDecorationTheme(
+    inputDecorationTheme: const InputDecorationTheme(
       labelStyle: TextStyle(
           color: Colors.grey,
           fontFamily: 'Lato',
@@ -45,22 +45,22 @@ ThemeData darkTheme = ThemeData(
     ),
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          textStyle: TextStyle(
+          textStyle: const TextStyle(
               fontFamily: 'Lato',
               fontWeight: FontWeight.w800,
               fontStyle: FontStyle.normal,
               fontSize: 15),
           foregroundColor: categoryButtonDarkColor,
         )),
-    buttonTheme: ButtonThemeData(buttonColor: colorAppDarkBar),
-    textTheme: TextTheme(
-      headline6: TextStyle(
+    buttonTheme: const ButtonThemeData(buttonColor: colorAppDarkBar),
+    textTheme: const TextTheme(
+      titleLarge: TextStyle(
           color: Colors.grey,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w700,
           fontStyle: FontStyle.normal,
           fontSize: 15),
-      headline5: TextStyle(
+      headlineSmall: TextStyle(
         color: textMainColor,
         fontFamily: 'Merienda',
         fontWeight: FontWeight.w600,
@@ -79,13 +79,13 @@ ThemeData darkTheme = ThemeData(
       //     fontWeight: FontWeight.w800,
       //     fontStyle: FontStyle.italic,
       //     fontSize: 35),
-      headline1: TextStyle(
+      displayLarge: TextStyle(
           color: Colors.black,
           fontFamily: 'LobsterTwo',
           fontWeight: FontWeight.w800,
           fontStyle: FontStyle.italic,
           fontSize: 55),
-      headline3: TextStyle(
+      displaySmall: TextStyle(
         color: Colors.black,
         fontFamily: 'LobsterTwo',
         fontWeight: FontWeight.w600,
@@ -93,7 +93,7 @@ ThemeData darkTheme = ThemeData(
         fontSize: 36,
       ),
     ),
-    appBarTheme: AppBarTheme(
+    appBarTheme: const AppBarTheme(
       titleTextStyle: TextStyle(
           color: textMainColor,
           fontFamily: 'LobsterTwo',
@@ -104,20 +104,20 @@ ThemeData darkTheme = ThemeData(
       foregroundColor: textMainColor,
       backgroundColor: colorAppDarkBar,
     ),
-  dialogTheme: DialogTheme(
+  dialogTheme: const DialogTheme(
       backgroundColor: backgroundScreenDarkColor,
-      titleTextStyle: const TextStyle(
+      titleTextStyle: TextStyle(
           color: Colors.black,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w700,
           fontStyle: FontStyle.normal,
           fontSize: 20),
-      contentTextStyle: const TextStyle(
+      contentTextStyle: TextStyle(
           color: Colors.black,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w700,
           fontStyle: FontStyle.normal,
           fontSize: 15),
       surfaceTintColor: Colors.transparent),
-  iconTheme: IconThemeData(color: textMainColor),
+  iconTheme: const IconThemeData(color: textMainColor),
 );

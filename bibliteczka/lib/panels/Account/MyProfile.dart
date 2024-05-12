@@ -1,3 +1,5 @@
+import 'package:biblioteczka/panels/Authors/DetailsOfAutors.dart';
+import 'package:biblioteczka/panels/Authors/PictureOfAuthor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -7,7 +9,7 @@ import '../CategoryBooks/DetailsOfBook.dart';
 import '../Tools/LoadingScreen.dart';
 import '../Tools/functions.dart';
 import 'PictureOfBooksInMyLibrary.dart';
-
+//todo wyświetlanie ulubionych autorów
 class MyProfileScreen extends StatefulWidget {
   const MyProfileScreen({super.key});
 
@@ -19,6 +21,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   List<dynamic> userData = [-1];
   List<dynamic> favBooks = [-1];
   List<dynamic> readBooks = [-1];
+  List<dynamic> favAuthors = [-1];
+  int userId = -1;
   bool isEditing = false;
 
   @override
@@ -224,6 +228,53 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     ),
                   ),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Autorzy',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                  ],
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: SizedBox(
+                    height: heightScreen / 4,
+                    child: GridView(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1, mainAxisExtent: heightScreen / 5, mainAxisSpacing: 20),
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      children: [
+                        if (favAuthors.isEmpty) ...{
+                          emptyBox(widthScreen, heightScreen),
+                        } else ...{
+                          for (int i = 0; i < favAuthors.length; i++) ...{
+                            PictureOfAuthor(
+                              authorId: favAuthors[i],
+                              isEditingLibrary: isEditing,
+                              userId: userId,
+                              // categoryUrl: apiURLFan,
+                              onPressed: () {
+                                checkIsTokenValid(
+                                    context,
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          DetailsOfAuthorsScreen(authorId: favAuthors[i]),
+                                    )).then((value) => setState(() {
+                                      giveMeUserData();
+                                    }))
+                                );
+                              },
+                            ),
+                          }
+                        }
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ));
@@ -238,6 +289,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
       userData = getUserResponse['results'];
       favBooks = userData[0]['library']['favourite_books'];
       readBooks = userData[0]['library']['read_books'];
+      favAuthors = userData[0]['followed_authors'];
+      userId = userData[0]['id'];
     });
   }
 

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-final Color colorAppBar = Color.fromRGBO(242, 224, 157, 1);
-final Color backgroundScreenColor = Color.fromRGBO(253, 249, 240, 1);
-final Color categoryButtonCyanColor = Color.fromRGBO(150, 218, 214, 1);
+const Color colorAppBar = Color.fromRGBO(242, 224, 157, 1);
+const Color backgroundScreenColor = Color.fromRGBO(253, 249, 240, 1);
+const Color categoryButtonCyanColor = Color.fromRGBO(150, 218, 214, 1);
 const Color textMainColor = Colors.black;
-final Color borderColor = Colors.grey;
-final Color greyContainerOpinion = Colors.black12;
-final Color errorColor = Colors.redAccent;
+const Color borderColor = Colors.grey;
+const Color greyContainerOpinion = Colors.black12;
+const Color errorColor = Colors.redAccent;
 
 ThemeData lightTheme = ThemeData(
   primaryColor: colorAppBar,
@@ -15,20 +15,20 @@ ThemeData lightTheme = ThemeData(
       ColorScheme.fromSwatch().copyWith(primary: colorAppBar, secondary: const Color(0xffdfeaf2)),
   brightness: Brightness.light,
   cardColor: Colors.orange,
-  scaffoldBackgroundColor: Color.fromRGBO(253, 249, 240, 1),
+  scaffoldBackgroundColor: const Color.fromRGBO(253, 249, 240, 1),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
             fontFamily: 'LobsterTwo',
             fontWeight: FontWeight.w700,
             fontStyle: FontStyle.italic,
             fontSize: 25),
-        minimumSize: Size.square(50.0),
+        minimumSize: const Size.square(50.0),
         backgroundColor: categoryButtonCyanColor,
         foregroundColor: textMainColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
   ),
-  inputDecorationTheme: InputDecorationTheme(
+  inputDecorationTheme: const InputDecorationTheme(
     hintStyle: TextStyle(
         color: borderColor,
         fontFamily: 'Lato',
@@ -52,7 +52,7 @@ ThemeData lightTheme = ThemeData(
   ),
   textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-    textStyle: TextStyle(
+    textStyle: const TextStyle(
         fontFamily: 'Lato', fontWeight: FontWeight.w800, fontStyle: FontStyle.normal, fontSize: 18),
     foregroundColor: textMainColor,
   )),
@@ -60,10 +60,10 @@ ThemeData lightTheme = ThemeData(
     buttonColor: Colors.orange,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(0.0),
-      side: BorderSide(color: backgroundScreenColor, width: 2),
+      side: const BorderSide(color: backgroundScreenColor, width: 2),
     ),
   ),
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
       displayLarge: TextStyle(
           color: Colors.black,
           fontFamily: 'LobsterTwo',
@@ -114,7 +114,7 @@ ThemeData lightTheme = ThemeData(
           fontWeight: FontWeight.w500,
           fontStyle: FontStyle.normal,
           fontSize: 16)),
-  appBarTheme: AppBarTheme(
+  appBarTheme: const AppBarTheme(
     titleTextStyle: TextStyle(
         color: textMainColor,
         fontFamily: 'LobsterTwo',
@@ -125,15 +125,15 @@ ThemeData lightTheme = ThemeData(
     foregroundColor: textMainColor,
     backgroundColor: colorAppBar,
   ),
-  dialogTheme: DialogTheme(
+  dialogTheme: const DialogTheme(
       backgroundColor: backgroundScreenColor,
-      titleTextStyle: const TextStyle(
+      titleTextStyle: TextStyle(
           color: Colors.black,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w700,
           fontStyle: FontStyle.normal,
           fontSize: 20),
-      contentTextStyle: const TextStyle(
+      contentTextStyle: TextStyle(
           color: Colors.black,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w700,
@@ -143,5 +143,5 @@ ThemeData lightTheme = ThemeData(
   snackBarTheme: const SnackBarThemeData(
     contentTextStyle: TextStyle(fontSize: 20),
   ),
-  iconTheme: IconThemeData(color: textMainColor),
+  iconTheme: const IconThemeData(color: textMainColor),
 );

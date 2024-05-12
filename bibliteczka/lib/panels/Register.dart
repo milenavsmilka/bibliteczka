@@ -9,6 +9,8 @@ import 'Account/ChangePassword.dart';
 import 'Login.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
@@ -52,7 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: usernameController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: RequiredValidator(
-                          errorText: giveMeUserNameError),
+                          errorText: giveMeUserNameError).call,
                       decoration: InputDecoration(
                           labelText: giveMeUserName,
                           prefixIcon: Icon(Icons.account_circle_rounded)),
@@ -74,7 +76,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         RequiredValidator(errorText: giveMeEmailError),
                         EmailValidator(
                             errorText: wrongEmailError),
-                      ]),
+                      ]).call,
                     ),
                   ),
                 ]),
@@ -146,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             passwordController.text,
                             repeatPasswordController.text,
                             emailController.text);
-                      };
+                      }
                     },
                   ),
                 ),
@@ -162,7 +164,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(haveAccountQuestion1,
-                        style: Theme.of(context).textTheme.headline6),
+                        style: Theme.of(context).textTheme.titleLarge),
                     TextButton(
                         onPressed: () {
                           Navigator.push(

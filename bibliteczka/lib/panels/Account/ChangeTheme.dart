@@ -1,6 +1,5 @@
 import 'package:biblioteczka/styles/ThemeProvider.dart';
 import 'package:biblioteczka/styles/strings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -8,6 +7,8 @@ import 'package:provider/provider.dart';
 import '../Tools/functions.dart';
 
 class ChangeThemeScreen extends StatefulWidget {
+  const ChangeThemeScreen({super.key});
+
   @override
   _ChangeThemeScreenState createState() => _ChangeThemeScreenState();
 }
@@ -65,7 +66,7 @@ class _ChangeThemeScreenState extends State<ChangeThemeScreen> {
                     try {
                       await changeSthInMyAccount(
                           context, apiURLChangeTheme, Map.of({"theme": "daltonism"}));
-                    } on http.ClientException catch (e) {
+                    } on http.ClientException {
                       showSnackBar(context, 'Wybrano obecny motyw', Theme.of(context).cardColor);
                     }
                   },

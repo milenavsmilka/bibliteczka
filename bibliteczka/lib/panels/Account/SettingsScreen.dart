@@ -15,6 +15,8 @@ import '../main.dart';
 import 'ChangePassword.dart';
 
 class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({super.key});
+
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
@@ -83,9 +85,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             builder: (BuildContext context) {
                                               return AlertDialog(
                                                 title:
-                                                    Text('Kod został wysłany'),
+                                                  Text('Kod został wysłany'),
                                                 content:
-                                                    Text('Wpisz go poniżej:'),
+                                                  Text('Wpisz go poniżej:'),
                                                 actions: [
                                                   TextFormField(
                                                     keyboardType:
@@ -126,8 +128,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<String> sendMail() async {
-    final emailFrom = 'spozywczaksmiesznewarzywko@gmail.com';
-    final emailTo = 'milena.milena16@onet.pl';
+    const emailFrom = 'spozywczaksmiesznewarzywko@gmail.com';
+    const emailTo = 'milena.milena16@onet.pl';
     String password = 'fxqf stoo kvpu hebg';
     final deleteCode = UniqueKey().hashCode;
     final smtpServer = gmail(emailFrom, password);

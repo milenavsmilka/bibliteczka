@@ -8,9 +8,9 @@ import 'CustomPageRoute.dart';
 import 'functions.dart';
 
 class DefaultAppBar extends StatefulWidget implements PreferredSizeWidget {
-  DefaultAppBar(
+  const DefaultAppBar(
       {super.key, required this.title, required this.automaticallyImplyLeading, this.onTap})
-      : preferredSize = Size.fromHeight(kToolbarHeight);
+      : preferredSize = const Size.fromHeight(kToolbarHeight);
 
   @override
   final Size preferredSize; // default is 56.0
@@ -30,13 +30,12 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
       automaticallyImplyLeading: widget.automaticallyImplyLeading,
       actions: <Widget>[
         PopupMenuButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.account_circle,
             size: 35,
           ),
           itemBuilder: (BuildContext context) => [
             PopupMenuItem(
-                child: Text('Wyświetl profil'),
                 onTap: widget.onTap ?? () {
                         checkIsTokenValid(
                             context,
@@ -45,7 +44,8 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
                                 CustomPageRoute(
                                     chooseAnimation: CustomPageRoute.SLIDE,
                                     child: MyProfileScreen())));
-                      }),
+                      },
+                child: const Text('Wyświetl profil')),
             PopupMenuItem(
               child: Text(changeTheme),
               onTap: () {
@@ -54,7 +54,7 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
                     Navigator.push(
                         context,
                         CustomPageRoute(
-                            chooseAnimation: CustomPageRoute.SLIDE, child: ChangeThemeScreen())));
+                            chooseAnimation: CustomPageRoute.SLIDE, child: const ChangeThemeScreen())));
               },
             ),
             PopupMenuItem(
@@ -65,7 +65,7 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
                     Navigator.push(
                         context,
                         CustomPageRoute(
-                            chooseAnimation: CustomPageRoute.SLIDE, child: SettingsScreen())));
+                            chooseAnimation: CustomPageRoute.SLIDE, child: const SettingsScreen())));
               },
             ),
             PopupMenuItem(

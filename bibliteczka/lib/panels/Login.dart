@@ -90,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   validator: MultiValidator([
                     RequiredValidator(errorText: giveMeEmailError),
                     EmailValidator(errorText: wrongEmailError),
-                  ]),
+                  ]).call,
                 ),
                 SizedBox(height: 20),
                 TextFormField(
@@ -124,10 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       try{
                         await signIn(
                             emailController.text, passwordController.text);
-                      } on Exception catch (e){
+                      } on Exception {
                         showSnackBar(context, 'Błąd logowania - niepoprawny email lub hasło', Colors.redAccent);
                     }
-                    };
+                    }
                   },
                 ),
                 SizedBox(height: 15),

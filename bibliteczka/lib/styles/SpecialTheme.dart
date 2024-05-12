@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final Color colorAppBar = Color.fromRGBO(0, 191, 178, 1);
-final Color backgroundScreenColor = Colors.white;
-final Color categoryButtonCyanColor = Color.fromRGBO(0, 191, 178, 1);
+const Color colorAppBar = Color.fromRGBO(0, 191, 178, 1);
+const Color backgroundScreenColor = Colors.white;
+const Color categoryButtonCyanColor = Color.fromRGBO(0, 191, 178, 1);
 const Color textMainColor = Colors.black;
-final Color borderColor = Colors.grey;
-final Color greyContainerOpinion = Colors.black12;
-final Color errorColor = Colors.redAccent;
+const Color borderColor = Colors.grey;
+const Color greyContainerOpinion = Colors.black12;
+const Color errorColor = Colors.redAccent;
 
 ThemeData specialTheme = ThemeData(
   primaryColor: colorAppBar,
@@ -120,13 +120,13 @@ ThemeData specialTheme = ThemeData(
   ),
   dialogTheme: DialogTheme(
       backgroundColor: backgroundScreenColor,
-      titleTextStyle: const TextStyle(
+      titleTextStyle: TextStyle(
           color: Colors.black,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w700,
           fontStyle: FontStyle.normal,
           fontSize: 20),
-      contentTextStyle: const TextStyle(
+      contentTextStyle: TextStyle(
           color: Colors.black,
           fontFamily: 'Lato',
           fontWeight: FontWeight.w700,

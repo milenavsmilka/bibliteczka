@@ -141,7 +141,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
                         onPressed: () async {
                           try {
                             await deleteSth(
-                                context, apiURLGetOpinion, 'id', widget.opinionId.toString());
+                                context, apiURLGetOpinion, Map.of({'id': widget.opinionId.toString()}));
                             if (!context.mounted) return;
                             checkIsTokenValid(
                                 context,

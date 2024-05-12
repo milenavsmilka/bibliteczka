@@ -1,9 +1,12 @@
 import 'package:biblioteczka/panels/Account/PictureOfBooksInMyLibrary.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
+import 'package:biblioteczka/panels/Tools/Icons.dart';
 import 'package:biblioteczka/panels/Tools/NetworkLoadingImage.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../styles/strings.dart';
 import '../Account/MyProfile.dart';
@@ -26,6 +29,10 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
   String name = '';
   int releasedBooksCount = -1;
   String picture = '';
+  String dateOfBirth = '';
+  String dateOfDead = '';
+  String authorsWebsite = '';
+  int userId = -1;
   List<dynamic> genres = [nothingHere];
   List<dynamic> releasedBooks = [nothingHere];
 
@@ -58,7 +65,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                 Navigator.push(
                     context,
                     CustomPageRoute(
-                        chooseAnimation: CustomPageRoute.SLIDE, child: MyProfileScreen())));
+                        chooseAnimation: CustomPageRoute.SLIDE, child: const MyProfileScreen())));
           },
         ),
         body: SingleChildScrollView(
@@ -81,23 +88,52 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                           ),
                           Opacity(
                             opacity: isHeartAnimating ? 1 : 0,
-                            child: IconsAnimation(
-                              duration: Duration(milliseconds: 800),
-                              child: emptyHeart
-                                  ? Icon(
-                                      Icons.favorite_border,
-                                      color: Colors.white,
-                                      size: 100,
-                                    )
-                                  : Icon(
-                                      Icons.favorite,
-                                      color: Colors.white,
-                                      size: 100,
-                                    ),
-                              isAnimating: isHeartAnimating,
-                              onEnd: () => setState(() {
-                                isHeartAnimating = false;
-                              }),
+                            child: SizedBox(
+                              width: widthScreen / 2.3,
+                              height: heightScreen / 2.5,
+                              child: IconsAnimation(
+                                duration: const Duration(milliseconds: 800),
+                                isAnimating: isHeartAnimating,
+                                onEnd: () => setState(() {
+                                  isHeartAnimating = false;
+                                }),
+                                child: emptyHeart ? deleteFromFavIcon(100) : addToFavIcon(100),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: widthScreen / 2.3,
+                            height: heightScreen / 2.5,
+                            child: Align(
+                              alignment: Alignment.bottomLeft,
+                              child: IconButton(
+                                  icon: !emptyHeart ? deleteFromFavIcon(45) : addToFavIcon(45),
+                                  onPressed: () async {
+                                    try {
+                                      await sendRequest(
+                                          apiURLFan,
+                                          Map.of({
+                                            'user_id': userId,
+                                            'author_id': widget.authorId.toString()
+                                          }),
+                                          context);
+                                      setState(() {
+                                        emptyHeart = true;
+                                      });
+                                    } on http.ClientException catch (e) {
+                                      print('wcale nie $e');
+                                      deleteSth(
+                                          context,
+                                          apiURLFan,
+                                          Map.of({
+                                            'user_id': userId,
+                                            'author_id': widget.authorId.toString()
+                                          }));
+                                      setState(() {
+                                        emptyHeart = false;
+                                      });
+                                    }
+                                  }),
                             ),
                           ),
                         ]),
@@ -107,14 +143,19 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                             isHeartAnimating = true;
                           });
                           try {
-                            // await sendRequest(apiURLBookFromFav, Map.of({'author_id': widget.authorId.toString()}));
-                            // emptyHeart = true;
-                          } on http.ClientException catch (e) {
-                            //todo dodanie do ulubionych autorów
-                            // print('wcale nie $e');
-                            // deleteBooksFromMyLibrary(apiURLBookFromFav,
-                            //     'book_id', widget.authorId.toString());
-                            // emptyHeart=false;
+                            await sendRequest(
+                                apiURLFan,
+                                Map.of(
+                                    {'user_id': userId, 'author_id': widget.authorId.toString()}),
+                                context);
+                            emptyHeart = true;
+                          } on http.ClientException {
+                            deleteSth(
+                                context,
+                                apiURLFan,
+                                Map.of(
+                                    {'user_id': userId, 'author_id': widget.authorId.toString()}));
+                            emptyHeart = false;
                           }
                         },
                       ),
@@ -132,6 +173,35 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                             name,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
+                          if (dateOfBirth != '') ...{
+                            Text('Data urodzenia: ',
+                                style: Theme.of(context).textTheme.headlineSmall),
+                            Text(
+                              dateOfBirth,
+                              style: Theme.of(context).textTheme.titleSmall,
+                            ),
+                            if (dateOfDead != '') ...{
+                              Text('Data śmierci: ',
+                                  style: Theme.of(context).textTheme.headlineSmall)
+                            },
+                            Text(
+                              dateOfDead,
+                              style: Theme.of(context).textTheme.titleSmall,
+                            )
+                          },
+                          if (authorsWebsite != '') ...{
+                            Text('Strona autora: ',
+                                style: Theme.of(context).textTheme.headlineSmall),
+                            GestureDetector(
+                              child: Text(
+                                'LINK',
+                                style: Theme.of(context).textTheme.titleSmall,
+                              ),
+                              onTap: () {
+                                _launchUrl(authorsWebsite);
+                              },
+                            )
+                          },
                           Text('Liczba książek: ',
                               style: Theme.of(context).textTheme.headlineSmall),
                           Text(
@@ -225,12 +295,16 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
 
     setState(() {
       final results = data['results'];
-      biography = results[0]['biography'];
       name = results[0]['name'];
       genres = results[0]['genres'];
       picture = results[0]['picture'];
       releasedBooksCount = results[0]['released_books_count'];
       releasedBooks = results[0]['released_books'];
+
+      if (results[0]['biography'] != null) biography = results[0]['biography'];
+      if (results[0]['birth_date'] != null) dateOfBirth = results[0]['birth_date'];
+      if (results[0]['death_date'] != null) dateOfDead = results[0]['death_date'];
+      if (results[0]['website'] != null) authorsWebsite = results[0]['website'];
     });
     print('Imię autora $name i gatunki $genres');
   }
@@ -244,12 +318,20 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
     setState(() {
       userData = getUserResponse['results'];
       followedAuthors = userData[0]['followed_authors'];
+      userId = userData[0]['id'];
     });
 
     if (followedAuthors.contains(widget.authorId)) {
       emptyHeart = true;
     } else {
       emptyHeart = false;
+    }
+  }
+
+  Future<void> _launchUrl(url) async {
+    final Uri url2 = Uri.parse(url);
+    if (!await launchUrl(url2)) {
+      throw Exception('Could not launch $url2');
     }
   }
 }

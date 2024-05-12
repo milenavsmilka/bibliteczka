@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,13 +20,9 @@ Widget emptyBox(double widthScreen, double heightScreen) {
   );
 }
 
-Future<void> deleteSth(BuildContext context, String apiUrl, String key, String value) async {
+Future<void> deleteSth(BuildContext context, String apiUrl, Map<String,dynamic> requestBody) async {
   var sharedPreferences = await SharedPreferences.getInstance();
   String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
-
-  final Map<String, dynamic> requestBody = {
-    key: value,
-  };
   String requestBodyJson = jsonEncode(requestBody);
 
   try {
@@ -50,11 +45,11 @@ Future<void> deleteSth(BuildContext context, String apiUrl, String key, String v
       print("Nie okej :(");
       throw http.ClientException(response.body);
     }
-  } on Exception catch (_) {
+  } on TimeoutException catch (_) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return NoConnection();
+          return const NoConnection();
         });
   }
 }
@@ -76,7 +71,7 @@ Future<Map<String, dynamic>> changeSthInMyAccount(
           },
           body: requestBodyJson,
         )
-        .timeout(new Duration(seconds: 10));
+        .timeout(const Duration(seconds: 10));
 
     Map<String, dynamic> data = jsonDecode(response.body);
     if (response.statusCode == 200) {
@@ -86,11 +81,11 @@ Future<Map<String, dynamic>> changeSthInMyAccount(
       throw http.ClientException(response.body);
     }
     return data;
-  } on Exception catch (_) {
+  } on TimeoutException catch (_) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return NoConnection();
+          return const NoConnection();
         });
   }
   return Map();
@@ -125,7 +120,7 @@ Future<void> sendRequest(
       checkIsTokenValid(
           context,
           Navigator.push(context,
-              CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: LoginScreen())));
+              CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: const LoginScreen())));
     } else if (response.statusCode == 200) {
       print("Okej :D");
     } else if (message == 'opinion_already_exists') {
@@ -138,11 +133,11 @@ Future<void> sendRequest(
       print("Nie okej :(");
       throw http.ClientException(message);
     }
-  } on Exception catch (_) {
+  } on TimeoutException catch (_) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return NoConnection();
+          return const NoConnection();
         });
   }
 }
@@ -163,11 +158,11 @@ Future<Map<String, dynamic>> getSthById(
       print("Nie good $params ${response.body}");
     }
     return data;
-  } on Exception catch (_) {
+  } on TimeoutException catch (_) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return NoConnection();
+          return const NoConnection();
         });
   }
   return Map();
@@ -197,29 +192,29 @@ void checkIsTokenValid(BuildContext context, [Future<dynamic>? navigator]) async
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
-                  title: Text("Twoja sesja wygasła. Zaloguj się ponownie."),
+                  title: const Text("Twoja sesja wygasła. Zaloguj się ponownie."),
                   actions: [
                     TextButton(
                         onPressed: () {
                           Navigator.push(
                               context,
                               CustomPageRoute(
-                                  chooseAnimation: CustomPageRoute.SLIDE, child: LoginScreen()));
+                                  chooseAnimation: CustomPageRoute.SLIDE, child: const LoginScreen()));
                         },
-                        child: Text("OK")),
+                        child: const Text("OK")),
                   ],
                 ));
       }
-    } on Exception catch (_) {
+    } on TimeoutException catch (_) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return NoConnection();
+            return const NoConnection();
           });
     }
   } else {
     Navigator.push(
-        context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: LoginScreen()));
+        context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: const LoginScreen()));
   }
 }
 
@@ -237,14 +232,14 @@ void whereToGo(BuildContext context) async {
       print('Czy token valid? $tokenValid');
       if (tokenValid == tokenIsValid) {
         Navigator.push(context,
-            CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: MainPanelScreen()));
+            CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: const MainPanelScreen()));
       } else {
         Navigator.push(
-            context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: LoginScreen()));
+            context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: const LoginScreen()));
       }
     } else {
       Navigator.push(
-          context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: LoginScreen()));
+          context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: const LoginScreen()));
     }
   });
 }

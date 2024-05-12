@@ -15,6 +15,7 @@ const String apiURLBookFromRead = '${apiURL}data/read_book';
 const String apiURLGetUser = '${apiURL}data/user';
 const String apiURLChangeProfilePicture = '${apiURL}account/change_profile_picture';
 const String apiURLChangeTheme = '${apiURL}account/change_theme';
+const String apiURLFan = '${apiURL}data/fan';
 
 const String iconHeart = "assets/icons/hearts.svg";
 const String iconBrainstorming = "assets/icons/brainstorming.svg";
@@ -88,7 +89,9 @@ const int lengthToShow = 110;
 const String bookTitle = 'Tytuł:';
 const String bookAuthor = 'Autorzy:'; //lub autor
 const String bookPublishingHouse = 'Wydawnictwo:';
+const String numberOfPages = 'Liczba stron:';
 const String opinionsAndTalks = "Opinie i dyskusje";
+const String leakOfInfo = "Brak informacji";
 
 //OpinionScreen
 const String minLengthForComment = 'Min 2 znaki';
