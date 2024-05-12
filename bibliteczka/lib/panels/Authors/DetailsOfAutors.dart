@@ -209,7 +209,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
 
   Future<void> giveMeDetailsOfAuthors(String authorId) async {
     Map<String, dynamic> data =
-        await getSthById(apiURLGetAuthor, Map.of({'id': authorId}));
+        await getSthById(context, apiURLGetAuthor, Map.of({'id': authorId}));
 
     setState(() {
       final results = data['results'];
@@ -225,7 +225,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
 
   Future<void> isThatAuthorInMyLibrary() async {
     Map<String, dynamic> getUserResponse =
-        await getSthById(apiURLGetUser, Map.of({'get_self': 'true'}));
+        await getSthById(context, apiURLGetUser, Map.of({'get_self': 'true'}));
 
     List<dynamic> userData;
     List<dynamic> followedAuthors = [-1];

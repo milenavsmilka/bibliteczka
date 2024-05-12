@@ -1,14 +1,10 @@
 import 'package:biblioteczka/panels/Account/MyProfile.dart';
-import 'package:biblioteczka/panels/CategoryBooks/DetailsOfBook.dart';
 import 'package:biblioteczka/panels/Tools/CustomPageRoute.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
 import '../Tools/NetworkLoadingImage.dart';
 import '../Tools/functions.dart';
-import '../main.dart';
 
 class PictureOfBooksInMyLibrary extends StatefulWidget {
   const PictureOfBooksInMyLibrary(
@@ -79,7 +75,7 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
                   onPressed: () {
                     setState(() {
                       checkIsTokenValid(context,
-                      deleteSth(widget.categoryUrl, 'book_id',
+                      deleteSth(context,widget.categoryUrl, 'book_id',
                           widget.bookId));//todo może jakoś da się obsłużyć ten błąd?
                       Navigator.of(context).pushReplacement(
                           CustomPageRoute(child: MyProfileScreen(), chooseAnimation: CustomPageRoute.FADE));
@@ -94,7 +90,7 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
 
   Future<void> giveMeBookData() async {
     bookResponse = await getSthById(
-        apiURLGetBooks, Map.of({'id': widget.bookId}));
+        context, apiURLGetBooks, Map.of({'id': widget.bookId}));
 
     setState(() {
       bookDetails = bookResponse['results'];

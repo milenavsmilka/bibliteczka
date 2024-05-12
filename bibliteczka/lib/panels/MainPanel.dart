@@ -77,7 +77,7 @@ class _MainPanelScreen extends State<MainPanelScreen> {
 
   Future<void> setTheme() async {
     Map<String, dynamic> themeData =
-        await getSthById(apiURLGetUser, Map.of({"get_self": true.toString()}));
+        await getSthById(context, apiURLGetUser, Map.of({"get_self": true.toString()}));
     final themeState = Provider.of<ThemeProvider>(context, listen: false);
     setState(() {
       themeState.setAnotherTheme = themeData['results'][0]['theme'];

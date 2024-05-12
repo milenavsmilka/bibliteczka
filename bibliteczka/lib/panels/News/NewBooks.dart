@@ -145,7 +145,7 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
     DateTime date = DateTime(
         DateTime.now().year, DateTime.now().month - 3, DateTime.now().day);
     Map<String, dynamic> newBooksResponse = await getSthById(
-        apiURLGetNewBooks, Map.of({'date_from': date.toString()}));
+        context, apiURLGetNewBooks, Map.of({'date_from': date.toString()}));
 
     setState(() {
       listOfBooks = newBooksResponse['results'];

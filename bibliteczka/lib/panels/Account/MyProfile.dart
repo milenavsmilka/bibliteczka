@@ -232,7 +232,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
 
   Future<void> giveMeUserData() async {
     Map<String, dynamic> getUserResponse =
-        await getSthById(apiURLGetUser, Map.of({'get_self': 'true'}));
+        await getSthById(context, apiURLGetUser, Map.of({'get_self': 'true'}));
 
     setState(() {
       userData = getUserResponse['results'];
@@ -257,7 +257,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     setState(() {
                       userData[0]['profile_picture'] = i;
                       changeSthInMyAccount(
-                          apiURLChangeProfilePicture, Map.of({'profile_picture': i}));
+                          context, apiURLChangeProfilePicture, Map.of({'profile_picture': i}));
                       Navigator.pop(context);
                     });
                   },

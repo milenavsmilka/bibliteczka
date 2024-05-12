@@ -108,8 +108,9 @@ class EditingOpinionState extends State<EditingOpinion> {
                                     'book_id': widget.bookId,
                                     'stars_count': starsRating,
                                     'comment': widget.opinionTextToSend.text
-                                  }))
+                                  }),context)
                               : await changeSthInMyAccount(
+                                  context,
                                   apiURLGetOpinion,
                                   Map.of({
                                     'id': widget.opinionId,

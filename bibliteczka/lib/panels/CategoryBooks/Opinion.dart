@@ -140,7 +140,8 @@ class _OpinionScreenState extends State<OpinionScreen> {
                     IconButton(
                         onPressed: () async {
                           try {
-                            await deleteSth(apiURLGetOpinion, 'id', widget.opinionId.toString());
+                            await deleteSth(
+                                context, apiURLGetOpinion, 'id', widget.opinionId.toString());
                             if (!context.mounted) return;
                             checkIsTokenValid(
                                 context,
@@ -195,8 +196,9 @@ class _OpinionScreenState extends State<OpinionScreen> {
   Future<void> giveMeOpinionBook() async {
     widget.instruction == OpinionScreen.LOAD
         ? opinionResponse =
-            await getSthById(apiURLGetOpinion, Map.of({'id': widget.opinionId.toString()}))
-        : opinionResponse = await getSthById(apiURLGetUser, Map.of({'get_self': true.toString()}));
+            await getSthById(context, apiURLGetOpinion, Map.of({'id': widget.opinionId.toString()}))
+        : opinionResponse =
+            await getSthById(context, apiURLGetUser, Map.of({'get_self': true.toString()}));
 
     setState(() {
       opinionsDetails = opinionResponse['results'];

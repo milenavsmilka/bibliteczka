@@ -89,7 +89,7 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
   }
 
   Future<void> giveMeListsOfBook(String nameOfCategory) async {
-    Map<String, dynamic> data = await getSthById(apiURLGetBooks, Map.of({'genres':nameOfCategory}));
+    Map<String, dynamic> data = await getSthById(context, apiURLGetBooks, Map.of({'genres':nameOfCategory}));
     print('jaki rezulat? $data');
 
     setState(() {

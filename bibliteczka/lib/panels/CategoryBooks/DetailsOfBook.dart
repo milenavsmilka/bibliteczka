@@ -121,14 +121,14 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                                 onPressed: () async {
                                   try {
                                     await sendRequest(apiURLBookFromRead,
-                                        Map.of({'book_id': widget.bookId.toString()}));
+                                        Map.of({'book_id': widget.bookId.toString()}), context);
                                     setState(() {
                                       emptyRead = true;
                                     });
                                   } on http.ClientException catch (e) {
                                     print('wcale nie $e');
-                                    deleteSth(
-                                        apiURLBookFromRead, 'book_id', widget.bookId.toString());
+                                    deleteSth(context, apiURLBookFromRead, 'book_id',
+                                        widget.bookId.toString());
                                     setState(() {
                                       emptyRead = false;
                                     });
@@ -147,14 +147,14 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                                   onPressed: () async {
                                     try {
                                       await sendRequest(apiURLBookFromFav,
-                                          Map.of({'book_id': widget.bookId.toString()}));
+                                          Map.of({'book_id': widget.bookId.toString()}), context);
                                       setState(() {
                                         emptyHeart = true;
                                       });
                                     } on http.ClientException catch (e) {
                                       print('wcale nie $e');
-                                      deleteSth(
-                                          apiURLBookFromFav, 'book_id', widget.bookId.toString());
+                                      deleteSth(context, apiURLBookFromFav, 'book_id',
+                                          widget.bookId.toString());
                                       setState(() {
                                         emptyHeart = false;
                                       });
@@ -169,12 +169,13 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             isHeartAnimating = true;
                           });
                           try {
-                            await sendRequest(
-                                apiURLBookFromFav, Map.of({'book_id': widget.bookId.toString()}));
+                            await sendRequest(apiURLBookFromFav,
+                                Map.of({'book_id': widget.bookId.toString()}), context);
                             emptyHeart = true;
                           } on http.ClientException catch (e) {
                             print('wcale nie $e');
-                            deleteSth(apiURLBookFromFav, 'book_id', widget.bookId.toString());
+                            deleteSth(
+                                context, apiURLBookFromFav, 'book_id', widget.bookId.toString());
                             emptyHeart = false;
                           }
                         },
@@ -184,12 +185,13 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             isReadAnimating = true;
                           });
                           try {
-                            await sendRequest(
-                                apiURLBookFromRead, Map.of({'book_id': widget.bookId.toString()}));
+                            await sendRequest(apiURLBookFromRead,
+                                Map.of({'book_id': widget.bookId.toString()}), context);
                             emptyRead = true;
                           } on http.ClientException catch (e) {
                             print('wcale nie $e');
-                            deleteSth(apiURLBookFromRead, 'book_id', widget.bookId.toString());
+                            deleteSth(
+                                context, apiURLBookFromRead, 'book_id', widget.bookId.toString());
                             emptyRead = false;
                           }
                         },
@@ -269,7 +271,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
   }
 
   Future<void> giveMeDetailsOfBook(String bookId) async {
-    Map<String, dynamic> data = await getSthById(apiURLGetBooks, Map.of({'id': bookId}));
+    Map<String, dynamic> data = await getSthById(context, apiURLGetBooks, Map.of({'id': bookId}));
 
     setState(() {
       final results = data['results'];
@@ -288,7 +290,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
 
   Future<void> isThatBookInMyLibrary() async {
     Map<String, dynamic> getUserResponse =
-        await getSthById(apiURLGetUser, Map.of({'get_self': 'true'}));
+        await getSthById(context, apiURLGetUser, Map.of({'get_self': 'true'}));
 
     List<dynamic> userData;
     List<dynamic> favBooks = [-1];

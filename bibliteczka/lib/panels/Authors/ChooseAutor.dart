@@ -171,7 +171,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
 
   Future<void> giveMeListsOfAuthors(int page, String letter) async {
     Map<String, dynamic> data = await getSthById(
-        apiURLGetAuthor,
+        context, apiURLGetAuthor,
         Map.of({
           'per_page': '10',
           'sorts': 'name',
@@ -194,7 +194,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
 
   Future<void> giveMeListsOfTopAuthors() async {
     Map<String, dynamic> data =
-        await getSthById(apiURLGetAuthor, Map.of({'per_page': '10', 'sorts': '-fans_count'}));
+        await getSthById(context, apiURLGetAuthor, Map.of({'per_page': '10', 'sorts': '-fans_count'}));
 
     setState(() {
       listOfPopularAuthors = data['results'];

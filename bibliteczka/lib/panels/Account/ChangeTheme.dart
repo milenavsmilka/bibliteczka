@@ -38,7 +38,7 @@ class _ChangeThemeScreenState extends State<ChangeThemeScreen> {
                     setState(() {
                       themeState.setAnotherTheme = light;
                     });
-                    changeSthInMyAccount(apiURLChangeTheme,Map.of({"theme": "light"}));
+                    changeSthInMyAccount(context, apiURLChangeTheme, Map.of({"theme": "light"}));
                   },
                   child: Text(changeToLightTheme)),
               ElevatedButton(
@@ -46,7 +46,7 @@ class _ChangeThemeScreenState extends State<ChangeThemeScreen> {
                     setState(() {
                       themeState.setAnotherTheme = dark;
                     });
-                    changeSthInMyAccount(apiURLChangeTheme,Map.of({"theme": "dark"}));
+                    changeSthInMyAccount(context, apiURLChangeTheme, Map.of({"theme": "dark"}));
                   },
                   child: Text(changeToDarkTheme)),
               ElevatedButton(
@@ -54,7 +54,7 @@ class _ChangeThemeScreenState extends State<ChangeThemeScreen> {
                     setState(() {
                       themeState.setAnotherTheme = special;
                     });
-                    changeSthInMyAccount(apiURLChangeTheme,Map.of({"theme": "special"}));
+                    changeSthInMyAccount(context, apiURLChangeTheme, Map.of({"theme": "special"}));
                   },
                   child: Text(changeToSpecialTheme)),
               ElevatedButton(
@@ -62,12 +62,12 @@ class _ChangeThemeScreenState extends State<ChangeThemeScreen> {
                     setState(() {
                       themeState.setAnotherTheme = daltonism;
                     });
-                    try{
-                      await changeSthInMyAccount(apiURLChangeTheme,Map.of({"theme": "daltonism"}));
-                    }on http.ClientException catch (e) {
+                    try {
+                      await changeSthInMyAccount(
+                          context, apiURLChangeTheme, Map.of({"theme": "daltonism"}));
+                    } on http.ClientException catch (e) {
                       showSnackBar(context, 'Wybrano obecny motyw', Theme.of(context).cardColor);
                     }
-                    
                   },
                   child: Text(changeToDaltonismTheme))
             ],

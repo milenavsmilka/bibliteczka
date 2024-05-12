@@ -229,7 +229,7 @@ class _TopScreen extends State<TopScreen> {
     Map<String, dynamic> data;
     if (nameOfCategory != Genres.all.nameEN) {
       data = await getSthById(
-          apiURLGetBooks,
+          context,apiURLGetBooks,
           Map.of({
             'genres': nameOfCategory,
             'per_page': '10',
@@ -238,7 +238,7 @@ class _TopScreen extends State<TopScreen> {
           }));
     } else {
       data = await getSthById(
-          apiURLGetBooks,
+          context,apiURLGetBooks,
           Map.of({
             'per_page': '10',
             'minimum_score': '4',

@@ -54,7 +54,7 @@ class _PictureOfAuthorState extends State<PictureOfAuthor> {
 
   Future<void> giveMeAuthorData() async {
     authorResponse = await getSthById(
-        apiURLGetAuthor, Map.of({'id': widget.authorId}));
+        context, apiURLGetAuthor, Map.of({'id': widget.authorId}));
 
     setState(() {
       authorDetails = authorResponse['results'];
