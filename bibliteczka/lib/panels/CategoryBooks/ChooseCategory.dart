@@ -3,6 +3,7 @@ import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../Tools/CustomPageRoute.dart';
 import '../Tools/DefaultAppBar.dart';
 import 'AllBooksFromCategory.dart';
 
@@ -156,16 +157,17 @@ class CategoryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
-    double heightScreen = MediaQuery.of(context).size.height;
 
     return ElevatedButton(
         onPressed: () {
           checkIsTokenValid(
               context,
+              Navigator.push(
+              context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child:
               AllCategoryBooksScreen(
                 nameOfCategory: nameOfCategory,
                 nameOfCategoryEN: nameOfCategoryEN,
-              ));
+              ))));
         },
         style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(

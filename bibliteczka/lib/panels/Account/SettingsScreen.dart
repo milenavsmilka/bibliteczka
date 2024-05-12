@@ -1,13 +1,11 @@
 import 'dart:convert';
 
-import 'package:biblioteczka/styles/ThemeProvider.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Login.dart';
@@ -28,7 +26,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeState = Provider.of<ThemeProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -49,11 +46,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             children: [
               ElevatedButton(
                   onPressed: () {
+                    checkIsTokenValid(context,
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => ChangePasswordScreen()),
-                    );
+                    ));
                   },
                   child: Text('Zmień hasło')),
               ElevatedButton(
@@ -189,8 +187,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           print("Okej :D");
                           Map<String, dynamic> data = jsonDecode(response.body);
                           print(data);
+                          checkIsTokenValid(context,
                           Navigator.push(
-                              context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE,child: LoginScreen()));
+                              context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE,child: LoginScreen())));
                         } else {
                           print("Nie okej :(");
                           throw Exception('Failed to load data');

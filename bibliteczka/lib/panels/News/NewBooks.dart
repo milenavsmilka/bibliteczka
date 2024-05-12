@@ -2,12 +2,11 @@ import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
 import 'package:biblioteczka/panels/Tools/NetworkLoadingImage.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
 import '../CategoryBooks/DetailsOfBook.dart';
+import '../Tools/CustomPageRoute.dart';
 import '../Tools/DefaultAppBar.dart';
-import '../main.dart';
 
 class NewBooksScreen extends StatefulWidget {
   const NewBooksScreen({super.key});
@@ -46,9 +45,11 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
                   onTap: () {
                     checkIsTokenValid(
                       context,
-                      DetailsOfBookScreen(
+                        Navigator.push(
+                        context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child:
+                        DetailsOfBookScreen(
                         bookId: listOfBooks[index]['id'],
-                      ),
+                      ))),
                     );
                   },
                   child: Row(

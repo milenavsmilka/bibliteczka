@@ -73,54 +73,95 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                           SizedBox(
                             width: widthScreen / 2.3,
                             height: heightScreen / 2.5,
-                            child: NetworkLoadingImage(
-                                pathToImage: picture),
+                            child: NetworkLoadingImage(pathToImage: picture),
                           ),
                           Opacity(
                             opacity: isHeartAnimating ? 1 : 0,
-                            child: IconsAnimation(
-                              duration: Duration(milliseconds: 800),
-                              child: emptyHeart
-                                  ? Icon(
-                                      Icons.favorite_border,
-                                      color: Colors.white,
-                                      size: 100,
-                                    )
-                                  : Icon(
-                                      Icons.favorite,
-                                      color: Colors.white,
-                                      size: 100,
-                                    ),
-                              isAnimating: isHeartAnimating,
-                              onEnd: () => setState(() {
-                                isHeartAnimating = false;
-                              }),
+                            child: SizedBox(
+                              width: widthScreen / 2.3,
+                              height: heightScreen / 2.5,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: IconsAnimation(
+                                  duration: const Duration(milliseconds: 800),
+                                  isAnimating: isHeartAnimating,
+                                  onEnd: () => setState(() {
+                                    isHeartAnimating = false;
+                                  }),
+                                  child: emptyHeart ? deleteFromFavIcon(100) : addToFavIcon(100),
+                                ),
+                              ),
                             ),
                           ),
                           Opacity(
                             opacity: isReadAnimating ? 1 : 0,
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: IconsAnimation(
-                                duration: Duration(milliseconds: 800),
-                                child: emptyRead
-                                    ? Icon(
-                                        Icons.remove_circle,
-                                        color: Colors.redAccent,
-                                        size: 100,
-                                      )
-                                    : Icon(
-                                        Icons.add_circle,
-                                        color: Colors.greenAccent,
-                                        size: 100,
-                                      ),
-                                isAnimating: isReadAnimating,
-                                onEnd: () => setState(() {
-                                  isReadAnimating = false;
-                                }),
+                            child: SizedBox(
+                              width: widthScreen / 2.3,
+                              height: heightScreen / 2.5,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: IconsAnimation(
+                                  duration: const Duration(milliseconds: 800),
+                                  isAnimating: isReadAnimating,
+                                  onEnd: () => setState(() {
+                                    isReadAnimating = false;
+                                  }),
+                                  child: emptyRead ? deleteFromReadIcon(100) : addToReadIcon(100),
+                                ),
                               ),
                             ),
-                          )
+                          ),
+                          SizedBox(
+                            width: widthScreen / 2.3,
+                            height: heightScreen / 2.5,
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: IconButton(
+                                icon: emptyRead ? deleteFromReadIcon(45) : addToReadIcon(45),
+                                onPressed: () async {
+                                  try {
+                                    await sendRequest(apiURLBookFromRead,
+                                        Map.of({'book_id': widget.bookId.toString()}));
+                                    setState(() {
+                                      emptyRead = true;
+                                    });
+                                  } on http.ClientException catch (e) {
+                                    print('wcale nie $e');
+                                    deleteSth(
+                                        apiURLBookFromRead, 'book_id', widget.bookId.toString());
+                                    setState(() {
+                                      emptyRead = false;
+                                    });
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: widthScreen / 2.3,
+                            height: heightScreen / 2.5,
+                            child: Align(
+                              alignment: Alignment.bottomLeft,
+                              child: IconButton(
+                                  icon: !emptyHeart ? deleteFromFavIcon(45) : addToFavIcon(45),
+                                  onPressed: () async {
+                                    try {
+                                      await sendRequest(apiURLBookFromFav,
+                                          Map.of({'book_id': widget.bookId.toString()}));
+                                      setState(() {
+                                        emptyHeart = true;
+                                      });
+                                    } on http.ClientException catch (e) {
+                                      print('wcale nie $e');
+                                      deleteSth(
+                                          apiURLBookFromFav, 'book_id', widget.bookId.toString());
+                                      setState(() {
+                                        emptyHeart = false;
+                                      });
+                                    }
+                                  }),
+                            ),
+                          ),
                         ]),
                         onDoubleTap: () async {
                           print('dodaje $isHeartAnimating');
@@ -133,8 +174,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             emptyHeart = true;
                           } on http.ClientException catch (e) {
                             print('wcale nie $e');
-                            deleteSth(
-                                apiURLBookFromFav, 'book_id', widget.bookId.toString());
+                            deleteSth(apiURLBookFromFav, 'book_id', widget.bookId.toString());
                             emptyHeart = false;
                           }
                         },
@@ -149,8 +189,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             emptyRead = true;
                           } on http.ClientException catch (e) {
                             print('wcale nie $e');
-                            deleteSth(
-                                apiURLBookFromRead, 'book_id', widget.bookId.toString());
+                            deleteSth(apiURLBookFromRead, 'book_id', widget.bookId.toString());
                             emptyRead = false;
                           }
                         },
@@ -218,7 +257,10 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
               OpinionScreen(instruction: OpinionScreen.SEND, bookId: widget.bookId),
               for (int i = 0; i < opinions.length; i++)
                 OpinionScreen(
-                    opinionId: opinions[i], instruction: OpinionScreen.LOAD, bookId: widget.bookId, currentUsername:username),
+                    opinionId: opinions[i],
+                    instruction: OpinionScreen.LOAD,
+                    bookId: widget.bookId,
+                    currentUsername: username),
             ]),
           ),
         ),
@@ -269,5 +311,37 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     } else {
       emptyRead = false;
     }
+  }
+
+  Icon addToFavIcon(double size) {
+    return Icon(
+      Icons.favorite,
+      color: Colors.white,
+      size: size,
+    );
+  }
+
+  Icon deleteFromFavIcon(double size) {
+    return Icon(
+      Icons.favorite_border,
+      color: Colors.white,
+      size: size,
+    );
+  }
+
+  Icon deleteFromReadIcon(double size) {
+    return Icon(
+      Icons.remove_circle,
+      color: Colors.redAccent,
+      size: size,
+    );
+  }
+
+  Icon addToReadIcon(double size) {
+    return Icon(
+      Icons.add_circle,
+      color: Colors.greenAccent,
+      size: size,
+    );
   }
 }

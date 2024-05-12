@@ -12,11 +12,13 @@ import '../Tools/OrdinaryOpinion.dart';
 import '../Tools/Triangle.dart';
 import 'EditingOpinion.dart';
 
-//todo edycja i usuwanie komentarzy - czekam na poprawki od Piotrka, po czym sortują się opinie? że edytowana trafia znowu na sam koniec?
-//todo dodanie ikonek ulubione, przeczytane
-//todo zaktualizować stronę top 100, kiedy wchodzę do książki, dodaję opinię i przy powrocie powinno się update robić
 class OpinionScreen extends StatefulWidget {
-  const OpinionScreen({super.key, this.opinionId,this.currentUsername, required this.instruction, required this.bookId});
+  const OpinionScreen(
+      {super.key,
+      this.opinionId,
+      this.currentUsername,
+      required this.instruction,
+      required this.bookId});
 
   final int? opinionId;
   final String? currentUsername;
@@ -139,14 +141,17 @@ class _OpinionScreenState extends State<OpinionScreen> {
                         onPressed: () async {
                           try {
                             await deleteSth(apiURLGetOpinion, 'id', widget.opinionId.toString());
-                            Navigator.of(context).pushReplacement(CustomPageRoute(
-                                child: DetailsOfBookScreen(bookId: widget.bookId),
-                                chooseAnimation: CustomPageRoute.FADE));
+                            if (!context.mounted) return;
+                            checkIsTokenValid(
+                                context,
+                                Navigator.of(context).pushReplacement(CustomPageRoute(
+                                    child: DetailsOfBookScreen(bookId: widget.bookId),
+                                    chooseAnimation: CustomPageRoute.FADE)));
                           } on http.ClientException catch (e) {
                             showSnackBar(context, e.message, errorColor);
                           }
                         },
-                        icon: Icon(Icons.close, size: 23)),
+                        icon: const Icon(Icons.close, size: 23)),
                   ],
                 ))
           },
@@ -180,7 +185,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
       ]).call,
       onTap: onTap,
       controller: controller,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
           hintText: writeOwnOpinion),

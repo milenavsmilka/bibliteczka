@@ -78,8 +78,9 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
                       .primaryColor),
                   onPressed: () {
                     setState(() {
+                      checkIsTokenValid(context,
                       deleteSth(widget.categoryUrl, 'book_id',
-                          widget.bookId);
+                          widget.bookId));//todo może jakoś da się obsłużyć ten błąd?
                       Navigator.of(context).pushReplacement(
                           CustomPageRoute(child: MyProfileScreen(), chooseAnimation: CustomPageRoute.FADE));
                     });

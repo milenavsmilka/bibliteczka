@@ -1,9 +1,9 @@
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/styles/strings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../CategoryBooks/DetailsOfBook.dart';
+import '../Tools/CustomPageRoute.dart';
 import '../Tools/Genres.dart';
 import '../Tools/HowMuchStars.dart';
 import '../Tools/LoadingScreen.dart';
@@ -18,7 +18,7 @@ class TopScreen extends StatefulWidget {
 }
 
 class _TopScreen extends State<TopScreen> {
-  Genres genres = Genres.all;
+  String genres = Genres.all.nameEN;
   List<dynamic> listOfBooks = [-1];
   int current = 0;
 
@@ -37,7 +37,7 @@ class _TopScreen extends State<TopScreen> {
       return const LoadingScreen(message: loading);
     } else {
       return Scaffold(
-        appBar: DefaultAppBar(title: titleOfApp, automaticallyImplyLeading: true),
+        appBar: DefaultAppBar(title: 'Top książki', automaticallyImplyLeading: true),
         body: SingleChildScrollView(
           physics: ScrollPhysics(),
           child: Column(
@@ -58,6 +58,7 @@ class _TopScreen extends State<TopScreen> {
                                 onTap: () {
                                   setState(() {
                                     current = index;
+                                    genres=Genres.values[index].nameEN;
                                     giveMeListsOfBookToTop(Genres.values[index].nameEN);
                                   });
                                 },
@@ -140,9 +141,13 @@ class _TopScreen extends State<TopScreen> {
                               onTap: () {
                                 checkIsTokenValid(
                                     context,
-                                    DetailsOfBookScreen(
-                                      bookId: listOfBooks[index]['id']
-                                    ));
+                                    Navigator.push(
+                                        context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: DetailsOfBookScreen(
+                                        bookId: listOfBooks[index]['id']
+                                    )))..then((value) => setState(() {
+                                      giveMeListsOfBookToTop(genres);
+                                    })),
+                                );
                               },
                               child: SizedBox(
                                   width: widthScreen / 2.3,

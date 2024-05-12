@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../styles/strings.dart';
 import '../Account/ChangeTheme.dart';
 import '../Account/SettingsScreen.dart';
+import 'CustomPageRoute.dart';
 import 'functions.dart';
 
 class DefaultAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -35,19 +36,22 @@ class _DefaultAppBarState extends State<DefaultAppBar>{
             PopupMenuItem(
               child: Text('Wyświetl profil'),
               onTap: () {
-                checkIsTokenValid(context, MyProfileScreen());
+                checkIsTokenValid(context, Navigator.push(
+                context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: MyProfileScreen())));
               },
             ),
             PopupMenuItem(
               child: Text(changeTheme),
               onTap: () {
-                checkIsTokenValid(context, ChangeThemeScreen());
+                checkIsTokenValid(context, Navigator.push(
+                context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: ChangeThemeScreen())));
               },
             ),
             PopupMenuItem(
               child: Text('Ustawienia'),
               onTap: () {
-                checkIsTokenValid(context, SettingsScreen());
+                checkIsTokenValid(context, Navigator.push(
+                context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: SettingsScreen())));
               },
             ),
             PopupMenuItem(

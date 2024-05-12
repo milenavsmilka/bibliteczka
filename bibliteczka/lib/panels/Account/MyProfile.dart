@@ -64,8 +64,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       child: Column(
                         children: [
                           Text('Cześć ${userData[0]['username']}!',
-                              style:
-                                  Theme.of(context).textTheme.headlineMedium),
+                              style: Theme.of(context).textTheme.headlineMedium),
                         ],
                       ),
                     ),
@@ -79,24 +78,16 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       children: [
                         Row(
                           children: [
-                            Text(
-                                userData[0]['library']['favourite_books_count']
-                                    .toString(),
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall),
-                            Text(' Ulubione',
-                                style: Theme.of(context).textTheme.titleSmall),
+                            Text(userData[0]['library']['favourite_books_count'].toString(),
+                                style: Theme.of(context).textTheme.headlineSmall),
+                            Text(' Ulubione', style: Theme.of(context).textTheme.titleSmall),
                           ],
                         ),
                         Row(
                           children: [
-                            Text(
-                                userData[0]['library']['read_books_count']
-                                    .toString(),
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall),
-                            Text(' Przeczytane',
-                                style: Theme.of(context).textTheme.titleSmall),
+                            Text(userData[0]['library']['read_books_count'].toString(),
+                                style: Theme.of(context).textTheme.headlineSmall),
+                            Text(' Przeczytane', style: Theme.of(context).textTheme.titleSmall),
                           ],
                         ),
                       ],
@@ -106,11 +97,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       children: [
                         Row(
                           children: [
-                            Text(
-                                userData[0]['followed_authors_count']
-                                    .toString(),
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall),
+                            Text(userData[0]['followed_authors_count'].toString(),
+                                style: Theme.of(context).textTheme.headlineSmall),
                             Text(' Ulubionych autorów',
                                 style: Theme.of(context).textTheme.titleSmall),
                           ],
@@ -118,10 +106,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                         Row(
                           children: [
                             Text(userData[0]['opinions_count'].toString(),
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall),
-                            Text(' Opinii',
-                                style: Theme.of(context).textTheme.titleSmall),
+                                style: Theme.of(context).textTheme.headlineSmall),
+                            Text(' Opinii', style: Theme.of(context).textTheme.titleSmall),
                           ],
                         ),
                       ],
@@ -143,10 +129,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           });
                         },
                         icon: SvgPicture.asset("assets/icons/pen.svg",
-                            height: Theme.of(context)
-                                .textTheme
-                                .headlineSmall
-                                ?.fontSize))
+                            height: Theme.of(context).textTheme.headlineSmall?.fontSize))
                   ],
                 ),
                 Row(
@@ -164,9 +147,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     height: heightScreen / 4,
                     child: GridView(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1,
-                          mainAxisExtent: heightScreen / 5,
-                          mainAxisSpacing: 20),
+                          crossAxisCount: 1, mainAxisExtent: heightScreen / 5, mainAxisSpacing: 20),
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       children: [
@@ -174,20 +155,23 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           emptyBox(widthScreen, heightScreen),
                         } else ...{
                           for (int i = 0; i < favBooks.length; i++) ...{
-                              PictureOfBooksInMyLibrary(
-                                bookId: favBooks[i],
-                                isEditingLibrary: isEditing,
-                                categoryUrl: apiURLBookFromFav,
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailsOfBookScreen(bookId: favBooks[i]),
-                                            )).then((value) => setState(() {
+                            PictureOfBooksInMyLibrary(
+                              bookId: favBooks[i],
+                              isEditingLibrary: isEditing,
+                              categoryUrl: apiURLBookFromFav,
+                              onPressed: () {
+                                checkIsTokenValid(
+                                    context,
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetailsOfBookScreen(bookId: favBooks[i]),
+                                        ))
+                                        .then((value) => setState(() {
                                               giveMeUserData();
-                                            }));
-                                },
-                              ),
+                                            })));
+                              },
+                            ),
                           }
                         }
                       ],
@@ -209,9 +193,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     height: heightScreen / 4,
                     child: GridView(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1,
-                          mainAxisExtent: heightScreen / 5,
-                          mainAxisSpacing: 20),
+                          crossAxisCount: 1, mainAxisExtent: heightScreen / 5, mainAxisSpacing: 20),
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       children: [
@@ -224,13 +206,16 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               isEditingLibrary: isEditing,
                               categoryUrl: apiURLBookFromRead,
                               onPressed: () {
-                                Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                DetailsOfBookScreen(bookId: readBooks[i]),
-                                          )).then((value) => setState(() {
-                                            giveMeUserData();
-                                          }));
+                                checkIsTokenValid(
+                                    context,
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              DetailsOfBookScreen(bookId: readBooks[i]),
+                                        ))
+                                        .then((value) => setState(() {
+                                              giveMeUserData();
+                                            })));
                               },
                             ),
                           }
@@ -247,7 +232,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
 
   Future<void> giveMeUserData() async {
     Map<String, dynamic> getUserResponse =
-        await getSthById(apiURLGetUser,Map.of({'get_self':'true'}));
+        await getSthById(apiURLGetUser, Map.of({'get_self': 'true'}));
 
     setState(() {
       userData = getUserResponse['results'];

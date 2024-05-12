@@ -1,8 +1,6 @@
 import 'package:biblioteczka/panels/Authors/DetailsOfAutors.dart';
 import 'package:biblioteczka/panels/Authors/PictureOfAuthor.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:number_paginator/number_paginator.dart';
 
@@ -77,10 +75,10 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                             PictureOfAuthor(
                               authorId: listOfPopularAuthors[i]['id'],
                               onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
+                                checkIsTokenValid(context, Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => DetailsOfAuthorsScreen(
                                       authorId: listOfPopularAuthors[i]['id']),
-                                ));
+                                )));
                               },
                             ),
                           }
@@ -123,7 +121,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                       },
                       icon: Icon(Icons.language, size: 30)),
                 ]),
-                Container(
+                SizedBox(
                   height: heightScreen / 3,
                   child: GridView(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -138,10 +136,11 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                           TextButton(
                               child: Text(listOfAuthors[i]['name']),
                               onPressed: () {
+                                checkIsTokenValid(context,
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) =>
                                       DetailsOfAuthorsScreen(authorId: listOfAuthors[i]['id']),
-                                ));
+                                )));
                               }),
                         }
                       }

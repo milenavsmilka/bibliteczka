@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'CustomPageRoute.dart';
 import '../Login.dart';
 import '../MainPanel.dart';
 import '../main.dart';
+import 'CustomPageRoute.dart';
 
 Widget emptyBox(double widthScreen, double heightScreen) {
   return SizedBox(
     width: widthScreen / 5,
     height: heightScreen / 5,
-    child: Center(child: const Text(nothingHere)),
+    child: const Center(child: Text(nothingHere)),
   );
 }
 
@@ -36,7 +36,7 @@ Future<void> deleteSth(String apiUrl, String key, String value) async {
     },
     body: requestBodyJson,
   );
-  print('Response: ${requestBody}');
+  print('Response: $requestBody');
   Map<String, dynamic> data = jsonDecode(response.body);
   if (response.statusCode == 200) {
     print("Okej :D");
@@ -96,8 +96,8 @@ Future<void> sendRequest(String apiUrl, Map<String, dynamic> requestBody,
   if (message == 'logged_out') {
     sharedPreferences.clear();
     print("Poprawnie wylogowano użytkownika");
-    Navigator.push(
-        context!, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: LoginScreen()));
+    checkIsTokenValid(context!, Navigator.push(
+        context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: LoginScreen())));
   } else if (response.statusCode == 200) {
     print("Okej :D");
   } else if (message == 'opinion_already_exists') {
@@ -128,7 +128,7 @@ Future<Map<String, dynamic>> getSthById(String url, Map<String, dynamic> params)
   return data;
 }
 
-void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {
+void checkIsTokenValid(BuildContext context, [Future<dynamic>? navigator]) async {
   var sharedPreferences = await SharedPreferences.getInstance();
   String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
   var isLoggedIn = sharedPreferences.getBool('isLogged') ?? false;
@@ -145,9 +145,10 @@ void checkIsTokenValid(BuildContext context, [Widget? widgetToRoute]) async {
     String tokenValid = data['message'];
     print('Czy token valid? $tokenValid');
     if (tokenValid == tokenIsValid) {
-      if (widgetToRoute != null) {
-        Navigator.push(
-            context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: widgetToRoute));
+      if (navigator != null) {
+        navigator;
+        // Navigator.push(
+        //     context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: widgetToRoute));
       }
     } else {
       showDialog(

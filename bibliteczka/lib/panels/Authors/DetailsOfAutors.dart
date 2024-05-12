@@ -187,10 +187,11 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                             isEditingLibrary: false,
                             categoryUrl: '',
                             onPressed: () {
+                              checkIsTokenValid(context,
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => DetailsOfBookScreen(
                                     bookId: releasedBooks[i]),
-                              ));
+                              )));
                             },
                           ),
                         }

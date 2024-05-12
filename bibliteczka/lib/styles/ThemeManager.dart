@@ -1,7 +1,7 @@
 import 'package:biblioteczka/styles/DaltonismTheme.dart';
 import 'package:biblioteczka/styles/DarkTheme.dart';
 import 'package:biblioteczka/styles/LightTheme.dart';
-import 'package:biblioteczka/styles/ScpecialTheme.dart';
+import 'package:biblioteczka/styles/SpecialTheme.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 

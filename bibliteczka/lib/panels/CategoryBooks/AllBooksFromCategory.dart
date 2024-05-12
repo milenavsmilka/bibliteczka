@@ -1,15 +1,11 @@
-import 'dart:convert';
-
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
+import '../Tools/CustomPageRoute.dart';
 import '../Tools/NetworkLoadingImage.dart';
-import '../main.dart';
 import 'DetailsOfBook.dart';
 
 class AllCategoryBooksScreen extends StatefulWidget {
@@ -67,9 +63,11 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                       onTap: () {
                         checkIsTokenValid(
                             context,
+                            Navigator.push(
+                            context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child:
                             DetailsOfBookScreen(
                               bookId: listOfBooks[index]['id']
-                            ));
+                            ))));
                       },
                       child: SizedBox(
                         width: widthScreen / 2.3,

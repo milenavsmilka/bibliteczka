@@ -9,11 +9,11 @@ import 'DetailsOfBook.dart';
 class EditingOpinion extends StatefulWidget {
   const EditingOpinion(
       {super.key,
-        required this.opinionTextToSend,
-        required this.listener,
-        required this.bookId,
-        required this.opinionId,
-        required this.operation});
+      required this.opinionTextToSend,
+      required this.listener,
+      required this.bookId,
+      required this.opinionId,
+      required this.operation});
 
   final TextEditingController opinionTextToSend;
   final bool listener;
@@ -75,9 +75,11 @@ class EditingOpinionState extends State<EditingOpinion> {
                     iconSize: 15,
                     onPressed: () {
                       setState(() {
-                        Navigator.of(context).pushReplacement(CustomPageRoute(
-                            child: DetailsOfBookScreen(bookId: widget.bookId),
-                            chooseAnimation: CustomPageRoute.FADE));
+                        checkIsTokenValid(
+                            context,
+                            Navigator.of(context).pushReplacement(CustomPageRoute(
+                                child: DetailsOfBookScreen(bookId: widget.bookId),
+                                chooseAnimation: CustomPageRoute.FADE)));
                       });
                     },
                   ),
@@ -101,24 +103,26 @@ class EditingOpinionState extends State<EditingOpinion> {
                         try {
                           widget.operation == 'ADD'
                               ? await sendRequest(
-                              apiURLGetOpinion,
-                              Map.of({
-                                'book_id': widget.bookId,
-                                'stars_count': starsRating,
-                                'comment': widget.opinionTextToSend.text
-                              }))
+                                  apiURLGetOpinion,
+                                  Map.of({
+                                    'book_id': widget.bookId,
+                                    'stars_count': starsRating,
+                                    'comment': widget.opinionTextToSend.text
+                                  }))
                               : await changeSthInMyAccount(
-                              apiURLGetOpinion,
-                              Map.of({
-                                'id': widget.opinionId,
-                                'stars_count': starsRating,
-                                'comment': widget.opinionTextToSend.text
-                              }));
-                          Navigator.of(context)
-                              .pushReplacement(CustomPageRoute(
-                              child: DetailsOfBookScreen(bookId: widget.bookId),
-                              chooseAnimation: CustomPageRoute.FADE))
-                              .then((value) => widget.opinionTextToSend.clear());
+                                  apiURLGetOpinion,
+                                  Map.of({
+                                    'id': widget.opinionId,
+                                    'stars_count': starsRating,
+                                    'comment': widget.opinionTextToSend.text
+                                  }));
+                          checkIsTokenValid(
+                              context,
+                              Navigator.of(context)
+                                  .pushReplacement(CustomPageRoute(
+                                      child: DetailsOfBookScreen(bookId: widget.bookId),
+                                      chooseAnimation: CustomPageRoute.FADE))
+                                  .then((value) => widget.opinionTextToSend.clear()));
                         } on http.ClientException catch (e) {
                           showSnackBar(context, e.message, Colors.redAccent);
                         }

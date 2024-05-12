@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../styles/ThemeProvider.dart';
 import 'CategoryBooks/ChooseCategory.dart';
+import 'Tools/CustomPageRoute.dart';
 import 'Tools/functions.dart';
 import 'TopOfTheTop/TopScreen.dart';
 
@@ -19,7 +20,6 @@ class MainPanelScreen extends StatefulWidget {
 }
 
 class _MainPanelScreen extends State<MainPanelScreen> {
-
   @override
   Widget build(BuildContext context) => PopScope(
         canPop: false,
@@ -49,26 +49,21 @@ class _MainPanelScreen extends State<MainPanelScreen> {
           return Future.value(shouldPop);
         },
         child: Scaffold(
-            appBar: DefaultAppBar(title: titleOfApp,automaticallyImplyLeading: false),
+            appBar: DefaultAppBar(title: titleOfApp, automaticallyImplyLeading: false),
             body: Container(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ChooseOptionFromMenuButton(
-                      nameOfOptionFromMenu: "Kategoria",
-                      widgetToRoute: ChooseCategoryScreen()),
+                      nameOfOptionFromMenu: "Kategoria", widgetToRoute: ChooseCategoryScreen()),
                   ChooseOptionFromMenuButton(
-                      nameOfOptionFromMenu: "Nowości",
-                      widgetToRoute: NewBooksScreen()),
+                      nameOfOptionFromMenu: "Nowości", widgetToRoute: NewBooksScreen()),
                   ChooseOptionFromMenuButton(
-                      nameOfOptionFromMenu: "Top 10 w kategorii",
-                      widgetToRoute: TopScreen()),
+                      nameOfOptionFromMenu: "Top 10 w kategorii", widgetToRoute: TopScreen()),
                   ChooseOptionFromMenuButton(
-                      nameOfOptionFromMenu: "Autorzy",
-                      widgetToRoute: ChooseAuthorScreen()),
+                      nameOfOptionFromMenu: "Autorzy", widgetToRoute: ChooseAuthorScreen()),
                   ChooseOptionFromMenuButton(
-                      nameOfOptionFromMenu: "Społeczność",
-                      widgetToRoute: ChooseCategoryScreen()),
+                      nameOfOptionFromMenu: "Społeczność", widgetToRoute: ChooseCategoryScreen()),
                 ],
               ),
             )),
@@ -81,8 +76,9 @@ class _MainPanelScreen extends State<MainPanelScreen> {
   }
 
   Future<void> setTheme() async {
-    Map<String, dynamic> themeData = await getSthById(apiURLGetUser, Map.of({"get_self":true.toString()}));
-    final themeState = Provider.of<ThemeProvider>(context,listen: false);
+    Map<String, dynamic> themeData =
+        await getSthById(apiURLGetUser, Map.of({"get_self": true.toString()}));
+    final themeState = Provider.of<ThemeProvider>(context, listen: false);
     setState(() {
       themeState.setAnotherTheme = themeData['results'][0]['theme'];
     });
@@ -111,7 +107,10 @@ class ChooseOptionFromMenuButton extends StatelessWidget {
           nameOfOptionFromMenu,
         ),
         onPressed: () {
-          checkIsTokenValid(context, widgetToRoute);
+          checkIsTokenValid(
+              context,
+              Navigator.push(context,
+                  CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: widgetToRoute)));
         },
       ),
     );

@@ -1,14 +1,8 @@
-import 'package:biblioteczka/panels/Account/MyProfile.dart';
-import 'package:biblioteczka/panels/CategoryBooks/DetailsOfBook.dart';
-import 'package:biblioteczka/panels/Tools/CustomPageRoute.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../styles/strings.dart';
 import '../Tools/NetworkLoadingImage.dart';
 import '../Tools/functions.dart';
-import '../main.dart';
 
 class PictureOfAuthor extends StatefulWidget {
   const PictureOfAuthor(
@@ -37,10 +31,6 @@ class _PictureOfAuthorState extends State<PictureOfAuthor> {
 
   @override
   Widget build(BuildContext context) {
-    double widthScreen = MediaQuery
-        .of(context)
-        .size
-        .width;
     double heightScreen = MediaQuery
         .of(context)
         .size
