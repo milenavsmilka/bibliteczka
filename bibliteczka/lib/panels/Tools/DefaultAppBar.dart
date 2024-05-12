@@ -8,12 +8,15 @@ import 'CustomPageRoute.dart';
 import 'functions.dart';
 
 class DefaultAppBar extends StatefulWidget implements PreferredSizeWidget {
-  DefaultAppBar({super.key, required this.title, required this.automaticallyImplyLeading}) : preferredSize = Size.fromHeight(kToolbarHeight);
+  DefaultAppBar({super.key, required this.title, required this.automaticallyImplyLeading,
+    this.onTap
+  }) : preferredSize = Size.fromHeight(kToolbarHeight);
 
   @override
   final Size preferredSize; // default is 56.0
   final String title;
   final bool automaticallyImplyLeading;
+  final onTap;
 
   @override
   _DefaultAppBarState createState() => _DefaultAppBarState();
@@ -35,10 +38,7 @@ class _DefaultAppBarState extends State<DefaultAppBar>{
           itemBuilder: (BuildContext context) => [
             PopupMenuItem(
               child: Text('Wyświetl profil'),
-              onTap: () {
-                checkIsTokenValid(context, Navigator.push(
-                context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: MyProfileScreen())));
-              },
+              onTap: widget.onTap
             ),
             PopupMenuItem(
               child: Text(changeTheme),

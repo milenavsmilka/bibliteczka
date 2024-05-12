@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../styles/strings.dart';
+import '../Account/MyProfile.dart';
+import '../Tools/CustomPageRoute.dart';
 import '../Tools/HowMuchStars.dart';
 import '../Tools/IconsAnimation.dart';
 import '../Tools/LoadingScreen.dart';
@@ -58,6 +60,11 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
         appBar: DefaultAppBar(
           title: title,
           automaticallyImplyLeading: true,
+          onTap:() {
+            checkIsTokenValid(context, Navigator.push(
+                context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: MyProfileScreen()))
+                .then((value) => isThatBookInMyLibrary()));
+          }
         ),
         body: SingleChildScrollView(
           child: Padding(

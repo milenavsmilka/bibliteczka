@@ -10,7 +10,6 @@ class ChangePasswordScreen extends StatefulWidget {
   @override
   _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
 }
-//todo wyskoczenie komunikatu jeżeli nie ma internetu
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final currentPasswordController = TextEditingController();

@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:number_paginator/number_paginator.dart';
 
 import '../../styles/strings.dart';
+import '../Account/MyProfile.dart';
+import '../Tools/CustomPageRoute.dart';
 import '../Tools/DefaultAppBar.dart';
 import '../Tools/LoadingScreen.dart';
 import '../Tools/functions.dart';
@@ -49,7 +51,19 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
       return const LoadingScreen(message: loading);
     } else {
       return Scaffold(
-          appBar: DefaultAppBar(title: 'Autorzy', automaticallyImplyLeading: true),
+          appBar: DefaultAppBar(
+            title: 'Autorzy',
+            automaticallyImplyLeading: true,
+            onTap: () {
+              checkIsTokenValid(
+                  context,
+                  Navigator.push(
+                          context,
+                          CustomPageRoute(
+                              chooseAnimation: CustomPageRoute.SLIDE, child: MyProfileScreen()))
+                      .then((value) => giveMeListsOfAuthors(currentPage, letterThatWasClicked)));
+            },
+          ),
           body: SingleChildScrollView(
             // padding: EdgeInsets.all(8),
             child: Column(
@@ -75,10 +89,12 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                             PictureOfAuthor(
                               authorId: listOfPopularAuthors[i]['id'],
                               onPressed: () {
-                                checkIsTokenValid(context, Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => DetailsOfAuthorsScreen(
-                                      authorId: listOfPopularAuthors[i]['id']),
-                                )));
+                                checkIsTokenValid(
+                                    context,
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => DetailsOfAuthorsScreen(
+                                          authorId: listOfPopularAuthors[i]['id']),
+                                    )));
                               },
                             ),
                           }
@@ -136,11 +152,12 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                           TextButton(
                               child: Text(listOfAuthors[i]['name']),
                               onPressed: () {
-                                checkIsTokenValid(context,
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      DetailsOfAuthorsScreen(authorId: listOfAuthors[i]['id']),
-                                )));
+                                checkIsTokenValid(
+                                    context,
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          DetailsOfAuthorsScreen(authorId: listOfAuthors[i]['id']),
+                                    )));
                               }),
                         }
                       }
@@ -171,7 +188,8 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
 
   Future<void> giveMeListsOfAuthors(int page, String letter) async {
     Map<String, dynamic> data = await getSthById(
-        context, apiURLGetAuthor,
+        context,
+        apiURLGetAuthor,
         Map.of({
           'per_page': '10',
           'sorts': 'name',
@@ -193,8 +211,8 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
   }
 
   Future<void> giveMeListsOfTopAuthors() async {
-    Map<String, dynamic> data =
-        await getSthById(context, apiURLGetAuthor, Map.of({'per_page': '10', 'sorts': '-fans_count'}));
+    Map<String, dynamic> data = await getSthById(
+        context, apiURLGetAuthor, Map.of({'per_page': '10', 'sorts': '-fans_count'}));
 
     setState(() {
       listOfPopularAuthors = data['results'];
