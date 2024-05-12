@@ -45,11 +45,13 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
                   onTap: () {
                     checkIsTokenValid(
                       context,
-                        Navigator.push(
-                        context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child:
-                        DetailsOfBookScreen(
-                        bookId: listOfBooks[index]['id'],
-                      ))),
+                      Navigator.push(
+                          context,
+                          CustomPageRoute(
+                              chooseAnimation: CustomPageRoute.SLIDE,
+                              child: DetailsOfBookScreen(
+                                bookId: listOfBooks[index]['id'],
+                              ))),
                     );
                   },
                   child: Row(
@@ -66,64 +68,46 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(bookTitle,
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall,
+                                  style: Theme.of(context).textTheme.headlineSmall,
                                   textAlign: TextAlign.start),
                               Text(
                                 (listOfBooks[index]['title']),
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
-                              Text(bookAuthor,
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall),
+                              Text(bookAuthor, style: Theme.of(context).textTheme.headlineSmall),
                               Column(
                                 children: [
-                                  if (listOfBooks[index]['authors_names']
-                                          .length ==
-                                      0) ...{
+                                  if (listOfBooks[index]['authors_names'].length == 0) ...{
                                     Text(
                                       nothingHere,
-                                      style:
-                                          Theme.of(context).textTheme.titleSmall,
+                                      style: Theme.of(context).textTheme.titleSmall,
                                     )
                                   },
                                   for (int i = 0;
-                                      i <
-                                          (listOfBooks[index]['authors_names'])
-                                              .length;
+                                      i < (listOfBooks[index]['authors_names']).length;
                                       i++) ...{
-                                    if (i ==
-                                        listOfBooks[index]['authors_names']
-                                                .length -
-                                            1) ...{
+                                    if (i == listOfBooks[index]['authors_names'].length - 1) ...{
                                       Text(
-                                        listOfBooks[index]['authors_names'][i]
-                                            .toString(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall,
+                                        listOfBooks[index]['authors_names'][i].toString(),
+                                        style: Theme.of(context).textTheme.titleSmall,
                                       )
                                     } else ...{
                                       Text(
                                         '${listOfBooks[index]['authors_names'][i]},',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall,
+                                        style: Theme.of(context).textTheme.titleSmall,
                                       )
                                     }
                                   }
                                 ],
                               ),
                               Text(bookPublishingHouse,
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall),
+                                  style: Theme.of(context).textTheme.headlineSmall),
                               Text(
                                 listOfBooks[index]['publishing_house'],
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
                               Text(dateOfPremiere,
-                                  style:
-                                      Theme.of(context).textTheme.headlineSmall),
+                                  style: Theme.of(context).textTheme.headlineSmall),
                               Text(
                                 listOfBooks[index]['premiere_date'],
                                 style: Theme.of(context).textTheme.titleSmall,
@@ -142,10 +126,9 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
   }
 
   Future<void> giveMeNewBooks() async {
-    DateTime date = DateTime(
-        DateTime.now().year, DateTime.now().month - 3, DateTime.now().day);
-    Map<String, dynamic> newBooksResponse = await getSthById(
-        context, apiURLGetNewBooks, Map.of({'date_from': date.toString()}));
+    DateTime date = DateTime(DateTime.now().year, DateTime.now().month - 3, DateTime.now().day);
+    Map<String, dynamic> newBooksResponse =
+        await getSthById(context, apiURLGetNewBooks, Map.of({'date_from': date.toString()}));
 
     setState(() {
       listOfBooks = newBooksResponse['results'];

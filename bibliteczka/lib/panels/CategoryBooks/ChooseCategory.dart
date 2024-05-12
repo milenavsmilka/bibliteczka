@@ -3,6 +3,7 @@ import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../Account/MyProfile.dart';
 import '../Tools/CustomPageRoute.dart';
 import '../Tools/DefaultAppBar.dart';
 import 'AllBooksFromCategory.dart';
@@ -23,7 +24,7 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
     return Scaffold(
         appBar: DefaultAppBar(
           title: 'Kategoria',
-          automaticallyImplyLeading: true,
+          automaticallyImplyLeading: true
         ),
         body: CustomScrollView(
           scrollDirection: Axis.vertical,
@@ -31,8 +32,7 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
             SliverFillRemaining(
               hasScrollBody: false,
               child: Wrap(children: [
-                SizedBox(
-                    height: heightScreen * 0.025, width: widthScreen * 0.18),
+                SizedBox(height: heightScreen * 0.025, width: widthScreen * 0.18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -48,8 +48,7 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
-                    height: heightScreen * 0.025, width: widthScreen * 0.18),
+                SizedBox(height: heightScreen * 0.025, width: widthScreen * 0.18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -65,8 +64,7 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
-                    height: heightScreen * 0.025, width: widthScreen * 0.18),
+                SizedBox(height: heightScreen * 0.025, width: widthScreen * 0.18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -82,8 +80,7 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                     )
                   ],
                 ),
-                SizedBox(
-                    height: heightScreen * 0.025, width: widthScreen * 0.18),
+                SizedBox(height: heightScreen * 0.025, width: widthScreen * 0.18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -99,8 +96,7 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                     )
                   ],
                 ),
-                SizedBox(
-                    height: heightScreen * 0.025, width: widthScreen * 0.18),
+                SizedBox(height: heightScreen * 0.025, width: widthScreen * 0.18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -116,15 +112,13 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                     )
                   ],
                 ),
-                SizedBox(
-                    height: heightScreen * 0.025, width: widthScreen * 0.18),
+                SizedBox(height: heightScreen * 0.025, width: widthScreen * 0.18),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
                       nameOfCategory: 'Thrillery',
-                      nameOfCategoryEN:
-                          'Thriller, Horror, Mystery and detective stories',
+                      nameOfCategoryEN: 'Thriller, Horror, Mystery and detective stories',
                       pathToImage: iconDetective,
                     ),
                     CategoryButton(
@@ -134,8 +128,7 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                     )
                   ],
                 ),
-                SizedBox(
-                    height: heightScreen * 0.025, width: widthScreen * 0.18),
+                SizedBox(height: heightScreen * 0.025, width: widthScreen * 0.18),
               ]),
             )
           ],
@@ -163,23 +156,25 @@ class CategoryButton extends StatelessWidget {
           checkIsTokenValid(
               context,
               Navigator.push(
-              context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child:
-              AllCategoryBooksScreen(
-                nameOfCategory: nameOfCategory,
-                nameOfCategoryEN: nameOfCategoryEN,
-              ))));
+                  context,
+                  CustomPageRoute(
+                      chooseAnimation: CustomPageRoute.SLIDE,
+                      child: AllCategoryBooksScreen(
+                        nameOfCategory: nameOfCategory,
+                        nameOfCategoryEN: nameOfCategoryEN,
+                      ))));
         },
         style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(23.0)))),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(23.0)))),
         child: SizedBox(
           height: widthScreen * 0.3 + widthScreen * 0.1,
           width: widthScreen * 0.3,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(pathToImage, height: widthScreen * 0.3,color: Theme.of(context).textTheme.titleSmall?.color),
+              SvgPicture.asset(pathToImage,
+                  height: widthScreen * 0.3, color: Theme.of(context).textTheme.titleSmall?.color),
               Text(
                 nameOfCategory,
                 overflow: TextOverflow.ellipsis,

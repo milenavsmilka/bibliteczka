@@ -10,9 +10,7 @@ import 'DetailsOfBook.dart';
 
 class AllCategoryBooksScreen extends StatefulWidget {
   const AllCategoryBooksScreen(
-      {super.key,
-      required this.nameOfCategory,
-      required this.nameOfCategoryEN});
+      {super.key, required this.nameOfCategory, required this.nameOfCategoryEN});
 
   final String nameOfCategory;
   final String nameOfCategoryEN;
@@ -44,13 +42,10 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
       return const LoadingScreen(message: loading);
     } else {
       return Scaffold(
-        appBar: DefaultAppBar(
-          title: widget.nameOfCategory,
-          automaticallyImplyLeading: true,
-        ),
+        appBar: DefaultAppBar(title: widget.nameOfCategory, automaticallyImplyLeading: true),
         body: GridView.builder(
-            gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, mainAxisExtent: heightScreen / 2.4+30),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, mainAxisExtent: heightScreen / 2.4 + 30),
             padding: const EdgeInsets.all(10.0),
             scrollDirection: Axis.vertical,
             itemCount: listOfBooks.length,
@@ -64,16 +59,15 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                         checkIsTokenValid(
                             context,
                             Navigator.push(
-                            context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child:
-                            DetailsOfBookScreen(
-                              bookId: listOfBooks[index]['id']
-                            ))));
+                                context,
+                                CustomPageRoute(
+                                    chooseAnimation: CustomPageRoute.SLIDE,
+                                    child: DetailsOfBookScreen(bookId: listOfBooks[index]['id']))));
                       },
                       child: SizedBox(
-                        width: widthScreen / 2.3,
-                        height: heightScreen / 2.5,
-                        child: NetworkLoadingImage(pathToImage: listOfBooks[index]['picture'])
-                      ),
+                          width: widthScreen / 2.3,
+                          height: heightScreen / 2.5,
+                          child: NetworkLoadingImage(pathToImage: listOfBooks[index]['picture'])),
                     ),
                     SizedBox(
                       height: 30,
@@ -89,7 +83,8 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
   }
 
   Future<void> giveMeListsOfBook(String nameOfCategory) async {
-    Map<String, dynamic> data = await getSthById(context, apiURLGetBooks, Map.of({'genres':nameOfCategory}));
+    Map<String, dynamic> data =
+        await getSthById(context, apiURLGetBooks, Map.of({'genres': nameOfCategory}));
     print('jaki rezulat? $data');
 
     setState(() {

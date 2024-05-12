@@ -8,9 +8,9 @@ import 'CustomPageRoute.dart';
 import 'functions.dart';
 
 class DefaultAppBar extends StatefulWidget implements PreferredSizeWidget {
-  DefaultAppBar({super.key, required this.title, required this.automaticallyImplyLeading,
-    this.onTap
-  }) : preferredSize = Size.fromHeight(kToolbarHeight);
+  DefaultAppBar(
+      {super.key, required this.title, required this.automaticallyImplyLeading, this.onTap})
+      : preferredSize = Size.fromHeight(kToolbarHeight);
 
   @override
   final Size preferredSize; // default is 56.0
@@ -22,8 +22,7 @@ class DefaultAppBar extends StatefulWidget implements PreferredSizeWidget {
   _DefaultAppBarState createState() => _DefaultAppBarState();
 }
 
-class _DefaultAppBarState extends State<DefaultAppBar>{
-
+class _DefaultAppBarState extends State<DefaultAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -37,28 +36,43 @@ class _DefaultAppBarState extends State<DefaultAppBar>{
           ),
           itemBuilder: (BuildContext context) => [
             PopupMenuItem(
-              child: Text('Wyświetl profil'),
-              onTap: widget.onTap
-            ),
+                child: Text('Wyświetl profil'),
+                onTap: widget.onTap ?? () {
+                        checkIsTokenValid(
+                            context,
+                            Navigator.push(
+                                context,
+                                CustomPageRoute(
+                                    chooseAnimation: CustomPageRoute.SLIDE,
+                                    child: MyProfileScreen())));
+                      }),
             PopupMenuItem(
               child: Text(changeTheme),
               onTap: () {
-                checkIsTokenValid(context, Navigator.push(
-                context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: ChangeThemeScreen())));
+                checkIsTokenValid(
+                    context,
+                    Navigator.push(
+                        context,
+                        CustomPageRoute(
+                            chooseAnimation: CustomPageRoute.SLIDE, child: ChangeThemeScreen())));
               },
             ),
             PopupMenuItem(
               child: Text('Ustawienia'),
               onTap: () {
-                checkIsTokenValid(context, Navigator.push(
-                context, CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: SettingsScreen())));
+                checkIsTokenValid(
+                    context,
+                    Navigator.push(
+                        context,
+                        CustomPageRoute(
+                            chooseAnimation: CustomPageRoute.SLIDE, child: SettingsScreen())));
               },
             ),
             PopupMenuItem(
                 child: Text(clickToLogOutButton),
                 onTap: () async {
                   checkIsTokenValid(context);
-                  await sendRequest(apiURLLogOut,Map(),context);
+                  await sendRequest(apiURLLogOut, Map(), context);
                 })
           ],
         )

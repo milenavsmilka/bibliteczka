@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../styles/strings.dart';
+import '../Account/MyProfile.dart';
 import '../CategoryBooks/DetailsOfBook.dart';
+import '../Tools/CustomPageRoute.dart';
 import '../Tools/IconsAnimation.dart';
 import '../Tools/LoadingScreen.dart';
 
@@ -50,6 +52,14 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
         appBar: DefaultAppBar(
           title: name,
           automaticallyImplyLeading: true,
+          onTap: () {
+            checkIsTokenValid(
+                context,
+                Navigator.push(
+                    context,
+                    CustomPageRoute(
+                        chooseAnimation: CustomPageRoute.SLIDE, child: MyProfileScreen())));
+          },
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -166,7 +176,8 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                   Flexible(child: Text(biography, style: Theme.of(context).textTheme.titleSmall)),
                 ],
               ),
-              Center(child: Text('Wydane książki', style: Theme.of(context).textTheme.headlineMedium)),
+              Center(
+                  child: Text('Wydane książki', style: Theme.of(context).textTheme.headlineMedium)),
               const Row(children: [Text('')]),
               Align(
                 alignment: Alignment.centerLeft,
@@ -187,11 +198,12 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                             isEditingLibrary: false,
                             categoryUrl: '',
                             onPressed: () {
-                              checkIsTokenValid(context,
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => DetailsOfBookScreen(
-                                    bookId: releasedBooks[i]),
-                              )));
+                              checkIsTokenValid(
+                                  context,
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailsOfBookScreen(bookId: releasedBooks[i]),
+                                  )));
                             },
                           ),
                         }
