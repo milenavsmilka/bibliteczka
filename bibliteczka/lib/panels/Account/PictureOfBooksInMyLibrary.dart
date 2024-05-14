@@ -84,7 +84,7 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
                               widget.categoryUrl,
                               Map.of({
                                 'book_id': widget.bookId
-                              }))); //todo może jakoś da się obsłużyć ten błąd?
+                              })));
                       Navigator.of(context).pushReplacement(CustomPageRoute(
                           child: MyProfileScreen(), chooseAnimation: CustomPageRoute.FADE));
                     });

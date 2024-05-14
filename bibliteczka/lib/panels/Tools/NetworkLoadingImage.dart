@@ -12,7 +12,7 @@ class NetworkLoadingImage extends StatelessWidget {
   Widget build(BuildContext context) {
     print(context.widget.key);
     return Image.network(
-      pathToImage,
+      pathToImage.trim(),
       fit: BoxFit.fill,
       errorBuilder: (context, error, stackTrace) {
         return Image.asset(

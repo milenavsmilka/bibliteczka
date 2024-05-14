@@ -10,7 +10,6 @@ import '../Tools/LoadingScreen.dart';
 import '../Tools/functions.dart';
 import 'PictureOfBooksInMyLibrary.dart';
 
-//todo wyświetlanie ulubionych autorów
 class MyProfileScreen extends StatefulWidget {
   const MyProfileScreen({super.key});
 

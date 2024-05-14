@@ -71,37 +71,36 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text('Popularni autorzy', style: Theme.of(context).textTheme.headlineMedium),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    color: Theme.of(context).secondaryHeaderColor,
-                    height: heightScreen / 3,
-                    child: GridView(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1, mainAxisExtent: heightScreen / 5, mainAxisSpacing: 20),
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      children: [
-                        if (listOfPopularAuthors.isEmpty) ...{
-                          emptyBox(widthScreen, heightScreen),
-                        } else ...{
-                          for (int i = 0; i < listOfPopularAuthors.length; i++) ...{
-                            PictureOfAuthor(
-                              isEditingLibrary: false,
-                              authorId: listOfPopularAuthors[i]['id'],
-                              onPressed: () {
-                                checkIsTokenValid(
-                                    context,
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => DetailsOfAuthorsScreen(
-                                          authorId: listOfPopularAuthors[i]['id']),
-                                    )));
-                              },
-                            ),
-                          }
+                Container(
+                  padding: const EdgeInsets.only(left: 20),
+                  alignment: Alignment.center,
+                  color: Theme.of(context).secondaryHeaderColor,
+                  height: heightScreen / 4,
+                  child: GridView(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1, mainAxisExtent: heightScreen / 5),
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    children: [
+                      if (listOfPopularAuthors.isEmpty) ...{
+                        emptyBox(widthScreen, heightScreen),
+                      } else ...{
+                        for (int i = 0; i < listOfPopularAuthors.length; i++) ...{
+                          PictureOfAuthor(
+                            isEditingLibrary: false,
+                            authorId: listOfPopularAuthors[i]['id'],
+                            onPressed: () {
+                              checkIsTokenValid(
+                                  context,
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => DetailsOfAuthorsScreen(
+                                        authorId: listOfPopularAuthors[i]['id']),
+                                  )));
+                            },
+                          ),
                         }
-                      ],
-                    ),
+                      }
+                    ],
                   ),
                 ),
                 const Text(''),
