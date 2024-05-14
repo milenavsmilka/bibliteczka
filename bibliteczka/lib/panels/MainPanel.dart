@@ -1,4 +1,5 @@
 import 'package:biblioteczka/panels/Authors/ChooseAutor.dart';
+import 'package:biblioteczka/panels/Community/PopularUsers.dart';
 import 'package:biblioteczka/panels/News/NewBooks.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/styles/strings.dart';
@@ -63,7 +64,7 @@ class _MainPanelScreen extends State<MainPanelScreen> {
                   ChooseOptionFromMenuButton(
                       nameOfOptionFromMenu: "Autorzy", widgetToRoute: ChooseAuthorScreen()),
                   ChooseOptionFromMenuButton(
-                      nameOfOptionFromMenu: "Społeczność", widgetToRoute: ChooseCategoryScreen()),
+                      nameOfOptionFromMenu: "Społeczność", widgetToRoute: PopularUsersScreen()),
                 ],
               ),
             )),

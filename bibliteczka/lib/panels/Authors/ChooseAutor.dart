@@ -10,7 +10,13 @@ import '../Tools/CustomPageRoute.dart';
 import '../Tools/DefaultAppBar.dart';
 import '../Tools/LoadingScreen.dart';
 import '../Tools/functions.dart';
-
+//todo paginacja dla książek w kategorii i w top i w komentarzach
+//todo zakładka społeczność
+//todo wyszukiwanie autorów i książek po lupie
+//todo podobne książki
+//todo dopracowanie themes
+//todo shakeomat
+//todo ogarnięcie ustawień użytkownika
 class ChooseAuthorScreen extends StatefulWidget {
   const ChooseAuthorScreen({super.key});
 
