@@ -140,7 +140,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                                     });
                                   } on http.ClientException catch (e) {
                                     print('wcale nie $e');
-                                    deleteSth(context, apiURLBookFromRead, Map.of({'book_id':
+                                    await deleteSth(context, apiURLBookFromRead, Map.of({'book_id':
                                       widget.bookId.toString()}));
                                     setState(() {
                                       emptyRead = false;
@@ -166,7 +166,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                                       });
                                     } on http.ClientException catch (e) {
                                       print('wcale nie $e');
-                                      deleteSth(context, apiURLBookFromFav,
+                                      await deleteSth(context, apiURLBookFromFav,
                                           Map.of({'book_id': widget.bookId.toString()}));
                                       setState(() {
                                         emptyHeart = false;
@@ -187,7 +187,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             emptyHeart = true;
                           } on http.ClientException catch (e) {
                             print('wcale nie $e');
-                            deleteSth(
+                            await deleteSth(
                                 context, apiURLBookFromFav, Map.of({'book_id': widget.bookId.toString()}));
                             emptyHeart = false;
                           }
@@ -203,7 +203,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             emptyRead = true;
                           } on http.ClientException catch (e) {
                             print('wcale nie $e');
-                            deleteSth(
+                            await deleteSth(
                                 context, apiURLBookFromRead, Map.of({'book_id': widget.bookId.toString()}));
                             emptyRead = false;
                           }

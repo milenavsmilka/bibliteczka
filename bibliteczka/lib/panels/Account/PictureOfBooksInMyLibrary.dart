@@ -35,6 +35,15 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
   }
 
   @override
+  void didUpdateWidget(PictureOfBooksInMyLibrary oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if(widget.bookId!=oldWidget.bookId){
+      giveMeBookData();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
     double heightScreen = MediaQuery.of(context).size.height;

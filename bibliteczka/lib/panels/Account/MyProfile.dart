@@ -9,6 +9,7 @@ import '../CategoryBooks/DetailsOfBook.dart';
 import '../Tools/LoadingScreen.dart';
 import '../Tools/functions.dart';
 import 'PictureOfBooksInMyLibrary.dart';
+
 //todo wyświetlanie ulubionych autorów
 class MyProfileScreen extends StatefulWidget {
   const MyProfileScreen({super.key});
@@ -255,18 +256,17 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                               authorId: favAuthors[i],
                               isEditingLibrary: isEditing,
                               userId: userId,
-                              // categoryUrl: apiURLFan,
                               onPressed: () {
                                 checkIsTokenValid(
                                     context,
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          DetailsOfAuthorsScreen(authorId: favAuthors[i]),
-                                    )).then((value) => setState(() {
-                                      giveMeUserData();
-                                    }))
-                                );
+                                          builder: (context) =>
+                                              DetailsOfAuthorsScreen(authorId: favAuthors[i]),
+                                        ))
+                                        .then((value) => setState(() {
+                                              giveMeUserData();
+                                            })));
                               },
                             ),
                           }
@@ -284,7 +284,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   Future<void> giveMeUserData() async {
     Map<String, dynamic> getUserResponse =
         await getSthById(context, apiURLGetUser, Map.of({'get_self': 'true'}));
-
     setState(() {
       userData = getUserResponse['results'];
       favBooks = userData[0]['library']['favourite_books'];
