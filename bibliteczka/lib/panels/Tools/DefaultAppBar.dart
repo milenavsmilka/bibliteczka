@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../styles/strings.dart';
 import '../Account/ChangeTheme.dart';
+import '../Account/QuoteScreen.dart';
 import '../Account/SettingsScreen.dart';
 import 'CustomPageRoute.dart';
 import 'functions.dart';
@@ -55,6 +56,17 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
                         context,
                         CustomPageRoute(
                             chooseAnimation: CustomPageRoute.SLIDE, child: const ChangeThemeScreen())));
+              },
+            ),
+            PopupMenuItem(
+              child: Text('Cytat na dziś'),
+              onTap: () {
+                checkIsTokenValid(
+                    context,
+                    Navigator.push(
+                        context,
+                        CustomPageRoute(
+                            chooseAnimation: CustomPageRoute.SLIDE, child: const QuoteScreen())));
               },
             ),
             PopupMenuItem(

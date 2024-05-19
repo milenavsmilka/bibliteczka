@@ -1,5 +1,5 @@
-const String apiURL = 'https://10.0.2.2:5000/api/';
-// const String apiURL ='https://192.168.0.3:5000/api/';
+// const String apiURL = 'https://10.0.2.2:5000/api/';
+const String apiURL ='https://192.168.0.2:5000/api/';
 const String apiURLRegister = '${apiURL}account/register';
 const String apiURLLogin = '${apiURL}account/login';
 const String apiURLLogOut = '${apiURL}account/logout';
@@ -16,6 +16,7 @@ const String apiURLGetUser = '${apiURL}data/user';
 const String apiURLChangeProfilePicture = '${apiURL}account/change_profile_picture';
 const String apiURLChangeTheme = '${apiURL}account/change_theme';
 const String apiURLFan = '${apiURL}data/fan';
+const String apiURLQuote = '${apiURL}data/quotes';
 
 const String iconHeart = "assets/icons/hearts.svg";
 const String iconBrainstorming = "assets/icons/brainstorming.svg";

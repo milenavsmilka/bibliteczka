@@ -61,19 +61,12 @@ class _PopularUsersScreenState extends State<PopularUsersScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Nazwa użytkownika:',
-                                    style: Theme.of(context).textTheme.headlineSmall,
-                                    textAlign: TextAlign.start),
                                 Text(
                                   (listOfUsers[index]['username']),
-                                  style: Theme.of(context).textTheme.titleSmall,
+                                  style: Theme.of(context).textTheme.headlineMedium,
                                 ),
-                                Text('Liczba opinii:',
+                                Text('Liczba opinii: ${listOfUsers[index]['opinions_count'].toString()}',
                                     style: Theme.of(context).textTheme.headlineSmall),
-                                Text(
-                                  listOfUsers[index]['opinions_count'].toString(),
-                                  style: Theme.of(context).textTheme.titleSmall,
-                                ),
                               ],
                             ),
                           ),
@@ -92,7 +85,8 @@ class _PopularUsersScreenState extends State<PopularUsersScreen> {
     Map<String, dynamic> usersResponse =
     await getSthById(context, apiURLGetUser, Map.of({
       'per_page': '10',
-      'sorts': '-opinions_count'
+      'sorts': '-opinions_count',
+      'opinions_count_ge': '1'
     }));
 
     setState(() {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 Icon addToFavIcon(double size) {
   return Icon(
     Icons.favorite,
-    color: Colors.white,
+    color: Colors.redAccent,
     size: size,
   );
 }
