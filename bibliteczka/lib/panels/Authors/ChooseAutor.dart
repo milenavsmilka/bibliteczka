@@ -11,11 +11,8 @@ import '../Tools/DefaultAppBar.dart';
 import '../Tools/LoadingScreen.dart';
 import '../Tools/functions.dart';
 
-//todo paginacja dla książek w kategorii i w top i w komentarzach
 //todo wyszukiwanie autorów i książek po lupie
-//todo podobne książki
 //todo dopracowanie themes
-//todo ogarnięcie ustawień użytkownika
 class ChooseAuthorScreen extends StatefulWidget {
   const ChooseAuthorScreen({super.key});
 
@@ -36,8 +33,8 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
   int index = 0;
   int pagesCount = -1;
   int currentPage = -1;
-  String letterThatWasClicked = 'A';
   List<dynamic> pages = [-1];
+  String letterThatWasClicked = 'A';
 
   @override
   void initState() {
@@ -70,7 +67,6 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
             },
           ),
           body: SingleChildScrollView(
-            // padding: EdgeInsets.all(8),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
