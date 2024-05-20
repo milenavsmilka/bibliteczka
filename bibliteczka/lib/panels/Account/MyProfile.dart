@@ -21,6 +21,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   List<dynamic> userData = [-1];
   List<dynamic> favBooks = [-1];
   List<dynamic> readBooks = [-1];
+  List<dynamic> similarBooks = [-1];
   List<dynamic> favAuthors = [-1];
   int userId = -1;
   bool isEditing = false;
@@ -274,6 +275,47 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     ),
                   ),
                 ),
+                Text(
+                  'Mogą Cię również zainteresować',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: SizedBox(
+                    height: heightScreen / 4,
+                    child: GridView(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1, mainAxisExtent: heightScreen / 5, mainAxisSpacing: 20),
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      children: [
+                        if (similarBooks.isEmpty) ...{
+                          emptyBox(widthScreen, heightScreen),
+                        } else ...{
+                          for (int i = 0; i < similarBooks.length; i++) ...{
+                            PictureOfBooksInMyLibrary(
+                              bookId: similarBooks[i]['id'],
+                              isEditingLibrary: isEditing,
+                              categoryUrl: '',
+                              onPressed: () {
+                                checkIsTokenValid(
+                                    context,
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          DetailsOfBookScreen(bookId: similarBooks[i]),
+                                    ))
+                                        .then((value) => setState(() {
+                                      giveMeUserData();
+                                    })));
+                              },
+                            ),
+                          }
+                        }
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
           ));
@@ -283,10 +325,15 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   Future<void> giveMeUserData() async {
     Map<String, dynamic> getUserResponse =
         await getSthById(context, apiURLGetUser, Map.of({'get_self': 'true'}));
+
+    Map<String, dynamic> getSimilarBooks =
+        await getSthById(context, apiURLSimilarBooks, Map.of({}));
+    print(getSimilarBooks['results']);
     setState(() {
       userData = getUserResponse['results'];
       favBooks = userData[0]['library']['favourite_books'];
       readBooks = userData[0]['library']['read_books'];
+      similarBooks = getSimilarBooks['results'];
       favAuthors = userData[0]['followed_authors'];
       userId = userData[0]['id'];
     });

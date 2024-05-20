@@ -15,7 +15,6 @@ import '../Tools/functions.dart';
 //todo wyszukiwanie autorów i książek po lupie
 //todo podobne książki
 //todo dopracowanie themes
-//todo shakeomat
 //todo ogarnięcie ustawień użytkownika
 class ChooseAuthorScreen extends StatefulWidget {
   const ChooseAuthorScreen({super.key});
