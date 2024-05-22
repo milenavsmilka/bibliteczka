@@ -2,33 +2,58 @@ import 'package:biblioteczka/panels/Account/MyProfile.dart';
 import 'package:flutter/material.dart';
 
 import '../../styles/strings.dart';
-import '../Account/QuoteScreen.dart';
-import '../Account/SettingsScreen.dart';
+import '../Account/QuoteForDay.dart';
+import '../Account/Settings.dart';
 import 'CustomPageRoute.dart';
+import 'Search.dart';
 import 'functions.dart';
 
 class DefaultAppBar extends StatefulWidget implements PreferredSizeWidget {
   const DefaultAppBar(
-      {super.key, required this.title, required this.automaticallyImplyLeading, this.onTap})
+      {super.key,
+      required this.title,
+      required this.automaticallyImplyLeading,
+      this.onTap,
+      this.turnSearch})
       : preferredSize = const Size.fromHeight(kToolbarHeight);
 
   @override
   final Size preferredSize; // default is 56.0
   final String title;
   final bool automaticallyImplyLeading;
-  final onTap;
+  final turnSearch;
+  final dynamic onTap;
 
   @override
   _DefaultAppBarState createState() => _DefaultAppBarState();
 }
 
 class _DefaultAppBarState extends State<DefaultAppBar> {
+  TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(widget.title, overflow: TextOverflow.ellipsis),
       automaticallyImplyLeading: widget.automaticallyImplyLeading,
       actions: <Widget>[
+        if (widget.turnSearch != null)...{
+          IconButton(
+            icon: Icon(
+              Icons.search,
+              size: 35,
+            ),
+            onPressed: () {
+              checkIsTokenValid(
+                  context,
+                  Navigator.push(
+                      context,
+                      CustomPageRoute(
+                          chooseAnimation: CustomPageRoute.FADE,
+                          child: SearchScreen(whatSearch: widget.turnSearch))));
+            },
+          ),
+        },
         PopupMenuButton(
           icon: const Icon(
             Icons.account_circle,
@@ -36,15 +61,16 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
           ),
           itemBuilder: (BuildContext context) => [
             PopupMenuItem(
-                onTap: widget.onTap ?? () {
-                        checkIsTokenValid(
-                            context,
-                            Navigator.push(
-                                context,
-                                CustomPageRoute(
-                                    chooseAnimation: CustomPageRoute.SLIDE,
-                                    child: MyProfileScreen())));
-                      },
+                onTap: widget.onTap ??
+                    () {
+                      checkIsTokenValid(
+                          context,
+                          Navigator.push(
+                              context,
+                              CustomPageRoute(
+                                  chooseAnimation: CustomPageRoute.SLIDE,
+                                  child: MyProfileScreen())));
+                    },
                 child: const Text('Wyświetl profil')),
             PopupMenuItem(
               child: Text('Cytat na dziś'),
@@ -65,7 +91,8 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
                     Navigator.push(
                         context,
                         CustomPageRoute(
-                            chooseAnimation: CustomPageRoute.SLIDE, child: const SettingsScreen())));
+                            chooseAnimation: CustomPageRoute.SLIDE,
+                            child: const SettingsScreen())));
               },
             ),
             PopupMenuItem(
@@ -75,8 +102,9 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
                   await sendRequest(apiURLLogOut, Map(), context);
                 })
           ],
-        )
+        ),
       ],
     );
   }
 }
+

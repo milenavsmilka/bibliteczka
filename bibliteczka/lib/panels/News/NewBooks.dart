@@ -28,6 +28,12 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
     giveMeNewBooks(1);
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;

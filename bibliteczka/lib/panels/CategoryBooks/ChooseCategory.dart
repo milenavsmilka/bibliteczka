@@ -1,3 +1,4 @@
+import 'package:biblioteczka/panels/Tools/Search.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,8 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
     return Scaffold(
         appBar: DefaultAppBar(
           title: 'Kategoria',
-          automaticallyImplyLeading: true
+          automaticallyImplyLeading: true,
+          turnSearch: SearchScreen.TURNBOOKS,
         ),
         body: CustomScrollView(
           scrollDirection: Axis.vertical,

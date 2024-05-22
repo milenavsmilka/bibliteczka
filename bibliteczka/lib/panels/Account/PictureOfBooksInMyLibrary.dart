@@ -35,6 +35,11 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   void didUpdateWidget(PictureOfBooksInMyLibrary oldWidget) {
     super.didUpdateWidget(oldWidget);
 

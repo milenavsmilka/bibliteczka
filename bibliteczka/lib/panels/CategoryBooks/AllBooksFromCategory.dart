@@ -37,7 +37,8 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
   @override
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
-    double heightScreen = MediaQuery.of(context).size.height - (MediaQuery.of(context).padding.top + kToolbarHeight + kBottomNavigationBarHeight);
+    double heightScreen = MediaQuery.of(context).size.height -
+        (MediaQuery.of(context).padding.top + kToolbarHeight + kBottomNavigationBarHeight);
 
     print(widget.nameOfCategory);
     if (listOfBooks.isEmpty) {
@@ -73,12 +74,14 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                                         context,
                                         CustomPageRoute(
                                             chooseAnimation: CustomPageRoute.SLIDE,
-                                            child: DetailsOfBookScreen(bookId: listOfBooks[index]['id']))));
+                                            child: DetailsOfBookScreen(
+                                                bookId: listOfBooks[index]['id']))));
                               },
                               child: SizedBox(
                                   width: widthScreen / 2.3,
                                   height: heightScreen / 2.1,
-                                  child: NetworkLoadingImage(pathToImage: listOfBooks[index]['picture'])),
+                                  child: NetworkLoadingImage(
+                                      pathToImage: listOfBooks[index]['picture'])),
                             ),
                             SizedBox(
                               height: 30,

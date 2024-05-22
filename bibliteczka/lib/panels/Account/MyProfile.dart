@@ -32,6 +32,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     giveMeUserData();
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
@@ -303,7 +309,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
                                       builder: (context) =>
-                                          DetailsOfBookScreen(bookId: similarBooks[i]),
+                                          DetailsOfBookScreen(bookId: similarBooks[i]['id']),
                                     ))
                                         .then((value) => setState(() {
                                       giveMeUserData();

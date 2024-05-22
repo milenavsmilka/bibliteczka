@@ -1,5 +1,6 @@
 import 'package:biblioteczka/panels/Authors/DetailsOfAutors.dart';
 import 'package:biblioteczka/panels/Authors/PictureOfAuthor.dart';
+import 'package:biblioteczka/panels/Tools/Search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:number_paginator/number_paginator.dart';
@@ -56,6 +57,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
           appBar: DefaultAppBar(
             title: 'Autorzy',
             automaticallyImplyLeading: true,
+            turnSearch: SearchScreen.TURNAUTHORS,
             onTap: () {
               checkIsTokenValid(
                   context,
@@ -79,7 +81,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                   height: heightScreen / 4,
                   child: GridView(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1, mainAxisExtent: heightScreen / 5),
+                        crossAxisCount: 1, mainAxisExtent: heightScreen / 4),
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: true,
                     children: [

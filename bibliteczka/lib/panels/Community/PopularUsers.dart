@@ -24,6 +24,12 @@ class _PopularUsersScreenState extends State<PopularUsersScreen> {
     giveMePopularUsers();
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;

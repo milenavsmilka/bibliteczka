@@ -25,6 +25,12 @@ class _QuoteScreenState extends State<QuoteScreen> {
     getQuote();
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,21 +53,26 @@ class _QuoteScreenState extends State<QuoteScreen> {
             )
                 : SizedBox(),
             (count < 100)
-                ? IconButton(
-              padding: EdgeInsets.all(10.0),
-              onPressed: () {
-                chooseRandom();
-                setState(() {
-                  count += 20;
-                });
-                print(count);
-              },
-              icon: Image.asset(
-                  'assets/images/bookToQuote.png',
-                  width: 150.0,
-                  height: 150.0,
-                  fit: BoxFit.fill),
-            )
+                ? Column(
+                  children: [
+                    IconButton(
+                                  padding: EdgeInsets.all(10.0),
+                                  onPressed: () {
+                    chooseRandom();
+                    setState(() {
+                      count += 20;
+                    });
+                    print(count);
+                                  },
+                                  icon: Image.asset(
+                      'assets/images/bookToQuote.png',
+                      width: 150.0,
+                      height: 150.0,
+                      fit: BoxFit.fill),
+                                ),
+                    Text('$count%'),
+                  ],
+                )
                 : Container(
                 padding: EdgeInsets.all(20),
                 child: Text(quote, style: Theme

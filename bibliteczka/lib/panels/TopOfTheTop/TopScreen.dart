@@ -28,6 +28,12 @@ class _TopScreen extends State<TopScreen> {
     giveMeListsOfBookToTop(Genres.all.nameEN);
   }
 
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
