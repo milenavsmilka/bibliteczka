@@ -1,9 +1,14 @@
 import 'dart:io';
 
+import 'package:biblioteczka/l10n/l10n.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:localization_i18n_arb/l10n/l10n.dart';
 import 'package:biblioteczka/styles/ThemeManager.dart';
 import 'package:biblioteczka/styles/ThemeProvider.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import 'Tools/functions.dart';
@@ -45,6 +50,14 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
           return MaterialApp(
+            supportedLocales: L10n.all,
+            locale: const Locale('pl'),
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              // GlobalWidgetLocalizations.delegate,
+              // GlobalCurpentinoLocalizations.delegate,
+            ],
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
             theme:
@@ -90,7 +103,7 @@ class MyHomePageState extends State<MyHomePage> {
               const Spacer(
                 flex: 3,
               ),
-              Text(library, style: Theme.of(context).textTheme.displayLarge),
+              Text(AppLocalizations.of(context)!.title, style: Theme.of(context).textTheme.displayLarge),
               const Spacer(
                 flex: 4,
               ),

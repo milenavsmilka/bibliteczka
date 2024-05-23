@@ -50,10 +50,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
+                      cursorColor: Theme.of(context).textTheme.titleLarge?.color,
                       autocorrect: false,
                       controller: usernameController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: PasswordMustContainValidator(validateUsernameError, usernameController.text).call,
+                      validator: UsernameMustContainValidator(validateUsernameError, usernameController.text).call,
                       decoration: const InputDecoration(
                           labelText: giveMeUserName,
                           errorMaxLines: 3,
@@ -65,6 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
+                      cursorColor: Theme.of(context).textTheme.titleLarge?.color,
                       autocorrect: false,
                       controller: emailController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -84,6 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
+                      cursorColor: Theme.of(context).textTheme.titleLarge?.color,
                       autocorrect: false,
                       controller: passwordController,
                       obscureText: !passVisible,
@@ -112,6 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
+                      cursorColor: Theme.of(context).textTheme.titleLarge?.color,
                       autocorrect: false,
                       controller: repeatPasswordController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,

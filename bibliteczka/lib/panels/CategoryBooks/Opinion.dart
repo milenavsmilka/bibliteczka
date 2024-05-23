@@ -177,6 +177,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
 
   Widget textFormField(TextEditingController controller, VoidCallback onTap) {
     return TextFormField(
+      cursorColor: Theme.of(context).textTheme.titleLarge?.color,
       maxLines: null,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: MultiValidator([

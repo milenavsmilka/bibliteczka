@@ -40,6 +40,7 @@ class _SearchScreenState extends State<SearchScreen> {
           SizedBox(
               width: widthScreen / 2,
               child: TextFormField(
+                cursorColor: Theme.of(context).textTheme.titleLarge?.color,
                 controller: searchController,
                 decoration: const InputDecoration(
                     disabledBorder: InputBorder.none,

@@ -143,6 +143,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                                 content: const Text(writeCode),
                                 actions: [
                                   TextFormField(
+                                    cursorColor: Theme.of(context).textTheme.titleLarge?.color,
                                     keyboardType: TextInputType.number,
                                     obscureText: true,
                                     controller: deleteCodeController,
@@ -217,6 +218,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                 title: const Text(giveMePassword),
                 actions: [
                   TextFormField(
+                    cursorColor: Theme.of(context).textTheme.titleLarge?.color,
                     obscureText: true,
                     controller: passwordController,
                   ),

@@ -213,7 +213,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                   ),
                   Flexible(
                     child: Container(
-                      padding: const EdgeInsets.all(15.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

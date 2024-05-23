@@ -42,7 +42,7 @@ class EditingOpinionState extends State<EditingOpinion> {
           children: [
             Row(
               children: [
-                SizedBox(width: widthScreen * (1 / 4)),
+                SizedBox(width: widthScreen * (1 / 4)-10),
                 for (int i = 1; i < 6; i++) ...{
                   IconButton(
                       onPressed: () {
@@ -133,6 +133,7 @@ class EditingOpinionState extends State<EditingOpinion> {
                 )
               ],
             ),
+            const SizedBox(height: 15),
           ],
         ),
       ),

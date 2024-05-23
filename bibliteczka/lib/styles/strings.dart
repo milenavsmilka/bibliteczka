@@ -1,5 +1,5 @@
-const String apiURL = 'https://10.0.2.2:5000/api/';
-// const String apiURL ='https://192.168.0.2:5000/api/';
+// const String apiURL = 'https://10.0.2.2:5000/api/';
+const String apiURL ='https://192.168.0.2:5000/api/';
 const String apiURLRegister = '${apiURL}account/register';
 const String apiURLLogin = '${apiURL}account/login';
 const String apiURLLogOut = '${apiURL}account/logout';
@@ -64,7 +64,7 @@ const String notHaveAccountYetQuestion1 = 'Lub zarejestruj się ';
 const String validatePasswordError =
     'Hasło musi zawierać od 10 do 50 znaków, w tym małe i duże litery, cyfry oraz znaki specjalne';
 const String validateUsernameError =
-    'Nazwa użytkownika musi zawierać od 10 do 50 znaków, w tym małe i duże litery, cyfry oraz znaki specjalne';
+    'Nazwa użytkownika musi zawierać od 10 do 50 znaków, w tym małe i duże litery, cyfry oraz znaki specjalne (- i _)';
 const String exitFromAppQuestion = 'Czy chcesz opuścić aplikację?';
 const String exitFromAppTitle = 'Wyjście';
 const String loginSuccessful = 'Zalogowano poprawnie';

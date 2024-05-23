@@ -10,6 +10,7 @@ class ChangePasswordScreen extends StatefulWidget {
   @override
   ChangePasswordScreenState createState() => ChangePasswordScreenState();
 }
+
 class ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final currentPasswordController = TextEditingController();
@@ -41,10 +42,13 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
+                      cursorColor: Theme.of(context).textTheme.titleLarge?.color,
                       autocorrect: false,
                       controller: currentPasswordController,
                       obscureText: !passVisible,
-                      validator: PasswordMustContainValidator(validatePasswordError,currentPasswordController.text).call,
+                      validator: PasswordMustContainValidator(
+                              validatePasswordError, currentPasswordController.text)
+                          .call,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                           labelText: giveMeCurrentPassword,
@@ -67,6 +71,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
+                      cursorColor: Theme.of(context).textTheme.titleLarge?.color,
                       autocorrect: false,
                       controller: newPasswordController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -75,7 +80,8 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                         RequiredValidator(errorText: fieldCannotBeEmpty),
                         DifferentPasswordValidator(
                             passMustBeDifferent, currentPasswordController.text),
-                        PasswordMustContainValidator(validatePasswordError, newPasswordController.text)
+                        PasswordMustContainValidator(
+                            validatePasswordError, newPasswordController.text)
                       ]).call,
                       decoration: InputDecoration(
                           labelText: giveMeNewPassword,
@@ -119,12 +125,29 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
       );
 }
 
+class UsernameMustContainValidator extends TextFieldValidator {
+  UsernameMustContainValidator(super.errorText, this.username);
+
+  final String username;
+
+  RegExp usernameReg = RegExp(r'^[a-zA-Z0-9_-]{10,50}$');
+
+  @override
+  bool get ignoreEmptyValues => true;
+
+  @override
+  bool isValid(String? value) {
+    return usernameReg.hasMatch(value ?? '');
+  }
+}
+
 class PasswordMustContainValidator extends TextFieldValidator {
   PasswordMustContainValidator(super.errorText, this.password);
+
   final String password;
 
-  RegExp passReg = RegExp(
-      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{10,50}$');
+  RegExp passReg =
+      RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{10,50}$');
 
   @override
   bool get ignoreEmptyValues => true;

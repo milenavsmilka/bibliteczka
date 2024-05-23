@@ -80,6 +80,7 @@ class LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
+                  cursorColor: Theme.of(context).textTheme.titleLarge?.color,
                   controller: emailController,
                   autocorrect: false,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -94,6 +95,7 @@ class LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  cursorColor: Theme.of(context).textTheme.titleLarge?.color,
                   controller: passwordController,
                   autocorrect: false,
                   obscureText: !passVisible,
