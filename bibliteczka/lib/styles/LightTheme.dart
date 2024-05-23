@@ -41,9 +41,9 @@ ThemeData lightTheme = ThemeData(
         fontWeight: FontWeight.w700,
         fontStyle: FontStyle.normal,
         fontSize: 18),
-    errorStyle: TextStyle(fontSize: 14.0, color: Colors.red),
-    errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1.0)),
-    focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1.5)),
+    errorStyle: TextStyle(fontSize: 14.0, color: errorColor),
+    errorBorder: OutlineInputBorder(borderSide: BorderSide(color: errorColor, width: 1.0)),
+    focusedErrorBorder: OutlineInputBorder(borderSide: BorderSide(color: errorColor, width: 1.5)),
     focusedBorder:
         OutlineInputBorder(borderSide: BorderSide(color: categoryButtonCyanColor, width: 2.0)),
     enabledBorder: OutlineInputBorder(

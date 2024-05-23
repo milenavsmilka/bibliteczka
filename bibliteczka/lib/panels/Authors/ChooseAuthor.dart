@@ -12,8 +12,8 @@ import '../Tools/DefaultAppBar.dart';
 import '../Tools/LoadingScreen.dart';
 import '../Tools/functions.dart';
 
-//todo wyszukiwanie autorów i książek po lupie
 //todo dopracowanie themes
+//todo sprawdzić angielską wersję
 class ChooseAuthorScreen extends StatefulWidget {
   const ChooseAuthorScreen({super.key});
 
@@ -55,7 +55,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
     } else {
       return Scaffold(
           appBar: DefaultAppBar(
-            title: 'Autorzy',
+            title: bookAuthors,
             automaticallyImplyLeading: true,
             turnSearch: SearchScreen.TURNAUTHORS,
             onTap: () {
@@ -73,7 +73,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Popularni autorzy', style: Theme.of(context).textTheme.headlineMedium),
+                Text(popularAuthors, style: Theme.of(context).textTheme.headlineMedium),
                 Container(
                   padding: const EdgeInsets.only(left: 20),
                   alignment: Alignment.center,
@@ -107,7 +107,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                   ),
                 ),
                 const Text(''),
-                Text('Alfabetycznie', style: Theme.of(context).textTheme.headlineMedium),
+                Text(orderByAlphabet, style: Theme.of(context).textTheme.headlineMedium),
                 Wrap(children: [
                   for (int i = 0; i < currentList.length; i++) ...{
                     SizedBox(
@@ -210,7 +210,6 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
             List.generate(pagesCount, (index) => Center(child: Text('Page number:${index + 1}')));
       }
     });
-    print('hej autorzy! ${listOfAuthors.length}');
   }
 
   Future<void> giveMeListsOfTopAuthors() async {
@@ -220,6 +219,5 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
     setState(() {
       listOfPopularAuthors = data['results'];
     });
-    print('number of books ${listOfPopularAuthors.length}');
   }
 }

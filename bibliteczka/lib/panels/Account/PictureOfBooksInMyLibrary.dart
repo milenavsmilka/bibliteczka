@@ -43,7 +43,7 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
   void didUpdateWidget(PictureOfBooksInMyLibrary oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if(widget.bookId!=oldWidget.bookId){
+    if (widget.bookId != oldWidget.bookId) {
       giveMeBookData();
     }
   }
@@ -54,7 +54,7 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
     double heightScreen = MediaQuery.of(context).size.height;
 
     if (bookPicture == '-1') {
-      return Text('czekamy na reklamy');
+      return const Text(loading);
     } else {
       return SizedBox(
           width: widthScreen / 5,
@@ -76,7 +76,7 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
                 alignment: Alignment.topRight,
                 child: FloatingActionButton(
                   heroTag: DateTime.now(),
-                  shape: CircleBorder(),
+                  shape: const CircleBorder(),
                   mini: true,
                   backgroundColor: Colors.redAccent,
                   child: Icon(Icons.close, color: Theme.of(context).primaryColor),
@@ -85,13 +85,9 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
                       checkIsTokenValid(
                           context,
                           deleteSth(
-                              context,
-                              widget.categoryUrl,
-                              Map.of({
-                                'book_id': widget.bookId
-                              })));
+                              context, widget.categoryUrl, Map.of({'book_id': widget.bookId})));
                       Navigator.of(context).pushReplacement(CustomPageRoute(
-                          child: MyProfileScreen(), chooseAnimation: CustomPageRoute.FADE));
+                          child: const MyProfileScreen(), chooseAnimation: CustomPageRoute.FADE));
                     });
                   },
                 ),

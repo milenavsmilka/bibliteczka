@@ -17,11 +17,11 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class LoginScreenState extends State<LoginScreen> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   String token = '';
@@ -59,11 +59,11 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(titleOfApp),
+          title: const Text(library),
           automaticallyImplyLeading: false,
         ),
         body: Form(
-          key: _formKey,
+          key: formKey,
           child: SingleChildScrollView(
             padding: EdgeInsetsDirectional.only(
                 bottom: MediaQuery.of(context).size.height * 0.1,
@@ -73,17 +73,17 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(
+                const Icon(
                   Icons.account_circle_rounded,
                   size: 120,
                   color: Colors.black,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   controller: emailController,
                   autocorrect: false,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: giveMeEmail,
                     prefixIcon: Icon(Icons.email),
                   ),
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     EmailValidator(errorText: wrongEmailError),
                   ]).call,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: passwordController,
                   autocorrect: false,
@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: InputDecoration(
                       labelText: giveMePassword,
                       errorMaxLines: 3,
-                      prefixIcon: Icon(Icons.lock),
+                      prefixIcon: const Icon(Icons.lock),
                       suffix: InkWell(
                         onTap: () {
                           setState(() {
@@ -116,21 +116,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       )),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 ElevatedButton(
-                  child: Text(clickToLoginButton),
+                  child: const Text(clickToLoginButton),
                   onPressed: () async {
-                    if(_formKey.currentState!.validate()){
+                    if(formKey.currentState!.validate()){
                       try{
                         await signIn(
                             emailController.text, passwordController.text);
                       } on Exception {
-                        showSnackBar(context, 'Błąd logowania - niepoprawny email lub hasło', Colors.redAccent);
+                        showSnackBar(context, 'Błąd logowania - niepoprawny email lub hasło', Theme.of(context).inputDecorationTheme.errorBorder!.borderSide.color);
                     }
                     }
                   },
                 ),
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [Flexible(child: Text(messageCanChange))],
@@ -145,10 +145,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RegisterScreen()),
+                                builder: (context) => const RegisterScreen()),
                           );
                         },
-                        child: Text(haveOrNotAccountQuestion2))
+                        child: const Text(haveOrNotAccountQuestion2))
                   ],
                 )
               ],
@@ -184,13 +184,14 @@ class _LoginScreenState extends State<LoginScreen> {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       sharedPreferences.setString(MyHomePageState.TOKEN, token);
+      sharedPreferences.setString(MyHomePageState.email, email);
       sharedPreferences.setString(
           MyHomePageState.password, passwordController.toString());
       sharedPreferences.setBool('isLogged', true);
       var isLoggedIn = sharedPreferences.getBool('isLogged');
       print("Wypiszę podczas ustawiania boola logowania $isLoggedIn");
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => MainPanelScreen()));
+          .push(MaterialPageRoute(builder: (context) => const MainPanelScreen()));
     } else if (message == 'already_logged_in') {
       print("Nie okej :(");
       throw Exception(userAlreadyLoggedIn);

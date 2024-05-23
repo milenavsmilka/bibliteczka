@@ -9,10 +9,10 @@ class QuoteScreen extends StatefulWidget {
   const QuoteScreen({super.key});
 
   @override
-  _QuoteScreenState createState() => _QuoteScreenState();
+  QuoteScreenState createState() => QuoteScreenState();
 }
 
-class _QuoteScreenState extends State<QuoteScreen> {
+class QuoteScreenState extends State<QuoteScreen> {
   String quote = '';
   String author = '';
   int count = 0;
@@ -25,7 +25,6 @@ class _QuoteScreenState extends State<QuoteScreen> {
     getQuote();
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -36,9 +35,9 @@ class _QuoteScreenState extends State<QuoteScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text('Cytat na dziś'),
+          title: const Text(quoteForToday),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -48,37 +47,31 @@ class _QuoteScreenState extends State<QuoteScreen> {
           children: [
             (count < 100)
                 ? SizedBox(
-              height: randomH * 1.0,
-              width: randomW * 1.0,
-            )
-                : SizedBox(),
+                    height: randomH * 1.0,
+                    width: randomW * 1.0,
+                  )
+                : const SizedBox(),
             (count < 100)
                 ? Column(
-                  children: [
-                    IconButton(
-                                  padding: EdgeInsets.all(10.0),
-                                  onPressed: () {
-                    chooseRandom();
-                    setState(() {
-                      count += 20;
-                    });
-                    print(count);
-                                  },
-                                  icon: Image.asset(
-                      'assets/images/bookToQuote.png',
-                      width: 150.0,
-                      height: 150.0,
-                      fit: BoxFit.fill),
-                                ),
-                    Text('$count%'),
-                  ],
-                )
+                    children: [
+                      IconButton(
+                        padding: const EdgeInsets.all(10.0),
+                        onPressed: () {
+                          chooseRandom();
+                          setState(() {
+                            count += 20;
+                          });
+                          print(count);
+                        },
+                        icon: Image.asset('assets/images/bookToQuote.png',
+                            width: 150.0, height: 150.0, fit: BoxFit.fill),
+                      ),
+                      Text('$count%'),
+                    ],
+                  )
                 : Container(
-                padding: EdgeInsets.all(20),
-                child: Text(quote, style: Theme
-                    .of(context)
-                    .textTheme
-                    .headlineSmall)),
+                    padding: const EdgeInsets.all(20),
+                    child: Text(quote, style: Theme.of(context).textTheme.headlineSmall)),
           ],
         ));
   }
@@ -96,14 +89,8 @@ class _QuoteScreenState extends State<QuoteScreen> {
     var random = Random();
 
     setState(() {
-      randomH = random.nextInt((MediaQuery
-          .of(context)
-          .size
-          .height - 250).toInt()) + 1; //- iconSize
-      randomW = random.nextInt((MediaQuery
-          .of(context)
-          .size
-          .width).toInt()) + 1;
+      randomH = random.nextInt((MediaQuery.of(context).size.height - 250).toInt()) + 1; //- iconSize
+      randomW = random.nextInt((MediaQuery.of(context).size.width).toInt()) + 1;
     });
   }
 }

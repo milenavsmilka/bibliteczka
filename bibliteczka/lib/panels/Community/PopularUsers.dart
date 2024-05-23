@@ -1,11 +1,8 @@
 import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
-import 'package:biblioteczka/panels/Tools/NetworkLoadingImage.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:flutter/material.dart';
 
 import '../../styles/strings.dart';
-import '../CategoryBooks/DetailsOfBook.dart';
-import '../Tools/CustomPageRoute.dart';
 import '../Tools/DefaultAppBar.dart';
 
 class PopularUsersScreen extends StatefulWidget {
@@ -41,7 +38,7 @@ class _PopularUsersScreenState extends State<PopularUsersScreen> {
       return const LoadingScreen(message: loading);
     } else {
       return Scaffold(
-        appBar: DefaultAppBar(title: 'Społeczność', automaticallyImplyLeading: true),
+        appBar: const DefaultAppBar(title: community, automaticallyImplyLeading: true),
         body: ListView.builder(
             itemCount: listOfUsers.length,
             itemBuilder: (context, index) {
@@ -71,7 +68,7 @@ class _PopularUsersScreenState extends State<PopularUsersScreen> {
                                   (listOfUsers[index]['username']),
                                   style: Theme.of(context).textTheme.headlineMedium,
                                 ),
-                                Text('Liczba opinii: ${listOfUsers[index]['opinions_count'].toString()}',
+                                Text('$numberOfOpinions ${listOfUsers[index]['opinions_count'].toString()}',
                                     style: Theme.of(context).textTheme.headlineSmall),
                               ],
                             ),

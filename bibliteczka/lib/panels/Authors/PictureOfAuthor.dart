@@ -38,7 +38,7 @@ class _PictureOfAuthorState extends State<PictureOfAuthor> {
     double widthScreen = MediaQuery.of(context).size.width;
 
     if (authorPicture == '-1') {
-      return Text('czekamy na reklamy');
+      return const Text(loading);
     } else {
       return SizedBox(
           width: widthScreen / 5,
@@ -60,7 +60,7 @@ class _PictureOfAuthorState extends State<PictureOfAuthor> {
                 alignment: Alignment.topRight,
                 child: FloatingActionButton(
                   heroTag: DateTime.now(),
-                  shape: CircleBorder(),
+                  shape: const CircleBorder(),
                   mini: true,
                   backgroundColor: Colors.redAccent,
                   child: Icon(Icons.close, color: Theme.of(context).primaryColor),
@@ -71,23 +71,13 @@ class _PictureOfAuthorState extends State<PictureOfAuthor> {
                           deleteSth(context, apiURLFan,
                               Map.of({'user_id': widget.userId, 'author_id': widget.authorId})));
                       Navigator.of(context).pushReplacement(CustomPageRoute(
-                          child: MyProfileScreen(), chooseAnimation: CustomPageRoute.FADE));
+                          child: const MyProfileScreen(), chooseAnimation: CustomPageRoute.FADE));
                     });
                   },
                 ),
               ),
             )
           ]));
-      //   FittedBox(
-      //   fit: BoxFit.fill,
-      //   child: SizedBox(
-      //     height: heightScreen/4,
-      //     child: IconButton(
-      //         icon: NetworkLoadingImage(pathToImage: authorPicture),
-      //         onPressed: widget.onPressed
-      //     ),
-      //   ),
-      // );
     }
   }
 

@@ -1,3 +1,4 @@
+import 'package:biblioteczka/panels/Tools/Genres.dart';
 import 'package:biblioteczka/panels/Tools/Search.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:biblioteczka/styles/strings.dart';
@@ -22,8 +23,8 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
     double heightScreen = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        appBar: DefaultAppBar(
-          title: 'Kategoria',
+        appBar: const DefaultAppBar(
+          title: category,
           automaticallyImplyLeading: true,
           turnSearch: SearchScreen.TURNBOOKS,
         ),
@@ -38,13 +39,13 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
-                      nameOfCategory: 'Romans',
-                      nameOfCategoryEN: 'Romance',
+                      nameOfCategory: Genres.romance.name,
+                      nameOfCategoryEN: Genres.romance.nameEN,
                       pathToImage: iconHeart,
                     ),
                     CategoryButton(
-                      nameOfCategory: 'Dziecięce',
-                      nameOfCategoryEN: "Children's",
+                      nameOfCategory: Genres.children.name,
+                      nameOfCategoryEN: Genres.children.nameEN,
                       pathToImage: iconChild,
                     ),
                   ],
@@ -54,13 +55,13 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
-                      nameOfCategory: 'Historia',
-                      nameOfCategoryEN: 'History',
+                      nameOfCategory: Genres.history.name,
+                      nameOfCategoryEN: Genres.history.nameEN,
                       pathToImage: iconSwords,
                     ),
                     CategoryButton(
-                      nameOfCategory: 'Nauka',
-                      nameOfCategoryEN: 'Popular Science',
+                      nameOfCategory: Genres.science.name,
+                      nameOfCategoryEN: Genres.science.nameEN,
                       pathToImage: iconBrainstorming,
                     ),
                   ],
@@ -70,13 +71,13 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
-                      nameOfCategory: 'Wiersze',
-                      nameOfCategoryEN: 'Poetry, Plays',
+                      nameOfCategory: Genres.poetry.name,
+                      nameOfCategoryEN: Genres.poetry.nameEN,
                       pathToImage: iconQuill,
                     ),
                     CategoryButton(
-                      nameOfCategory: 'Młodzieżowe',
-                      nameOfCategoryEN: 'Young Adult',
+                      nameOfCategory: Genres.youngAdult.name,
+                      nameOfCategoryEN: Genres.youngAdult.nameEN,
                       pathToImage: iconYoungAdults,
                     )
                   ],
@@ -86,13 +87,13 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
-                      nameOfCategory: 'Fantasy',
-                      nameOfCategoryEN: 'Fantasy, Science fiction',
+                      nameOfCategory: Genres.fantasy.name,
+                      nameOfCategoryEN: Genres.fantasy.nameEN,
                       pathToImage: iconDragon,
                     ),
                     CategoryButton(
-                      nameOfCategory: 'Biografie',
-                      nameOfCategoryEN: 'Biography',
+                      nameOfCategory: Genres.bio.name,
+                      nameOfCategoryEN: Genres.bio.nameEN,
                       pathToImage: iconContacts,
                     )
                   ],
@@ -102,13 +103,13 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
-                      nameOfCategory: 'Przygodowe',
-                      nameOfCategoryEN: 'Adventure',
+                      nameOfCategory: Genres.adventure.name,
+                      nameOfCategoryEN: Genres.adventure.nameEN,
                       pathToImage: iconAdventure,
                     ),
                     CategoryButton(
-                      nameOfCategory: 'Komiksy',
-                      nameOfCategoryEN: 'Comic books',
+                      nameOfCategory: Genres.comics.name,
+                      nameOfCategoryEN: Genres.comics.nameEN,
                       pathToImage: iconComic,
                     )
                   ],
@@ -118,13 +119,13 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
-                      nameOfCategory: 'Thrillery',
-                      nameOfCategoryEN: 'Thriller, Horror, Mystery and detective stories',
+                      nameOfCategory: Genres.thriller.name,
+                      nameOfCategoryEN: Genres.thriller.nameEN,
                       pathToImage: iconDetective,
                     ),
                     CategoryButton(
-                      nameOfCategory: 'Inne',
-                      nameOfCategoryEN: 'Other',
+                      nameOfCategory: Genres.other.name,
+                      nameOfCategoryEN: Genres.other.nameEN,
                       pathToImage: iconOther,
                     )
                   ],

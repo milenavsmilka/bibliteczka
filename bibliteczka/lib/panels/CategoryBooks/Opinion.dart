@@ -1,7 +1,6 @@
 import 'package:biblioteczka/panels/CategoryBooks/DetailsOfBook.dart';
 import 'package:biblioteczka/panels/Tools/CustomPageRoute.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
-import 'package:biblioteczka/styles/LightTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -149,7 +148,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
                                     child: DetailsOfBookScreen(bookId: widget.bookId),
                                     chooseAnimation: CustomPageRoute.FADE)));
                           } on http.ClientException catch (e) {
-                            showSnackBar(context, e.message, errorColor);
+                            showSnackBar(context, e.message, Theme.of(context).inputDecorationTheme.errorBorder!.borderSide.color);
                           }
                         },
                         icon: const Icon(Icons.close, size: 23)),

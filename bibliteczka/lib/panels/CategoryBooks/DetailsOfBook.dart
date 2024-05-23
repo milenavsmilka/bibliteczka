@@ -222,7 +222,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             title,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
-                          Text(bookAuthor, style: Theme.of(context).textTheme.headlineSmall),
+                          Text(bookAuthors, style: Theme.of(context).textTheme.headlineSmall),
                           Column(
                             children: [
                               if (authorsNames.isEmpty) ...{

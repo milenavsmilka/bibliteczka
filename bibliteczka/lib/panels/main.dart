@@ -67,6 +67,7 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> {
   static const String TOKEN = "login";
   static const String password = "password";
+  static const String email = "email";
   static const bool isLogged = false;
 
   @override
@@ -89,7 +90,7 @@ class MyHomePageState extends State<MyHomePage> {
               const Spacer(
                 flex: 3,
               ),
-              Text(titleOfApp, style: Theme.of(context).textTheme.displayLarge),
+              Text(library, style: Theme.of(context).textTheme.displayLarge),
               const Spacer(
                 flex: 4,
               ),

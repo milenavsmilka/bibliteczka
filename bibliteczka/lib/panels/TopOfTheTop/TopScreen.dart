@@ -43,9 +43,9 @@ class _TopScreen extends State<TopScreen> {
       return const LoadingScreen(message: loading);
     } else {
       return Scaffold(
-        appBar: DefaultAppBar(title: 'Top książki', automaticallyImplyLeading: true),
+        appBar: const DefaultAppBar(title: topBooks, automaticallyImplyLeading: true),
         body: SingleChildScrollView(
-          physics: ScrollPhysics(),
+          physics: const ScrollPhysics(),
           child: Column(
             children: [
               Column(
@@ -196,7 +196,7 @@ class _TopScreen extends State<TopScreen> {
                                               )
                                             }
                                           },
-                                          Text(''),
+                                          const Text(''),
                                           HowMuchStars(
                                               rate: (listOfBooks[index]['score'] * 1.0).isNaN
                                                   ? 0
@@ -206,12 +206,12 @@ class _TopScreen extends State<TopScreen> {
                                     ),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.all(15.0),
+                                    padding: const EdgeInsets.all(15.0),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Text('Ilość opinii: ${listOfBooks[index]['opinions_count']}',
+                                        Text('$numberOfOpinions ${listOfBooks[index]['opinions_count']}',
                                             style: Theme.of(context).textTheme.titleSmall),
                                       ],
                                     ),
@@ -254,7 +254,6 @@ class _TopScreen extends State<TopScreen> {
     setState(() {
       listOfBooks = data['results'];
     });
-    print('jaki rezulat? $data');
     print('number of books ${listOfBooks.length}');
   }
 }

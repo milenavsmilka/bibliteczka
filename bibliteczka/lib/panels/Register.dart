@@ -28,12 +28,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text(titleOfApp),
+          title: const Text(library),
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back_ios_sharp),
+            icon: const Icon(Icons.arrow_back_ios_sharp),
           ),
         ),
         body: Form(
@@ -53,10 +53,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       autocorrect: false,
                       controller: usernameController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: RequiredValidator(
-                          errorText: giveMeUserNameError).call,
-                      decoration: InputDecoration(
+                      validator: PasswordMustContainValidator(validateUsernameError, usernameController.text).call,
+                      decoration: const InputDecoration(
                           labelText: giveMeUserName,
+                          errorMaxLines: 3,
                           prefixIcon: Icon(Icons.account_circle_rounded)),
                     ),
                   ),
@@ -68,7 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       autocorrect: false,
                       controller: emailController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: giveMeEmail,
                         prefixIcon: Icon(Icons.email),
                       ),
@@ -92,7 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       decoration: InputDecoration(
                           labelText: giveMePassword,
                           errorMaxLines: 3,
-                          prefixIcon: Icon(Icons.lock),
+                          prefixIcon: const Icon(Icons.lock),
                           suffix: InkWell(
                             onTap: () {
                               setState(() {
@@ -121,7 +121,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           : null, //repeatPassValidator,
                       decoration: InputDecoration(
                           labelText: giveMeRepeatPassword,
-                          prefixIcon: Icon(Icons.lock),
+                          prefixIcon: const Icon(Icons.lock),
                           suffix: InkWell(
                             onTap: () {
                               setState(() {
@@ -140,7 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Center(
                   child: ElevatedButton(
-                    child: Text(clickToRegisterButton),
+                    child: const Text(clickToRegisterButton),
                     onPressed: () async {
                       if(_formKey.currentState!.validate()){
                         await signUp(
@@ -170,10 +170,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginScreen()),
+                                builder: (context) => const LoginScreen()),
                           );
                         },
-                        child: Text(haveOrNotAccountQuestion2))
+                        child: const Text(haveOrNotAccountQuestion2))
                   ],
                 ))
               ],
@@ -210,7 +210,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => LoginScreen()),
+            builder: (context) => const LoginScreen()),
       );
       print("Okej :D");
     } else {

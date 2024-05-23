@@ -12,7 +12,8 @@ enum Genres {
   bio(name: bioG, nameEN: bioGEN),
   adventure(name: adventureG, nameEN: adventureGEN),
   comics(name: comicsG, nameEN: comicsGEN),
-  thriller(name: thrillerG, nameEN: thrillerGEN);
+  thriller(name: thrillerG, nameEN: thrillerGEN),
+  other(name: otherG, nameEN: otherGEN);
 
   const Genres({
     required this.name,

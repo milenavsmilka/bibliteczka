@@ -3,7 +3,6 @@ import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/panels/Tools/Icons.dart';
 import 'package:biblioteczka/panels/Tools/NetworkLoadingImage.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
@@ -50,7 +49,6 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
   Widget build(BuildContext context) {
     double widthScreen = MediaQuery.of(context).size.width;
     double heightScreen = MediaQuery.of(context).size.height;
-    print('Picture $picture');
 
     if (biography.isEmpty) {
       return const LoadingScreen(message: loading);
@@ -168,20 +166,20 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text('Autor: ', style: Theme.of(context).textTheme.headlineSmall),
+                          Text(authorTitle, style: Theme.of(context).textTheme.headlineSmall),
                           Text(
                             name,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                           if (dateOfBirth != '') ...{
-                            Text('Data urodzenia: ',
+                            Text(dateOfBirthTitle,
                                 style: Theme.of(context).textTheme.headlineSmall),
                             Text(
                               dateOfBirth,
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                             if (dateOfDead != '') ...{
-                              Text('Data śmierci: ',
+                              Text(dateOfDeadTitle,
                                   style: Theme.of(context).textTheme.headlineSmall)
                             },
                             Text(
@@ -190,7 +188,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                             )
                           },
                           if (authorsWebsite != '') ...{
-                            Text('Strona autora: ',
+                            Text(authorsWebsiteTitle,
                                 style: Theme.of(context).textTheme.headlineSmall),
                             GestureDetector(
                               child: Text(
@@ -202,13 +200,13 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                               },
                             )
                           },
-                          Text('Liczba książek: ',
+                          Text(numberOfBooksTitle,
                               style: Theme.of(context).textTheme.headlineSmall),
                           Text(
                             '$releasedBooksCount',
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
-                          Text('Pisze: ', style: Theme.of(context).textTheme.headlineSmall),
+                          Text(writesGenresTitle, style: Theme.of(context).textTheme.headlineSmall),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -247,7 +245,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                 ],
               ),
               Center(
-                  child: Text('Wydane książki', style: Theme.of(context).textTheme.headlineMedium)),
+                  child: Text(releasedBooksTitle, style: Theme.of(context).textTheme.headlineMedium)),
               const Row(children: [Text('')]),
               Align(
                 alignment: Alignment.centerLeft,
@@ -331,7 +329,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
   Future<void> _launchUrl(url) async {
     final Uri url2 = Uri.parse(url);
     if (!await launchUrl(url2)) {
-      throw Exception('Could not launch $url2');
+      throw Exception(url2);
     }
   }
 }

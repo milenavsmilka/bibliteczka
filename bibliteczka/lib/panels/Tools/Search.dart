@@ -41,13 +41,13 @@ class _SearchScreenState extends State<SearchScreen> {
               width: widthScreen / 2,
               child: TextFormField(
                 controller: searchController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     disabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
                     enabledBorder: InputBorder.none),
               )),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               size: 35,
             ),
@@ -55,11 +55,10 @@ class _SearchScreenState extends State<SearchScreen> {
               setState(() {
                 giveMeBooksByName(1, searchController.text);
               });
-              ;
             },
           ),
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.close,
               size: 35,
             ),
@@ -122,7 +121,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           ],
                         );
                       })
-                  : Center(child: Text(nothingHere)),
+                  : const Center(child: Text(nothingHere)),
             ),
             Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

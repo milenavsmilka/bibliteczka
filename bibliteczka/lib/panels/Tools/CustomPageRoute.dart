@@ -3,12 +3,10 @@ import 'package:flutter/cupertino.dart';
 class CustomPageRoute extends PageRouteBuilder {
   final Widget child;
   final String chooseAnimation;
-  // final AxisDirection direction;
 
   CustomPageRoute({
     required this.child,
     required this.chooseAnimation
-    // this.direction = AxisDirection.right,
   }) : super(transitionDuration: const Duration(milliseconds: 500),
       reverseTransitionDuration: const Duration(milliseconds: 500),
       pageBuilder: (context, animation, secondaryAnimation) => child);

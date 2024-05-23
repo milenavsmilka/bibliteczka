@@ -98,7 +98,7 @@ class EditingOpinionState extends State<EditingOpinion> {
                     iconSize: 15,
                     onPressed: () async {
                       if (starsRating == 0) {
-                        showSnackBar(context, rateBookByStars, Colors.redAccent);
+                        showSnackBar(context, rateBookByStars, Theme.of(context).inputDecorationTheme.errorBorder!.borderSide.color);
                       } else if (_formKey.currentState!.validate()) {
                         try {
                           widget.operation == 'ADD'
@@ -125,7 +125,7 @@ class EditingOpinionState extends State<EditingOpinion> {
                                       chooseAnimation: CustomPageRoute.FADE))
                                   .then((value) => widget.opinionTextToSend.clear()));
                         } on http.ClientException catch (e) {
-                          showSnackBar(context, e.message, Colors.redAccent);
+                          showSnackBar(context, e.message, Theme.of(context).inputDecorationTheme.errorBorder!.borderSide.color);
                         }
                       }
                     },

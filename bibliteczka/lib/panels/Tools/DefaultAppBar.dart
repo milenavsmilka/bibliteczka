@@ -21,7 +21,7 @@ class DefaultAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Size preferredSize; // default is 56.0
   final String title;
   final bool automaticallyImplyLeading;
-  final turnSearch;
+  final dynamic turnSearch;
   final dynamic onTap;
 
   @override
@@ -39,7 +39,7 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
       actions: <Widget>[
         if (widget.turnSearch != null)...{
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               size: 35,
             ),
@@ -69,11 +69,11 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
                               context,
                               CustomPageRoute(
                                   chooseAnimation: CustomPageRoute.SLIDE,
-                                  child: MyProfileScreen())));
+                                  child: const MyProfileScreen())));
                     },
-                child: const Text('Wyświetl profil')),
+                child: const Text(showProfile)),
             PopupMenuItem(
-              child: Text('Cytat na dziś'),
+              child: const Text(quoteForToday),
               onTap: () {
                 checkIsTokenValid(
                     context,
@@ -84,7 +84,7 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
               },
             ),
             PopupMenuItem(
-              child: Text('Ustawienia'),
+              child: const Text(settings),
               onTap: () {
                 checkIsTokenValid(
                     context,
@@ -96,10 +96,10 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
               },
             ),
             PopupMenuItem(
-                child: Text(clickToLogOutButton),
+                child: const Text(clickToLogOutButton),
                 onTap: () async {
                   checkIsTokenValid(context);
-                  await sendRequest(apiURLLogOut, Map(), context);
+                  await sendRequest(apiURLLogOut, Map.of({}), context);
                 })
           ],
         ),

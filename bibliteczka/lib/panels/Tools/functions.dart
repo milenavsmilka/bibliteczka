@@ -88,7 +88,7 @@ Future<Map<String, dynamic>> changeSthInMyAccount(
           return const NoConnection();
         });
   }
-  return Map();
+  return Map.of({});
 }
 
 Future<void> sendRequest(
@@ -116,7 +116,7 @@ Future<void> sendRequest(
     print(message);
     if (message == 'logged_out') {
       sharedPreferences.clear();
-      print("Poprawnie wylogowano użytkownika");
+      print(userLogOutCorrectly);
       checkIsTokenValid(
           context,
           Navigator.push(context,
@@ -124,10 +124,10 @@ Future<void> sendRequest(
     } else if (response.statusCode == 200) {
       print("Okej :D");
     } else if (message == 'opinion_already_exists') {
-      message = 'Możesz wystawić tylko jedną opinię dla danej książki';
+      message = youCanSendOneOpinion;
       throw http.ClientException(message);
     } else if (message == 'length_validation_error') {
-      message = 'Komentarz może mieć min 2 i max 1000 znaków';
+      message = commentMin2Max1000;
       throw http.ClientException(message);
     } else {
       print("Nie okej :(");
@@ -165,7 +165,7 @@ Future<Map<String, dynamic>> getSthById(
           return const NoConnection();
         });
   }
-  return Map();
+  return Map.of({});
 }
 
 void checkIsTokenValid(BuildContext context, [Future<dynamic>? navigator]) async {
@@ -192,7 +192,7 @@ void checkIsTokenValid(BuildContext context, [Future<dynamic>? navigator]) async
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
-                  title: const Text("Twoja sesja wygasła. Zaloguj się ponownie."),
+                  title: const Text(sessionExpired),
                   actions: [
                     TextButton(
                         onPressed: () {
@@ -201,7 +201,7 @@ void checkIsTokenValid(BuildContext context, [Future<dynamic>? navigator]) async
                               CustomPageRoute(
                                   chooseAnimation: CustomPageRoute.SLIDE, child: const LoginScreen()));
                         },
-                        child: const Text("OK")),
+                        child: const Text(ok)),
                   ],
                 ));
       }

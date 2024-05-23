@@ -8,9 +8,9 @@ class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
 
   @override
-  _ChangePasswordScreenState createState() => _ChangePasswordScreenState();
+  ChangePasswordScreenState createState() => ChangePasswordScreenState();
 }
-class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+class ChangePasswordScreenState extends State<ChangePasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final currentPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
@@ -20,7 +20,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text(titleOfApp),
+          title: const Text(library),
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -47,7 +47,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       validator: PasswordMustContainValidator(validatePasswordError,currentPasswordController.text).call,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                          labelText: 'Podaj obecne hasło',
+                          labelText: giveMeCurrentPassword,
                           errorMaxLines: 3,
                           prefixIcon: const Icon(Icons.lock),
                           suffix: InkWell(
@@ -72,13 +72,13 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       obscureText: !passRepVisible,
                       validator: MultiValidator([
-                        RequiredValidator(errorText: 'Pole nie może być puste'),
+                        RequiredValidator(errorText: fieldCannotBeEmpty),
                         DifferentPasswordValidator(
-                            'Hasła nie mogą być takie same', currentPasswordController.text),
+                            passMustBeDifferent, currentPasswordController.text),
                         PasswordMustContainValidator(validatePasswordError, newPasswordController.text)
                       ]).call,
                       decoration: InputDecoration(
-                          labelText: 'Podaj nowe hasło',
+                          labelText: giveMeNewPassword,
                           prefixIcon: const Icon(Icons.lock),
                           errorMaxLines: 3,
                           suffix: InkWell(
@@ -94,10 +94,10 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     ),
                   ),
                 ]),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Center(
                   child: ElevatedButton(
-                    child: Text('Zmień hasło'),
+                    child: const Text(changePassword),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         changeSthInMyAccount(
@@ -134,6 +134,7 @@ class PasswordMustContainValidator extends TextFieldValidator {
     return passReg.hasMatch(value ?? '');
   }
 }
+
 class DifferentPasswordValidator extends TextFieldValidator {
   DifferentPasswordValidator(super.errorText, this.textToCompare);
 

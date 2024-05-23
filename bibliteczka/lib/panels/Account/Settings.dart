@@ -20,25 +20,24 @@ class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
   @override
-  _SettingsScreenState createState() => _SettingsScreenState();
+  SettingsScreenState createState() => SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class SettingsScreenState extends State<SettingsScreen> {
   final deleteCodeController = TextEditingController();
   final currentPassController = TextEditingController();
   final newPassController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    double heightScreen = MediaQuery.of(context).size.height;
     final themeState = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(settings),
+        title: const Text(settings),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -55,7 +54,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Zmień motyw',
+                  changeTheme,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 ElevatedButton(
@@ -65,7 +64,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       });
                       await tryChangeTheme(context, light);
                     },
-                    child: Text(changeToLightTheme)),
+                    child: const Text(changeToLightTheme)),
                 ElevatedButton(
                     onPressed: () async {
                       setState(() {
@@ -73,7 +72,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       });
                       await tryChangeTheme(context, dark);
                     },
-                    child: Text(changeToDarkTheme)),
+                    child: const Text(changeToDarkTheme)),
                 ElevatedButton(
                     onPressed: () async {
                       setState(() {
@@ -81,7 +80,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       });
                       await tryChangeTheme(context, special);
                     },
-                    child: Text(changeToSpecialTheme)),
+                    child: const Text(changeToSpecialTheme)),
                 ElevatedButton(
                     onPressed: () async {
                       setState(() {
@@ -89,9 +88,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       });
                       await tryChangeTheme(context, daltonism);
                     },
-                    child: Text(changeToDaltonismTheme)),
+                    child: const Text(changeToDaltonismTheme)),
                 Text(
-                  'Konto',
+                  account,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 ElevatedButton(
@@ -100,16 +99,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           context,
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => ChangePasswordScreen()),
+                            MaterialPageRoute(builder: (context) => const ChangePasswordScreen()),
                           ));
                     },
-                    child: Text('Zmień hasło')),
+                    child: const Text(changePassword)),
                 ElevatedButton(
                     onPressed: () {
                       String deleteCode = '';
                       showDialogToDeleteAccount(context, deleteCode);
                     },
-                    child: Text('Usuń konto')),
+                    child: const Text(deleteMyAccount)),
               ],
             ),
           ],
@@ -124,15 +123,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         builder: (context) => SingleChildScrollView(
               padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 5),
               child: AlertDialog(
-                title: Text('Czy na pewno chcesz usunąć swoje konto?'),
-                content: Text('Aplikacja wyśle na twój email kod weryfikacyjny, '
-                    'który pozwoli na usunięcie Twoich danych.'),
+                title: const Text(areYouSureToDeleteAccount),
+                content: const Text(appSendDeleteCode),
                 actions: [
                   TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Cofnij')),
+                      child: const Text(back)),
                   TextButton(
                       onPressed: () async {
                         deleteCode = await sendMail();
@@ -141,8 +139,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('Kod został wysłany'),
-                                content: Text('Wpisz go poniżej:'),
+                                title: const Text(appSentCode),
+                                content: const Text(writeCode),
                                 actions: [
                                   TextFormField(
                                     keyboardType: TextInputType.number,
@@ -154,18 +152,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         onPressed: () {
                                           Navigator.pop(context);
                                         },
-                                        child: Text('Cofnij')),
+                                        child: const Text(back)),
                                     TextButton(
                                         onPressed: () {
                                           deleteAccount(deleteCode);
                                         },
-                                        child: Text("OK"))
+                                        child: const Text(ok))
                                   ]),
                                 ],
                               );
                             });
                       },
-                      child: Text('Wyślij')),
+                      child: const Text(sendCode)),
                 ],
               ),
             ));
@@ -175,26 +173,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
     try {
       await changeSthInMyAccount(context, apiURLChangeTheme, Map.of({"theme": theme}));
     } on http.ClientException {
-      showSnackBar(context, 'Wybrano obecny motyw', Theme.of(context).cardColor);
+      showSnackBar(context, youHaveCurrentTheme, Theme.of(context).cardColor);
     }
   }
 
   Future<String> sendMail() async {
+    var sharedPreferences = await SharedPreferences.getInstance();
+    String? actualEmail = sharedPreferences.getString(MyHomePageState.email);
+
     const emailFrom = 'spozywczaksmiesznewarzywko@gmail.com';
-    const emailTo = 'milena.milena16@onet.pl';
+    String emailTo = actualEmail.toString();
     String password = 'fxqf stoo kvpu hebg';
     final deleteCode = UniqueKey().hashCode;
     final smtpServer = gmail(emailFrom, password);
     final message = Message()
-      ..from = Address(emailFrom, 'Biblioteczka')
+      ..from = const Address(emailFrom, library)
       ..recipients.add(emailTo)
-      ..subject = 'Usuwanie konta'
+      ..subject = deleteMyAccountEmailSubject
       ..text =
-          'Ten email został wysłany, ponieważ została uruchomiona akcja usuwania konta. Wpisz poniższy kod'
-              ' w oknie aplikacji, który potwierdzi usunięcie Twoich danych: $deleteCode';
+          '$mailSendBecauseYouWantDeleteAccount $deleteCode';
     try {
       await send(message, smtpServer);
-      showSnackBar(context, 'Poprawnie wysłano email', Colors.greenAccent);
+      showSnackBar(context, mailSentCorrectly, Colors.greenAccent);
       return deleteCode.toString();
     } catch (e) {
       if (kDebugMode) {
@@ -207,15 +207,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> deleteAccount(String deleteCode) async {
     final passwordController = TextEditingController();
     if (deleteCodeController.text == deleteCode) {
-      print('Kody są zgodne. Konto zostanie usunięte');
-
       var sharedPreferences = await SharedPreferences.getInstance();
       String? actualToken = sharedPreferences.getString(MyHomePageState.TOKEN);
 
+      if (!mounted) return;
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
-                title: Text('Wprowadź hasło'),
+                title: const Text(giveMePassword),
                 actions: [
                   TextFormField(
                     obscureText: true,
@@ -241,23 +240,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           print("Okej :D");
                           Map<String, dynamic> data = jsonDecode(response.body);
                           print(data);
-                          checkIsTokenValid(
-                              context,
                               Navigator.push(
                                   context,
                                   CustomPageRoute(
                                       chooseAnimation: CustomPageRoute.SLIDE,
-                                      child: LoginScreen())));
+                                      child: const LoginScreen()));
                         } else {
                           print("Nie okej :(");
-                          throw Exception('Failed to load data');
+                          throw Exception(failedToLoadData);
                         }
                       },
-                      child: Text("OK"))
+                      child: const Text(ok))
                 ],
               ));
     } else {
-      print('Kody nie są zgodne. Konto nie zostanie usunięte');
+      showSnackBar(context, codesDifferent, Theme.of(context).inputDecorationTheme.errorBorder!.borderSide.color);
     }
   }
 }

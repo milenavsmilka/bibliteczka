@@ -9,7 +9,6 @@ class HowMuchStars extends StatelessWidget {
   Widget build(BuildContext context) {
     String halfStarString = (rate - rate.toInt()).toStringAsPrecision(2);
     double halfStar = double.parse(halfStarString);
-    print('Ile gwiazdek? $rate, jaki wynik połówki? $halfStar');
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

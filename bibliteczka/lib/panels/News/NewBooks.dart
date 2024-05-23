@@ -47,7 +47,7 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
       return const LoadingScreen(message: loading);
     } else {
       return Scaffold(
-        appBar: DefaultAppBar(title: 'Nowości', automaticallyImplyLeading: true),
+        appBar: const DefaultAppBar(title: news, automaticallyImplyLeading: true),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -92,7 +92,7 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
                                         (listOfBooks[index]['title']),
                                         style: Theme.of(context).textTheme.titleSmall,
                                       ),
-                                      Text(bookAuthor,
+                                      Text(bookAuthors,
                                           style: Theme.of(context).textTheme.headlineSmall),
                                       Column(
                                         children: [

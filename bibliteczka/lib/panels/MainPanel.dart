@@ -1,4 +1,4 @@
-import 'package:biblioteczka/panels/Authors/ChooseAutor.dart';
+import 'package:biblioteczka/panels/Authors/ChooseAuthor.dart';
 import 'package:biblioteczka/panels/Community/PopularUsers.dart';
 import 'package:biblioteczka/panels/News/NewBooks.dart';
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
@@ -49,24 +49,22 @@ class _MainPanelScreen extends State<MainPanelScreen> {
           );
           return Future.value(shouldPop);
         },
-        child: Scaffold(
-            appBar: DefaultAppBar(title: titleOfApp, automaticallyImplyLeading: false),
-            body: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ChooseOptionFromMenuButton(
-                      nameOfOptionFromMenu: "Kategoria", widgetToRoute: ChooseCategoryScreen()),
-                  ChooseOptionFromMenuButton(
-                      nameOfOptionFromMenu: "Nowości", widgetToRoute: NewBooksScreen()),
-                  ChooseOptionFromMenuButton(
-                      nameOfOptionFromMenu: "Top 10 w kategorii", widgetToRoute: TopScreen()),
-                  ChooseOptionFromMenuButton(
-                      nameOfOptionFromMenu: "Autorzy", widgetToRoute: ChooseAuthorScreen()),
-                  ChooseOptionFromMenuButton(
-                      nameOfOptionFromMenu: "Społeczność", widgetToRoute: PopularUsersScreen()),
-                ],
-              ),
+        child: const Scaffold(
+            appBar: DefaultAppBar(title: library, automaticallyImplyLeading: false),
+            body: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ChooseOptionFromMenuButton(
+                    nameOfOptionFromMenu: category, widgetToRoute: ChooseCategoryScreen()),
+                ChooseOptionFromMenuButton(
+                    nameOfOptionFromMenu: news, widgetToRoute: NewBooksScreen()),
+                ChooseOptionFromMenuButton(
+                    nameOfOptionFromMenu: top10Books, widgetToRoute: TopScreen()),
+                ChooseOptionFromMenuButton(
+                    nameOfOptionFromMenu: authors, widgetToRoute: ChooseAuthorScreen()),
+                ChooseOptionFromMenuButton(
+                    nameOfOptionFromMenu: community, widgetToRoute: PopularUsersScreen()),
+              ],
             )),
       );
 
@@ -102,7 +100,7 @@ class ChooseOptionFromMenuButton extends StatelessWidget {
       flex: 2,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          minimumSize: Size.fromHeight(95),
+          minimumSize: const Size.fromHeight(95),
         ),
         child: Text(
           nameOfOptionFromMenu,

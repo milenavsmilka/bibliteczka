@@ -50,11 +50,11 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     } else {
       return Scaffold(
           appBar: AppBar(
-            title: Text('Mój profil'),
+            title: const Text(myProfile),
             automaticallyImplyLeading: true,
           ),
           body: SingleChildScrollView(
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -74,7 +74,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     Flexible(
                       child: Column(
                         children: [
-                          Text('Cześć ${userData[0]['username']}!',
+                          Text('$hello ${userData[0]['username']}!',
                               style: Theme.of(context).textTheme.headlineMedium),
                         ],
                       ),
@@ -91,14 +91,14 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           children: [
                             Text(userData[0]['library']['favourite_books_count'].toString(),
                                 style: Theme.of(context).textTheme.headlineSmall),
-                            Text(' Ulubione', style: Theme.of(context).textTheme.titleSmall),
+                            Text(' $favourite', style: Theme.of(context).textTheme.titleSmall),
                           ],
                         ),
                         Row(
                           children: [
                             Text(userData[0]['library']['read_books_count'].toString(),
                                 style: Theme.of(context).textTheme.headlineSmall),
-                            Text(' Przeczytane', style: Theme.of(context).textTheme.titleSmall),
+                            Text(' $read', style: Theme.of(context).textTheme.titleSmall),
                           ],
                         ),
                       ],
@@ -110,7 +110,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           children: [
                             Text(userData[0]['followed_authors_count'].toString(),
                                 style: Theme.of(context).textTheme.headlineSmall),
-                            Text(' Ulubionych autorów',
+                            Text(' $favouriteAuthors',
                                 style: Theme.of(context).textTheme.titleSmall),
                           ],
                         ),
@@ -118,19 +118,19 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           children: [
                             Text(userData[0]['opinions_count'].toString(),
                                 style: Theme.of(context).textTheme.headlineSmall),
-                            Text(' Opinii', style: Theme.of(context).textTheme.titleSmall),
+                            Text(' $opinions', style: Theme.of(context).textTheme.titleSmall),
                           ],
                         ),
                       ],
                     ),
                   ],
                 ),
-                Text(''),
+                const Text(''),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Twoja Biblioteczka',
+                      myLibrary,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     IconButton(
@@ -147,7 +147,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Ulubione',
+                      favourite,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ],
@@ -193,7 +193,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Przeczytane',
+                      read,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ],
@@ -239,7 +239,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      'Autorzy',
+                      authors,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ],
@@ -282,7 +282,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   ),
                 ),
                 Text(
-                  'Mogą Cię również zainteresować',
+                  mayBeInterestedForYou,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Align(
@@ -332,6 +332,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     Map<String, dynamic> getUserResponse =
         await getSthById(context, apiURLGetUser, Map.of({'get_self': 'true'}));
 
+    if (!mounted) return;
     Map<String, dynamic> getSimilarBooks =
         await getSthById(context, apiURLSimilarBooks, Map.of({}));
     print(getSimilarBooks['results']);
