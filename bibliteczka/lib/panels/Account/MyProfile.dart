@@ -3,10 +3,11 @@ import 'package:biblioteczka/panels/Authors/PictureOfAuthor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../styles/strings.dart';
 import '../CategoryBooks/DetailsOfBook.dart';
-import '../Tools/LoadingScreen.dart';
+import '../Tools/Loading.dart';
 import '../Tools/functions.dart';
 import 'PictureOfBooksInMyLibrary.dart';
 
@@ -32,7 +33,6 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     giveMeUserData();
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -44,13 +44,13 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     double heightScreen = MediaQuery.of(context).size.height;
 
     if (userData.isEmpty) {
-      return const LoadingScreen(message: nothingHere);
+      return LoadingScreen(message: AppLocalizations.of(context)!.nothingHere);
     } else if (userData[0] == -1) {
-      return const LoadingScreen(message: loading);
+      return LoadingScreen(message: AppLocalizations.of(context)!.loading);
     } else {
       return Scaffold(
           appBar: AppBar(
-            title: const Text(myProfile),
+            title: Text(AppLocalizations.of(context)!.myProfile),
             automaticallyImplyLeading: true,
           ),
           body: SingleChildScrollView(
@@ -74,7 +74,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                     Flexible(
                       child: Column(
                         children: [
-                          Text('$hello ${userData[0]['username']}!',
+                          Text('${AppLocalizations.of(context)!.hello} ${userData[0]['username']}!',
                               style: Theme.of(context).textTheme.headlineMedium),
                         ],
                       ),
@@ -91,14 +91,16 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           children: [
                             Text(userData[0]['library']['favourite_books_count'].toString(),
                                 style: Theme.of(context).textTheme.headlineSmall),
-                            Text(' $favourite', style: Theme.of(context).textTheme.titleSmall),
+                            Text(' ${AppLocalizations.of(context)!.favourite}',
+                                style: Theme.of(context).textTheme.titleSmall),
                           ],
                         ),
                         Row(
                           children: [
                             Text(userData[0]['library']['read_books_count'].toString(),
                                 style: Theme.of(context).textTheme.headlineSmall),
-                            Text(' $read', style: Theme.of(context).textTheme.titleSmall),
+                            Text(' ${AppLocalizations.of(context)!.read}',
+                                style: Theme.of(context).textTheme.titleSmall),
                           ],
                         ),
                       ],
@@ -110,7 +112,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           children: [
                             Text(userData[0]['followed_authors_count'].toString(),
                                 style: Theme.of(context).textTheme.headlineSmall),
-                            Text(' $favouriteAuthors',
+                            Text(' ${AppLocalizations.of(context)!.favouriteAuthors}',
                                 style: Theme.of(context).textTheme.titleSmall),
                           ],
                         ),
@@ -118,7 +120,8 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           children: [
                             Text(userData[0]['opinions_count'].toString(),
                                 style: Theme.of(context).textTheme.headlineSmall),
-                            Text(' $opinions', style: Theme.of(context).textTheme.titleSmall),
+                            Text(' ${AppLocalizations.of(context)!.opinions}',
+                                style: Theme.of(context).textTheme.titleSmall),
                           ],
                         ),
                       ],
@@ -130,7 +133,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      myLibrary,
+                      AppLocalizations.of(context)!.myLibrary,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     IconButton(
@@ -147,7 +150,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      favourite,
+                      AppLocalizations.of(context)!.favourite,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ],
@@ -163,7 +166,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       shrinkWrap: true,
                       children: [
                         if (favBooks.isEmpty) ...{
-                          emptyBox(widthScreen, heightScreen),
+                          emptyBox(widthScreen, heightScreen, context),
                         } else ...{
                           for (int i = 0; i < favBooks.length; i++) ...{
                             PictureOfBooksInMyLibrary(
@@ -193,7 +196,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      read,
+                      AppLocalizations.of(context)!.read,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ],
@@ -209,7 +212,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       shrinkWrap: true,
                       children: [
                         if (readBooks.isEmpty) ...{
-                          emptyBox(widthScreen, heightScreen),
+                          emptyBox(widthScreen, heightScreen, context),
                         } else ...{
                           for (int i = 0; i < readBooks.length; i++) ...{
                             PictureOfBooksInMyLibrary(
@@ -239,7 +242,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      authors,
+                      AppLocalizations.of(context)!.authors,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                   ],
@@ -255,7 +258,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       shrinkWrap: true,
                       children: [
                         if (favAuthors.isEmpty) ...{
-                          emptyBox(widthScreen, heightScreen),
+                          emptyBox(widthScreen, heightScreen, context),
                         } else ...{
                           for (int i = 0; i < favAuthors.length; i++) ...{
                             PictureOfAuthor(
@@ -282,7 +285,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                   ),
                 ),
                 Text(
-                  mayBeInterestedForYou,
+                  AppLocalizations.of(context)!.mayBeInterestedForYou,
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Align(
@@ -296,7 +299,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                       shrinkWrap: true,
                       children: [
                         if (similarBooks.isEmpty) ...{
-                          emptyBox(widthScreen, heightScreen),
+                          emptyBox(widthScreen, heightScreen, context),
                         } else ...{
                           for (int i = 0; i < similarBooks.length; i++) ...{
                             PictureOfBooksInMyLibrary(
@@ -308,12 +311,12 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                                     context,
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          DetailsOfBookScreen(bookId: similarBooks[i]['id']),
-                                    ))
+                                          builder: (context) =>
+                                              DetailsOfBookScreen(bookId: similarBooks[i]['id']),
+                                        ))
                                         .then((value) => setState(() {
-                                      giveMeUserData();
-                                    })));
+                                              giveMeUserData();
+                                            })));
                               },
                             ),
                           }

@@ -1,6 +1,7 @@
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../Tools/functions.dart';
 
@@ -21,7 +22,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text(library),
+          title: Text(AppLocalizations.of(context)!.library),
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -47,11 +48,11 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       controller: currentPasswordController,
                       obscureText: !passVisible,
                       validator: PasswordMustContainValidator(
-                              validatePasswordError, currentPasswordController.text)
+                          AppLocalizations.of(context)!.validatePasswordError, currentPasswordController.text)
                           .call,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                          labelText: giveMeCurrentPassword,
+                          labelText: AppLocalizations.of(context)!.giveMeCurrentPassword,
                           errorMaxLines: 3,
                           prefixIcon: const Icon(Icons.lock),
                           suffix: InkWell(
@@ -77,14 +78,14 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       obscureText: !passRepVisible,
                       validator: MultiValidator([
-                        RequiredValidator(errorText: fieldCannotBeEmpty),
+                        RequiredValidator(errorText: AppLocalizations.of(context)!.fieldCannotBeEmpty),
                         DifferentPasswordValidator(
-                            passMustBeDifferent, currentPasswordController.text),
+                            AppLocalizations.of(context)!.passMustBeDifferent, currentPasswordController.text),
                         PasswordMustContainValidator(
-                            validatePasswordError, newPasswordController.text)
+                            AppLocalizations.of(context)!.validatePasswordError, newPasswordController.text)
                       ]).call,
                       decoration: InputDecoration(
-                          labelText: giveMeNewPassword,
+                          labelText: AppLocalizations.of(context)!.giveMeNewPassword,
                           prefixIcon: const Icon(Icons.lock),
                           errorMaxLines: 3,
                           suffix: InkWell(
@@ -103,7 +104,7 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 const SizedBox(height: 30),
                 Center(
                   child: ElevatedButton(
-                    child: const Text(changePassword),
+                    child: Text(AppLocalizations.of(context)!.changePassword),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         changeSthInMyAccount(

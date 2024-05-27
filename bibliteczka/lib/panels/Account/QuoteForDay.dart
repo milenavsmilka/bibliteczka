@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../Tools/functions.dart';
 
@@ -35,7 +36,7 @@ class QuoteScreenState extends State<QuoteScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: const Text(quoteForToday),
+          title: Text(AppLocalizations.of(context)!.quoteForToday),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
@@ -89,7 +90,7 @@ class QuoteScreenState extends State<QuoteScreen> {
     var random = Random();
 
     setState(() {
-      randomH = random.nextInt((MediaQuery.of(context).size.height - 250).toInt()) + 1; //- iconSize
+      randomH = random.nextInt((MediaQuery.of(context).size.height - 300).toInt()) + 1; //- iconSize
       randomW = random.nextInt((MediaQuery.of(context).size.width).toInt()) + 1;
     });
   }

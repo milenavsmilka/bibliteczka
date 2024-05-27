@@ -1,8 +1,9 @@
-import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
+import 'package:biblioteczka/panels/Tools/Loading.dart';
 import 'package:biblioteczka/panels/Tools/NetworkLoadingImage.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../styles/strings.dart';
 import '../CategoryBooks/DetailsOfBook.dart';
@@ -42,12 +43,12 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
 
     print(listOfBooks);
     if (listOfBooks.isEmpty) {
-      return const LoadingScreen(message: nothingHere);
+      return LoadingScreen(message: AppLocalizations.of(context)!.nothingHere);
     } else if (listOfBooks[0] == -1) {
-      return const LoadingScreen(message: loading);
+      return LoadingScreen(message: AppLocalizations.of(context)!.loading);
     } else {
       return Scaffold(
-        appBar: const DefaultAppBar(title: news, automaticallyImplyLeading: true),
+        appBar: DefaultAppBar(title: AppLocalizations.of(context)!.news, automaticallyImplyLeading: true),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -85,14 +86,14 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(bookTitle,
+                                      Text(AppLocalizations.of(context)!.bookTitle,
                                           style: Theme.of(context).textTheme.headlineSmall,
                                           textAlign: TextAlign.start),
                                       Text(
                                         (listOfBooks[index]['title']),
                                         style: Theme.of(context).textTheme.titleSmall,
                                       ),
-                                      Text(bookAuthors,
+                                      Text(AppLocalizations.of(context)!.bookAuthors,
                                           style: Theme.of(context).textTheme.headlineSmall),
                                       Column(
                                         children: [
@@ -120,13 +121,13 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
                                           }
                                         ],
                                       ),
-                                      Text(bookPublishingHouse,
+                                      Text(AppLocalizations.of(context)!.bookPublishingHouse,
                                           style: Theme.of(context).textTheme.headlineSmall),
                                       Text(
                                         listOfBooks[index]['publishing_house'],
                                         style: Theme.of(context).textTheme.titleSmall,
                                       ),
-                                      Text(dateOfPremiere,
+                                      Text(AppLocalizations.of(context)!.dateOfPremiere,
                                           style: Theme.of(context).textTheme.headlineSmall),
                                       Text(
                                         listOfBooks[index]['premiere_date'],

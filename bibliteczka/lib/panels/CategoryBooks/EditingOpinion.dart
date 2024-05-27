@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../styles/strings.dart';
 import '../Tools/CustomPageRoute.dart';
@@ -98,7 +99,7 @@ class EditingOpinionState extends State<EditingOpinion> {
                     iconSize: 15,
                     onPressed: () async {
                       if (starsRating == 0) {
-                        showSnackBar(context, rateBookByStars, Theme.of(context).inputDecorationTheme.errorBorder!.borderSide.color);
+                        showSnackBar(context, AppLocalizations.of(context)!.rateBookByStars, Theme.of(context).inputDecorationTheme.errorBorder!.borderSide.color);
                       } else if (_formKey.currentState!.validate()) {
                         try {
                           widget.operation == 'ADD'

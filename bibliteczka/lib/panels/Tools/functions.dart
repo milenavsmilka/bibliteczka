@@ -5,6 +5,7 @@ import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../Login.dart';
 import '../MainPanel.dart';
@@ -12,11 +13,11 @@ import '../main.dart';
 import 'CustomPageRoute.dart';
 import 'NoConnection.dart';
 
-Widget emptyBox(double widthScreen, double heightScreen) {
+Widget emptyBox(double widthScreen, double heightScreen, BuildContext context) {
   return SizedBox(
     width: widthScreen / 5,
     height: heightScreen / 5,
-    child: const Center(child: Text(nothingHere)),
+    child: Center(child: Text(AppLocalizations.of(context)!.nothingHere)),
   );
 }
 
@@ -124,10 +125,10 @@ Future<void> sendRequest(
     } else if (response.statusCode == 200) {
       print("Okej :D");
     } else if (message == 'opinion_already_exists') {
-      message = youCanSendOneOpinion;
+      message = AppLocalizations.of(context)!.youCanSendOneOpinion;
       throw http.ClientException(message);
     } else if (message == 'length_validation_error') {
-      message = commentMin2Max1000;
+      message = AppLocalizations.of(context)!.commentMin2Max1000;
       throw http.ClientException(message);
     } else {
       print("Nie okej :(");

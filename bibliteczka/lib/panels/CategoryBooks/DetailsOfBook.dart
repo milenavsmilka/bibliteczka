@@ -4,6 +4,7 @@ import 'package:biblioteczka/panels/Tools/NetworkLoadingImage.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../styles/strings.dart';
 import '../Account/MyProfile.dart';
@@ -11,7 +12,7 @@ import '../Tools/CustomPageRoute.dart';
 import '../Tools/HowMuchStars.dart';
 import '../Tools/Icons.dart';
 import '../Tools/IconsAnimation.dart';
-import '../Tools/LoadingScreen.dart';
+import '../Tools/Loading.dart';
 
 class DetailsOfBookScreen extends StatefulWidget {
   const DetailsOfBookScreen({super.key, required this.bookId});
@@ -56,7 +57,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
     print('Picture $picture');
 
     if (title.isEmpty) {
-      return const LoadingScreen(message: loading);
+      return LoadingScreen(message: AppLocalizations.of(context)!.loading);
     } else {
       return Scaffold(
         appBar: DefaultAppBar(
@@ -217,12 +218,12 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(bookTitle, style: Theme.of(context).textTheme.headlineSmall),
+                          Text(AppLocalizations.of(context)!.bookTitle, style: Theme.of(context).textTheme.headlineSmall),
                           Text(
                             title,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
-                          Text(bookAuthors, style: Theme.of(context).textTheme.headlineSmall),
+                          Text(AppLocalizations.of(context)!.bookAuthors, style: Theme.of(context).textTheme.headlineSmall),
                           Column(
                             children: [
                               if (authorsNames.isEmpty) ...{
@@ -246,14 +247,14 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                               }
                             ],
                           ),
-                          Text(bookPublishingHouse,
+                          Text(AppLocalizations.of(context)!.bookPublishingHouse,
                               style: Theme.of(context).textTheme.headlineSmall),
                           Text(
                             publishingHouse,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                           if (countOfPages != 0) ...{
-                            Text(numberOfPages, style: Theme.of(context).textTheme.headlineSmall),
+                            Text(AppLocalizations.of(context)!.numberOfPages, style: Theme.of(context).textTheme.headlineSmall),
                             Text(
                               countOfPages.toString(),
                               style: Theme.of(context).textTheme.titleSmall,
@@ -277,7 +278,7 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                 )
               },
               const Row(children: [Text('')]),
-              Text(opinionsAndTalks, style: Theme.of(context).textTheme.headlineSmall),
+              Text(AppLocalizations.of(context)!.opinionsAndTalks, style: Theme.of(context).textTheme.headlineSmall),
               const Row(children: [Text('')]),
               OpinionScreen(instruction: OpinionScreen.SEND, bookId: widget.bookId),
               for (int i = 0; i < opinions.length; i++)

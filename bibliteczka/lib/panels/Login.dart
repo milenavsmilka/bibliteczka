@@ -4,6 +4,7 @@ import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,19 +38,19 @@ class LoginScreenState extends State<LoginScreen> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: const Text(exitFromAppTitle),
-              content: const Text(exitFromAppQuestion),
+              title: Text(AppLocalizations.of(context)!.exitFromAppTitle),
+              content: Text(AppLocalizations.of(context)!.exitFromAppQuestion),
               actions: [
                 TextButton(
                     onPressed: () {
                       SystemNavigator.pop();
                     },
-                    child: const Text(yes)),
+                    child: Text(AppLocalizations.of(context)!.yes)),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context, false);
                   },
-                  child: const Text(no),
+                  child: Text(AppLocalizations.of(context)!.no),
                 ),
               ],
             );
@@ -59,7 +60,7 @@ class LoginScreenState extends State<LoginScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text(library),
+          title: Text(AppLocalizations.of(context)!.library),
           automaticallyImplyLeading: false,
         ),
         body: Form(
@@ -84,13 +85,13 @@ class LoginScreenState extends State<LoginScreen> {
                   controller: emailController,
                   autocorrect: false,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: const InputDecoration(
-                    labelText: giveMeEmail,
-                    prefixIcon: Icon(Icons.email),
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.giveMeEmail,
+                    prefixIcon: const Icon(Icons.email),
                   ),
                   validator: MultiValidator([
-                    RequiredValidator(errorText: giveMeEmailError),
-                    EmailValidator(errorText: wrongEmailError),
+                    RequiredValidator(errorText: AppLocalizations.of(context)!.giveMeEmailError),
+                    EmailValidator(errorText: AppLocalizations.of(context)!.wrongEmailError),
                   ]).call,
                 ),
                 const SizedBox(height: 20),
@@ -99,10 +100,10 @@ class LoginScreenState extends State<LoginScreen> {
                   controller: passwordController,
                   autocorrect: false,
                   obscureText: !passVisible,
-                  validator: PasswordMustContainValidator(validatePasswordError, passwordController.text).call,
+                  validator: PasswordMustContainValidator(AppLocalizations.of(context)!.validatePasswordError, passwordController.text).call,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
-                      labelText: giveMePassword,
+                      labelText: AppLocalizations.of(context)!.giveMePassword,
                       errorMaxLines: 3,
                       prefixIcon: const Icon(Icons.lock),
                       suffix: InkWell(
@@ -120,14 +121,14 @@ class LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 30),
                 ElevatedButton(
-                  child: const Text(clickToLoginButton),
+                  child: Text(AppLocalizations.of(context)!.clickToLoginButton),
                   onPressed: () async {
                     if(formKey.currentState!.validate()){
                       try{
                         await signIn(
                             emailController.text, passwordController.text);
                       } on Exception {
-                        showSnackBar(context, 'Błąd logowania - niepoprawny email lub hasło', Theme.of(context).inputDecorationTheme.errorBorder!.borderSide.color);
+                        showSnackBar(context, AppLocalizations.of(context)!.sorryForErrorLogin, Theme.of(context).inputDecorationTheme.errorBorder!.borderSide.color);
                     }
                     }
                   },
@@ -140,7 +141,7 @@ class LoginScreenState extends State<LoginScreen> {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(notHaveAccountYetQuestion1,
+                    Text(AppLocalizations.of(context)!.notHaveAccountYetQuestion1,
                         style: Theme.of(context).textTheme.titleLarge),
                     TextButton(
                         onPressed: () {
@@ -150,7 +151,7 @@ class LoginScreenState extends State<LoginScreen> {
                                 builder: (context) => const RegisterScreen()),
                           );
                         },
-                        child: const Text(haveOrNotAccountQuestion2))
+                        child: Text(AppLocalizations.of(context)!.haveOrNotAccountQuestion2))
                   ],
                 )
               ],
@@ -196,7 +197,7 @@ class LoginScreenState extends State<LoginScreen> {
           .push(MaterialPageRoute(builder: (context) => const MainPanelScreen()));
     } else if (message == 'already_logged_in') {
       print("Nie okej :(");
-      throw Exception(userAlreadyLoggedIn);
+      throw Exception(AppLocalizations.of(context)!.userAlreadyLoggedIn);
     } else if (message == 'authentication_failed') {
       print("Nie okej :(");
       throw Exception('Failed to load data');
@@ -208,19 +209,19 @@ class LoginScreenState extends State<LoginScreen> {
   void changeText(String receivedMessageFromAPI) {
     setState(() {
       if (receivedMessageFromAPI == "login_successful") {
-        messageCanChange = loginSuccessful;
+        messageCanChange = AppLocalizations.of(context)!.loginSuccessful;
       } else if (receivedMessageFromAPI == 'already_logged_in') {
-        messageCanChange = userAlreadyLoggedIn;
+        messageCanChange = AppLocalizations.of(context)!.userAlreadyLoggedIn;
       } else if (receivedMessageFromAPI == 'authentication_failed') {
-        messageCanChange = loginNoDataError;
+        messageCanChange = AppLocalizations.of(context)!.loginNoDataError;
       } else if (receivedMessageFromAPI == 'email_wrong_format') {
-        messageCanChange = loginEmailError;
+        messageCanChange = AppLocalizations.of(context)!.loginEmailError;
       } else if (receivedMessageFromAPI == 'password_wrong_format') {
-        messageCanChange = validatePasswordError;
+        messageCanChange = AppLocalizations.of(context)!.validatePasswordError;
       } else if (receivedMessageFromAPI == 'locked_user_login_attempts') {
-        messageCanChange = tooMuchLoginAttemptsError;
+        messageCanChange = AppLocalizations.of(context)!.tooMuchLoginAttemptsError;
       } else {
-        messageCanChange = sorryForError;
+        messageCanChange = AppLocalizations.of(context)!.sorryForError;
       }
     });
   }

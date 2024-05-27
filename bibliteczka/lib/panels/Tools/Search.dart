@@ -1,6 +1,7 @@
 import 'package:biblioteczka/panels/Authors/DetailsOfAutors.dart';
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../styles/strings.dart';
 import '../CategoryBooks/DetailsOfBook.dart';
@@ -20,7 +21,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  TextEditingController searchController = TextEditingController(text: 'Wyszukaj');
+  TextEditingController searchController = TextEditingController(text: search);
   int pagesCount = -1;
   int currentPage = -1;
   List<dynamic> pages = [-1];
@@ -112,17 +113,20 @@ class _SearchScreenState extends State<SearchScreen> {
                               ),
                               SizedBox(
                                 height: 30,
-                                child: Text(
-                                    widget.whatSearch == SearchScreen.TURNBOOKS
-                                        ? listOfBooks[index]['title']
-                                        : listOfAuthors[index]['name'],
-                                    style: Theme.of(context).textTheme.headlineSmall),
+                                width: widthScreen / 2.3,
+                                child: Center(
+                                  child: Text(
+                                      widget.whatSearch == SearchScreen.TURNBOOKS
+                                          ? listOfBooks[index]['title']
+                                          : listOfAuthors[index]['name'],
+                                      style: Theme.of(context).textTheme.headlineSmall),
+                                ),
                               ),
                             ]),
                           ],
                         );
                       })
-                  : const Center(child: Text(nothingHere)),
+                  : Center(child: Text(AppLocalizations.of(context)!.nothingHere)),
             ),
             Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

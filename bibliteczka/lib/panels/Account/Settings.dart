@@ -8,6 +8,7 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../styles/ThemeProvider.dart';
 import '../Login.dart';
@@ -35,7 +36,7 @@ class SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text(settings),
+        title: Text(AppLocalizations.of(context)!.settings),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
@@ -45,18 +46,21 @@ class SettingsScreenState extends State<SettingsScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Row(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Text(
+              AppLocalizations.of(context)!.changeTheme,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headlineMedium,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  changeTheme,
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
                 ElevatedButton(
                     onPressed: () async {
                       setState(() {
@@ -64,15 +68,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                       });
                       await tryChangeTheme(context, light);
                     },
-                    child: const Text(changeToLightTheme)),
-                ElevatedButton(
-                    onPressed: () async {
-                      setState(() {
-                        themeState.setAnotherTheme = dark;
-                      });
-                      await tryChangeTheme(context, dark);
-                    },
-                    child: const Text(changeToDarkTheme)),
+                    child: Text(AppLocalizations.of(context)!.changeToLightTheme)),
                 ElevatedButton(
                     onPressed: () async {
                       setState(() {
@@ -80,7 +76,21 @@ class SettingsScreenState extends State<SettingsScreen> {
                       });
                       await tryChangeTheme(context, special);
                     },
-                    child: const Text(changeToSpecialTheme)),
+                    child: Text(AppLocalizations.of(context)!.changeToSpecialTheme)),
+              ],
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                    onPressed: () async {
+                      setState(() {
+                        themeState.setAnotherTheme = dark;
+                      });
+                      await tryChangeTheme(context, dark);
+                    },
+                    child: Text(AppLocalizations.of(context)!.changeToDarkTheme)),
                 ElevatedButton(
                     onPressed: () async {
                       setState(() {
@@ -88,11 +98,22 @@ class SettingsScreenState extends State<SettingsScreen> {
                       });
                       await tryChangeTheme(context, daltonism);
                     },
-                    child: const Text(changeToDaltonismTheme)),
-                Text(
-                  account,
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
+                    child: Text(AppLocalizations.of(context)!.changeToDaltonismTheme)),
+              ],
+            ),
+            Text(
+              AppLocalizations.of(context)!.account,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headlineMedium,
+            ),
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              alignment: WrapAlignment.spaceAround,
+              spacing: 20,
+              direction: Axis.vertical,
+              children: [
                 ElevatedButton(
                     onPressed: () {
                       checkIsTokenValid(
@@ -102,15 +123,39 @@ class SettingsScreenState extends State<SettingsScreen> {
                             MaterialPageRoute(builder: (context) => const ChangePasswordScreen()),
                           ));
                     },
-                    child: const Text(changePassword)),
+                    child: Text(AppLocalizations.of(context)!.changePassword)),
                 ElevatedButton(
                     onPressed: () {
                       String deleteCode = '';
                       showDialogToDeleteAccount(context, deleteCode);
                     },
-                    child: const Text(deleteMyAccount)),
+                    child: Text(AppLocalizations.of(context)!.deleteMyAccount)),
               ],
             ),
+            Text(
+              AppLocalizations.of(context)!.language,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headlineMedium,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      MyApp.of(context)?.setLocale(const Locale.fromSubtags(languageCode: 'pl'));
+                    },
+                    child: Text(AppLocalizations.of(context)!.polish)),
+                ElevatedButton(
+                    onPressed: () {
+                      MyApp.of(context)?.setLocale(const Locale.fromSubtags(languageCode: 'en'));
+                    },
+                    child: Text(AppLocalizations.of(context)!.english)),
+              ],
+            )
+            //AppLocalizations.of(context)!.title
           ],
         ),
       ),
@@ -120,8 +165,12 @@ class SettingsScreenState extends State<SettingsScreen> {
   Future<dynamic> showDialogToDeleteAccount(BuildContext context, String deleteCode) {
     return showDialog(
         context: context,
-        builder: (context) => SingleChildScrollView(
-              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 5),
+        builder: (context) =>
+            SingleChildScrollView(
+              padding: EdgeInsets.only(top: MediaQuery
+                  .of(context)
+                  .size
+                  .height / 5),
               child: AlertDialog(
                 title: const Text(areYouSureToDeleteAccount),
                 content: const Text(appSendDeleteCode),
@@ -143,7 +192,11 @@ class SettingsScreenState extends State<SettingsScreen> {
                                 content: const Text(writeCode),
                                 actions: [
                                   TextFormField(
-                                    cursorColor: Theme.of(context).textTheme.titleLarge?.color,
+                                    cursorColor: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.color,
                                     keyboardType: TextInputType.number,
                                     obscureText: true,
                                     controller: deleteCodeController,
@@ -174,7 +227,9 @@ class SettingsScreenState extends State<SettingsScreen> {
     try {
       await changeSthInMyAccount(context, apiURLChangeTheme, Map.of({"theme": theme}));
     } on http.ClientException {
-      showSnackBar(context, youHaveCurrentTheme, Theme.of(context).cardColor);
+      showSnackBar(context, AppLocalizations.of(context)!.youHaveCurrentTheme, Theme
+          .of(context)
+          .cardColor);
     }
   }
 
@@ -214,11 +269,16 @@ class SettingsScreenState extends State<SettingsScreen> {
       if (!mounted) return;
       showDialog(
           context: context,
-          builder: (context) => AlertDialog(
+          builder: (context) =>
+              AlertDialog(
                 title: const Text(giveMePassword),
                 actions: [
                   TextFormField(
-                    cursorColor: Theme.of(context).textTheme.titleLarge?.color,
+                    cursorColor: Theme
+                        .of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.color,
                     obscureText: true,
                     controller: passwordController,
                   ),
@@ -242,11 +302,11 @@ class SettingsScreenState extends State<SettingsScreen> {
                           print("Okej :D");
                           Map<String, dynamic> data = jsonDecode(response.body);
                           print(data);
-                              Navigator.push(
-                                  context,
-                                  CustomPageRoute(
-                                      chooseAnimation: CustomPageRoute.SLIDE,
-                                      child: const LoginScreen()));
+                          Navigator.push(
+                              context,
+                              CustomPageRoute(
+                                  chooseAnimation: CustomPageRoute.SLIDE,
+                                  child: const LoginScreen()));
                         } else {
                           print("Nie okej :(");
                           throw Exception(failedToLoadData);
@@ -256,7 +316,12 @@ class SettingsScreenState extends State<SettingsScreen> {
                 ],
               ));
     } else {
-      showSnackBar(context, codesDifferent, Theme.of(context).inputDecorationTheme.errorBorder!.borderSide.color);
+      showSnackBar(context, codesDifferent, Theme
+          .of(context)
+          .inputDecorationTheme
+          .errorBorder!
+          .borderSide
+          .color);
     }
   }
 }

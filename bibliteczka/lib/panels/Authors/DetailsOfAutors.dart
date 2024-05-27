@@ -6,13 +6,14 @@ import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../styles/strings.dart';
 import '../Account/MyProfile.dart';
 import '../CategoryBooks/DetailsOfBook.dart';
 import '../Tools/CustomPageRoute.dart';
 import '../Tools/IconsAnimation.dart';
-import '../Tools/LoadingScreen.dart';
+import '../Tools/Loading.dart';
 
 class DetailsOfAuthorsScreen extends StatefulWidget {
   const DetailsOfAuthorsScreen({super.key, required this.authorId});
@@ -51,7 +52,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
     double heightScreen = MediaQuery.of(context).size.height;
 
     if (biography.isEmpty) {
-      return const LoadingScreen(message: loading);
+      return LoadingScreen(message: AppLocalizations.of(context)!.loading);
     } else {
       return Scaffold(
         appBar: DefaultAppBar(
@@ -166,20 +167,20 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Text(authorTitle, style: Theme.of(context).textTheme.headlineSmall),
+                          Text(AppLocalizations.of(context)!.authorTitle, style: Theme.of(context).textTheme.headlineSmall),
                           Text(
                             name,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                           if (dateOfBirth != '') ...{
-                            Text(dateOfBirthTitle,
+                            Text(AppLocalizations.of(context)!.dateOfBirthTitle,
                                 style: Theme.of(context).textTheme.headlineSmall),
                             Text(
                               dateOfBirth,
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                             if (dateOfDead != '') ...{
-                              Text(dateOfDeadTitle,
+                              Text(AppLocalizations.of(context)!.dateOfDeadTitle,
                                   style: Theme.of(context).textTheme.headlineSmall)
                             },
                             Text(
@@ -188,7 +189,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                             )
                           },
                           if (authorsWebsite != '') ...{
-                            Text(authorsWebsiteTitle,
+                            Text(AppLocalizations.of(context)!.authorsWebsiteTitle,
                                 style: Theme.of(context).textTheme.headlineSmall),
                             GestureDetector(
                               child: Text(
@@ -200,13 +201,13 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                               },
                             )
                           },
-                          Text(numberOfBooksTitle,
+                          Text(AppLocalizations.of(context)!.numberOfBooksTitle,
                               style: Theme.of(context).textTheme.headlineSmall),
                           Text(
                             '$releasedBooksCount',
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
-                          Text(writesGenresTitle, style: Theme.of(context).textTheme.headlineSmall),
+                          Text(AppLocalizations.of(context)!.writesGenresTitle, style: Theme.of(context).textTheme.headlineSmall),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,7 +246,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                 ],
               ),
               Center(
-                  child: Text(releasedBooksTitle, style: Theme.of(context).textTheme.headlineMedium)),
+                  child: Text(AppLocalizations.of(context)!.releasedBooksTitle, style: Theme.of(context).textTheme.headlineMedium)),
               const Row(children: [Text('')]),
               Align(
                 alignment: Alignment.centerLeft,
@@ -258,7 +259,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                     shrinkWrap: true,
                     children: [
                       if (releasedBooks.isEmpty) ...{
-                        emptyBox(widthScreen, heightScreen),
+                        emptyBox(widthScreen, heightScreen, context),
                       } else ...{
                         for (int i = 0; i < releasedBooks.length; i++) ...{
                           PictureOfBooksInMyLibrary(

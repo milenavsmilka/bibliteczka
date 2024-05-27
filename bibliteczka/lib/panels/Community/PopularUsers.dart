@@ -1,6 +1,7 @@
-import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
+import 'package:biblioteczka/panels/Tools/Loading.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../styles/strings.dart';
 import '../Tools/DefaultAppBar.dart';
@@ -21,7 +22,6 @@ class _PopularUsersScreenState extends State<PopularUsersScreen> {
     giveMePopularUsers();
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -33,12 +33,12 @@ class _PopularUsersScreenState extends State<PopularUsersScreen> {
     double heightScreen = MediaQuery.of(context).size.height;
     print(listOfUsers);
     if (listOfUsers.isEmpty) {
-      return const LoadingScreen(message: nothingHere);
+      return LoadingScreen(message: AppLocalizations.of(context)!.nothingHere);
     } else if (listOfUsers[0] == -1) {
-      return const LoadingScreen(message: loading);
+      return LoadingScreen(message: AppLocalizations.of(context)!.loading);
     } else {
       return Scaffold(
-        appBar: const DefaultAppBar(title: community, automaticallyImplyLeading: true),
+        appBar: DefaultAppBar(title: AppLocalizations.of(context)!.community, automaticallyImplyLeading: true),
         body: ListView.builder(
             itemCount: listOfUsers.length,
             itemBuilder: (context, index) {
@@ -68,7 +68,7 @@ class _PopularUsersScreenState extends State<PopularUsersScreen> {
                                   (listOfUsers[index]['username']),
                                   style: Theme.of(context).textTheme.headlineMedium,
                                 ),
-                                Text('$numberOfOpinions ${listOfUsers[index]['opinions_count'].toString()}',
+                                Text('${AppLocalizations.of(context)!.numberOfOpinions} ${listOfUsers[index]['opinions_count'].toString()}',
                                     style: Theme.of(context).textTheme.headlineSmall),
                               ],
                             ),

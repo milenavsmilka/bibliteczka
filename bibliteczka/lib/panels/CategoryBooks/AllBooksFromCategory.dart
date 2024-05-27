@@ -1,8 +1,9 @@
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
-import 'package:biblioteczka/panels/Tools/LoadingScreen.dart';
+import 'package:biblioteczka/panels/Tools/Loading.dart';
 import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../styles/strings.dart';
 import '../Tools/CustomPageRoute.dart';
@@ -42,9 +43,9 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
 
     print(widget.nameOfCategory);
     if (listOfBooks.isEmpty) {
-      return const LoadingScreen(message: nothingHere);
+      return LoadingScreen(message: AppLocalizations.of(context)!.nothingHere);
     } else if (listOfBooks[0] == -1) {
-      return const LoadingScreen(message: loading);
+      return LoadingScreen(message: AppLocalizations.of(context)!.loading);
     } else {
       return Scaffold(
         appBar: DefaultAppBar(title: widget.nameOfCategory, automaticallyImplyLeading: true),
@@ -85,8 +86,11 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                             ),
                             SizedBox(
                               height: 30,
-                              child: Text(listOfBooks[index]['title'],
-                                  style: Theme.of(context).textTheme.headlineSmall),
+                              width: widthScreen / 2.3,
+                              child: Center(
+                                child: Text(listOfBooks[index]['title'],
+                                    style: Theme.of(context).textTheme.headlineSmall, overflow: TextOverflow.ellipsis,),
+                              ),
                             ),
                           ]),
                         ],

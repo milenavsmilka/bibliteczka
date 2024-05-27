@@ -1,5 +1,5 @@
-// const String apiURL = 'https://10.0.2.2:5000/api/';
-const String apiURL ='https://192.168.0.2:5000/api/';
+const String apiURL = 'https://10.0.2.2:5000/api/';
+// const String apiURL ='https://192.168.0.2:5000/api/';
 const String apiURLRegister = '${apiURL}account/register';
 const String apiURLLogin = '${apiURL}account/login';
 const String apiURLLogOut = '${apiURL}account/logout';
@@ -81,6 +81,7 @@ const String commentMin2Max1000 = 'Komentarz może mieć min 2 i max 1000 znakó
 const String sessionExpired = "Twoja sesja wygasła. Zaloguj się ponownie.";
 
 const String loading = 'Ładowanie';
+const String search = 'Wyszukaj';
 const String nothingHere = 'Nic tu nie ma :(';
 const String news = 'Nowości';
 
@@ -114,6 +115,9 @@ const String orderByAlphabet = 'Alfabetycznie';
 
 //Settings
 const String changeTheme = 'Zmień motyw';
+const String polish = 'Polski';
+const String english = 'Angielski';
+const String language = 'Wybierz język';
 const String settings = 'Ustawienia';
 const String changeToLightTheme = 'Jasny';
 const String changeToDarkTheme = 'Ciemny';

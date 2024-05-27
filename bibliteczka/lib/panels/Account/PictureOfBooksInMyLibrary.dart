@@ -1,6 +1,7 @@
 import 'package:biblioteczka/panels/Account/MyProfile.dart';
 import 'package:biblioteczka/panels/Tools/CustomPageRoute.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../styles/strings.dart';
 import '../Tools/NetworkLoadingImage.dart';
@@ -54,7 +55,7 @@ class _PictureOfBooksInMyLibraryState extends State<PictureOfBooksInMyLibrary> {
     double heightScreen = MediaQuery.of(context).size.height;
 
     if (bookPicture == '-1') {
-      return const Text(loading);
+      return Text(AppLocalizations.of(context)!.loading);
     } else {
       return SizedBox(
           width: widthScreen / 5,

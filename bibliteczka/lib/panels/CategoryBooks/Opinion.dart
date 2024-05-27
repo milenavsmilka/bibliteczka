@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../styles/strings.dart';
 import '../Tools/OrdinaryOpinion.dart';
@@ -51,7 +52,7 @@ class _OpinionScreenState extends State<OpinionScreen> {
     double widthScreen = MediaQuery.of(context).size.width;
 
     if (username == '') {
-      return const Row(children: [Text(loading)]);
+      return Row(children: [Text(AppLocalizations.of(context)!.loading)]);
     } else {
       return Column(
         children: [
@@ -181,15 +182,15 @@ class _OpinionScreenState extends State<OpinionScreen> {
       maxLines: null,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: MultiValidator([
-        MinLengthValidator(2, errorText: minLengthForComment),
-        MaxLengthValidator(1000, errorText: maxLengthForComment),
+        MinLengthValidator(2, errorText: AppLocalizations.of(context)!.minLengthForComment),
+        MaxLengthValidator(1000, errorText: AppLocalizations.of(context)!.maxLengthForComment),
       ]).call,
       onTap: onTap,
       controller: controller,
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
-          hintText: writeOwnOpinion),
+          hintText: AppLocalizations.of(context)!.writeOwnOpinion),
     );
   }
 

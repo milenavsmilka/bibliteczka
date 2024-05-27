@@ -4,6 +4,7 @@ import 'package:biblioteczka/panels/Tools/functions.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../Tools/CustomPageRoute.dart';
 import '../Tools/DefaultAppBar.dart';
@@ -23,8 +24,8 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
     double heightScreen = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        appBar: const DefaultAppBar(
-          title: category,
+        appBar: DefaultAppBar(
+          title: AppLocalizations.of(context)!.category,
           automaticallyImplyLeading: true,
           turnSearch: SearchScreen.TURNBOOKS,
         ),
@@ -39,12 +40,12 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
-                      nameOfCategory: Genres.romance.name,
+                      nameOfCategory: AppLocalizations.of(context)!.romanceG,
                       nameOfCategoryEN: Genres.romance.nameEN,
                       pathToImage: iconHeart,
                     ),
                     CategoryButton(
-                      nameOfCategory: Genres.children.name,
+                      nameOfCategory: AppLocalizations.of(context)!.childrenG,
                       nameOfCategoryEN: Genres.children.nameEN,
                       pathToImage: iconChild,
                     ),
@@ -55,12 +56,12 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
-                      nameOfCategory: Genres.history.name,
+                      nameOfCategory: AppLocalizations.of(context)!.historyG,
                       nameOfCategoryEN: Genres.history.nameEN,
                       pathToImage: iconSwords,
                     ),
                     CategoryButton(
-                      nameOfCategory: Genres.science.name,
+                      nameOfCategory: AppLocalizations.of(context)!.scienceG,
                       nameOfCategoryEN: Genres.science.nameEN,
                       pathToImage: iconBrainstorming,
                     ),
@@ -71,12 +72,12 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
-                      nameOfCategory: Genres.poetry.name,
+                      nameOfCategory: AppLocalizations.of(context)!.poetryG,
                       nameOfCategoryEN: Genres.poetry.nameEN,
                       pathToImage: iconQuill,
                     ),
                     CategoryButton(
-                      nameOfCategory: Genres.youngAdult.name,
+                      nameOfCategory: AppLocalizations.of(context)!.youngAdultG,
                       nameOfCategoryEN: Genres.youngAdult.nameEN,
                       pathToImage: iconYoungAdults,
                     )
@@ -87,12 +88,12 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
-                      nameOfCategory: Genres.fantasy.name,
+                      nameOfCategory: AppLocalizations.of(context)!.fantasyG,
                       nameOfCategoryEN: Genres.fantasy.nameEN,
                       pathToImage: iconDragon,
                     ),
                     CategoryButton(
-                      nameOfCategory: Genres.bio.name,
+                      nameOfCategory: AppLocalizations.of(context)!.bioG,
                       nameOfCategoryEN: Genres.bio.nameEN,
                       pathToImage: iconContacts,
                     )
@@ -103,12 +104,12 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
-                      nameOfCategory: Genres.adventure.name,
+                      nameOfCategory: AppLocalizations.of(context)!.adventureG,
                       nameOfCategoryEN: Genres.adventure.nameEN,
                       pathToImage: iconAdventure,
                     ),
                     CategoryButton(
-                      nameOfCategory: Genres.comics.name,
+                      nameOfCategory: AppLocalizations.of(context)!.comicsG,
                       nameOfCategoryEN: Genres.comics.nameEN,
                       pathToImage: iconComic,
                     )
@@ -119,12 +120,12 @@ class _ChooseCategoryScreenState extends State<ChooseCategoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     CategoryButton(
-                      nameOfCategory: Genres.thriller.name,
+                      nameOfCategory: AppLocalizations.of(context)!.thrillerG,
                       nameOfCategoryEN: Genres.thriller.nameEN,
                       pathToImage: iconDetective,
                     ),
                     CategoryButton(
-                      nameOfCategory: Genres.other.name,
+                      nameOfCategory: AppLocalizations.of(context)!.otherG,
                       nameOfCategoryEN: Genres.other.nameEN,
                       pathToImage: iconOther,
                     )

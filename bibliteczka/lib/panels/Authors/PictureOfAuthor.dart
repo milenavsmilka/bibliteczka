@@ -5,6 +5,7 @@ import '../Account/MyProfile.dart';
 import '../Tools/CustomPageRoute.dart';
 import '../Tools/NetworkLoadingImage.dart';
 import '../Tools/functions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PictureOfAuthor extends StatefulWidget {
   const PictureOfAuthor(
@@ -38,7 +39,7 @@ class _PictureOfAuthorState extends State<PictureOfAuthor> {
     double widthScreen = MediaQuery.of(context).size.width;
 
     if (authorPicture == '-1') {
-      return const Text(loading);
+      return Text(AppLocalizations.of(context)!.loading);
     } else {
       return SizedBox(
           width: widthScreen / 5,

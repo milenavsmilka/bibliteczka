@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../styles/strings.dart';
 
@@ -47,7 +48,7 @@ class _OrdinaryOpinionState extends State<OrdinaryOpinion> {
                                   });
                                 },
                                 child: Text(
-                                  showAll ? showLess : showMore,
+                                  showAll ? AppLocalizations.of(context)!.showLess : AppLocalizations.of(context)!.showMore,
                                   style: Theme.of(context).textTheme.titleMedium,
                                 ),
                               ),

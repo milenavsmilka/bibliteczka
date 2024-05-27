@@ -4,16 +4,16 @@ import 'package:biblioteczka/panels/Tools/Search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:number_paginator/number_paginator.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../styles/strings.dart';
 import '../Account/MyProfile.dart';
 import '../Tools/CustomPageRoute.dart';
 import '../Tools/DefaultAppBar.dart';
-import '../Tools/LoadingScreen.dart';
+import '../Tools/Loading.dart';
 import '../Tools/functions.dart';
 
 //todo dopracowanie themes
-//todo sprawdzić angielską wersję
 class ChooseAuthorScreen extends StatefulWidget {
   const ChooseAuthorScreen({super.key});
 
@@ -51,11 +51,11 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
 
     if ((listOfPopularAuthors.isNotEmpty && listOfPopularAuthors[0] == -1) ||
         (listOfAuthors.isNotEmpty && listOfAuthors[0] == -1)) {
-      return const LoadingScreen(message: loading);
+      return LoadingScreen(message: AppLocalizations.of(context)!.loading);
     } else {
       return Scaffold(
           appBar: DefaultAppBar(
-            title: bookAuthors,
+            title: AppLocalizations.of(context)!.bookAuthors,
             automaticallyImplyLeading: true,
             turnSearch: SearchScreen.TURNAUTHORS,
             onTap: () {
@@ -73,7 +73,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(popularAuthors, style: Theme.of(context).textTheme.headlineMedium),
+                Text(AppLocalizations.of(context)!.popularAuthors, style: Theme.of(context).textTheme.headlineMedium),
                 Container(
                   padding: const EdgeInsets.only(left: 20),
                   alignment: Alignment.center,
@@ -86,7 +86,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                     shrinkWrap: true,
                     children: [
                       if (listOfPopularAuthors.isEmpty) ...{
-                        emptyBox(widthScreen, heightScreen),
+                        emptyBox(widthScreen, heightScreen, context),
                       } else ...{
                         for (int i = 0; i < listOfPopularAuthors.length; i++) ...{
                           PictureOfAuthor(
@@ -107,7 +107,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                   ),
                 ),
                 const Text(''),
-                Text(orderByAlphabet, style: Theme.of(context).textTheme.headlineMedium),
+                Text(AppLocalizations.of(context)!.orderByAlphabet, style: Theme.of(context).textTheme.headlineMedium),
                 Wrap(children: [
                   for (int i = 0; i < currentList.length; i++) ...{
                     SizedBox(
@@ -149,7 +149,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                     shrinkWrap: true,
                     children: [
                       if (listOfAuthors.isEmpty) ...{
-                        emptyBox(widthScreen, heightScreen),
+                        emptyBox(widthScreen, heightScreen, context),
                       } else ...{
                         for (int i = 0; i < listOfAuthors.length; i++) ...{
                           TextButton(

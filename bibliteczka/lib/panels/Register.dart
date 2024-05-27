@@ -4,6 +4,7 @@ import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'Account/ChangePassword.dart';
 import 'Login.dart';
@@ -28,7 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: const Text(library),
+          title: Text(AppLocalizations.of(context)!.library),
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -54,11 +55,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       autocorrect: false,
                       controller: usernameController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: UsernameMustContainValidator(validateUsernameError, usernameController.text).call,
-                      decoration: const InputDecoration(
-                          labelText: giveMeUserName,
+                      validator: UsernameMustContainValidator(
+                              AppLocalizations.of(context)!.validateUsernameError,
+                              usernameController.text)
+                          .call,
+                      decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.giveMeUserName,
                           errorMaxLines: 3,
-                          prefixIcon: Icon(Icons.account_circle_rounded)),
+                          prefixIcon: const Icon(Icons.account_circle_rounded)),
                     ),
                   ),
                 ]),
@@ -70,14 +74,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       autocorrect: false,
                       controller: emailController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: const InputDecoration(
-                        labelText: giveMeEmail,
-                        prefixIcon: Icon(Icons.email),
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!.giveMeEmail,
+                        prefixIcon: const Icon(Icons.email),
                       ),
                       validator: MultiValidator([
-                        RequiredValidator(errorText: giveMeEmailError),
-                        EmailValidator(
-                            errorText: wrongEmailError),
+                        RequiredValidator(
+                            errorText: AppLocalizations.of(context)!.giveMeEmailError),
+                        EmailValidator(errorText: AppLocalizations.of(context)!.wrongEmailError),
                       ]).call,
                     ),
                   ),
@@ -90,10 +94,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       autocorrect: false,
                       controller: passwordController,
                       obscureText: !passVisible,
-                      validator: PasswordMustContainValidator(validatePasswordError, passwordController.text).call,
+                      validator: PasswordMustContainValidator(
+                              AppLocalizations.of(context)!.validatePasswordError,
+                              passwordController.text)
+                          .call,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                          labelText: giveMePassword,
+                          labelText: AppLocalizations.of(context)!.giveMePassword,
                           errorMaxLines: 3,
                           prefixIcon: const Icon(Icons.lock),
                           suffix: InkWell(
@@ -103,9 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               });
                             },
                             child: Icon(
-                              passVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                              passVisible ? Icons.visibility : Icons.visibility_off,
                             ),
                           )),
                     ),
@@ -121,10 +126,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       obscureText: !passRepVisible,
                       validator: (repeat) => repeat != passwordController.text
-                          ? passwordIsDifferentError
-                          : null, //repeatPassValidator,
+                          ? AppLocalizations.of(context)!.passwordIsDifferentError
+                          : null,
+                      //repeatPassValidator,
                       decoration: InputDecoration(
-                          labelText: giveMeRepeatPassword,
+                          labelText: AppLocalizations.of(context)!.giveMeRepeatPassword,
                           prefixIcon: const Icon(Icons.lock),
                           suffix: InkWell(
                             onTap: () {
@@ -133,9 +139,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               });
                             },
                             child: Icon(
-                              passRepVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
+                              passRepVisible ? Icons.visibility : Icons.visibility_off,
                             ),
                           )),
                     ),
@@ -144,14 +148,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                 Center(
                   child: ElevatedButton(
-                    child: const Text(clickToRegisterButton),
+                    child: Text(AppLocalizations.of(context)!.clickToRegisterButton),
                     onPressed: () async {
-                      if(_formKey.currentState!.validate()){
-                        await signUp(
-                            usernameController.text,
-                            passwordController.text,
-                            repeatPasswordController.text,
-                            emailController.text);
+                      if (_formKey.currentState!.validate()) {
+                        await signUp(usernameController.text, passwordController.text,
+                            repeatPasswordController.text, emailController.text);
                       }
                     },
                   ),
@@ -167,17 +168,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(haveAccountQuestion1,
+                    Text(AppLocalizations.of(context)!.haveAccountQuestion1,
                         style: Theme.of(context).textTheme.titleLarge),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreen()),
-                          );
-                        },
-                        child: const Text(haveOrNotAccountQuestion2))
+                    Flexible(
+                      child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const LoginScreen()),
+                            );
+                          },
+                          child: Text(AppLocalizations.of(context)!.haveOrNotAccountQuestion2)),
+                    )
                   ],
                 ))
               ],
@@ -186,8 +188,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       );
 
-  Future<void> signUp(String username, String password, String repeatPassword,
-      String email) async {
+  Future<void> signUp(String username, String password, String repeatPassword, String email) async {
     if (password != repeatPassword) {
       return;
     }
@@ -213,14 +214,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (message == 'register_successful') {
       Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (context) => const LoginScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
       print("Okej :D");
     } else {
       print('Nie okej $message');
     }
   }
+
   void changeText(String receivedMessageFromAPI) {
     setState(() {
       if (receivedMessageFromAPI == "register_successful") {

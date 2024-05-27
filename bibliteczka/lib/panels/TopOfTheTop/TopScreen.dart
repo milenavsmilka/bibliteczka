@@ -1,12 +1,13 @@
 import 'package:biblioteczka/panels/Tools/DefaultAppBar.dart';
 import 'package:biblioteczka/styles/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../CategoryBooks/DetailsOfBook.dart';
 import '../Tools/CustomPageRoute.dart';
 import '../Tools/Genres.dart';
 import '../Tools/HowMuchStars.dart';
-import '../Tools/LoadingScreen.dart';
+import '../Tools/Loading.dart';
 import '../Tools/NetworkLoadingImage.dart';
 import '../Tools/functions.dart';
 
@@ -28,7 +29,6 @@ class _TopScreen extends State<TopScreen> {
     giveMeListsOfBookToTop(Genres.all.nameEN);
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -40,10 +40,10 @@ class _TopScreen extends State<TopScreen> {
     double heightScreen = MediaQuery.of(context).size.height;
 
     if (listOfBooks.isNotEmpty && listOfBooks[0] == -1) {
-      return const LoadingScreen(message: loading);
+      return LoadingScreen(message: AppLocalizations.of(context)!.loading);
     } else {
       return Scaffold(
-        appBar: const DefaultAppBar(title: topBooks, automaticallyImplyLeading: true),
+        appBar: DefaultAppBar(title: AppLocalizations.of(context)!.topBooks, automaticallyImplyLeading: true),
         body: SingleChildScrollView(
           physics: const ScrollPhysics(),
           child: Column(
@@ -211,7 +211,7 @@ class _TopScreen extends State<TopScreen> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        Text('$numberOfOpinions ${listOfBooks[index]['opinions_count']}',
+                                        Text('${AppLocalizations.of(context)!.numberOfOpinions} ${listOfBooks[index]['opinions_count']}',
                                             style: Theme.of(context).textTheme.titleSmall),
                                       ],
                                     ),

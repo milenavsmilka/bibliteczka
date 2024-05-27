@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../../styles/strings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NoConnection extends StatelessWidget {
   const NoConnection({super.key});
@@ -9,14 +8,14 @@ class NoConnection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text(noServerConnection),
-      content: const Text(connectToInternetOrAdmin),
+      title: Text(AppLocalizations.of(context)!.noServerConnection),
+      content: Text(AppLocalizations.of(context)!.connectToInternetOrAdmin),
       actions: [
         TextButton(
             onPressed: () {
               SystemNavigator.pop();
             },
-            child: const Text(ok)),
+            child: Text(AppLocalizations.of(context)!.ok)),
       ],
     );
   }
