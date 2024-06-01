@@ -99,7 +99,7 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
                                         children: [
                                           if (listOfBooks[index]['authors_names'].length == 0) ...{
                                             Text(
-                                              nothingHere,
+                                              AppLocalizations.of(context)!.nothingHere,
                                               style: Theme.of(context).textTheme.titleSmall,
                                             )
                                           },

@@ -128,7 +128,7 @@ class _TopScreen extends State<TopScreen> {
                 ],
               ),
               if (listOfBooks.isEmpty) ...{
-                const Text(nothingHere)
+                Text(AppLocalizations.of(context)!.nothingHere)
               } else ...{
                 GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -176,7 +176,7 @@ class _TopScreen extends State<TopScreen> {
                                               style: Theme.of(context).textTheme.headlineSmall),
                                           if (listOfBooks[index]['authors_names'].isEmpty) ...{
                                             Text(
-                                              nothingHere,
+                                              AppLocalizations.of(context)!.nothingHere,
                                               style: Theme.of(context).textTheme.titleSmall,
                                             )
                                           },

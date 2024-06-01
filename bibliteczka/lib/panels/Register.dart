@@ -233,17 +233,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void changeText(String receivedMessageFromAPI) {
     setState(() {
       if (receivedMessageFromAPI == "register_successful") {
-        messageCanChange = registerSuccessful;
+        messageCanChange = AppLocalizations.of(context)!.registerSuccessful;
       } else if (receivedMessageFromAPI == 'username_wrong_format') {
-        messageCanChange = validateUsernameError;
+        messageCanChange = AppLocalizations.of(context)!.validateUsernameError;
       } else if (receivedMessageFromAPI == 'password_wrong_format') {
-        messageCanChange = validatePasswordError;
+        messageCanChange = AppLocalizations.of(context)!.validatePasswordError;
       } else if (receivedMessageFromAPI == 'email_wrong_format') {
-        messageCanChange = loginEmailError;
+        messageCanChange = AppLocalizations.of(context)!.loginEmailError;
       } else if (receivedMessageFromAPI == 'user_already_exists') {
-        messageCanChange = userAlreadyExists;
+        messageCanChange = AppLocalizations.of(context)!.userAlreadyExists;
       } else {
-        messageCanChange = sorryForError;
+        messageCanChange = AppLocalizations.of(context)!.sorryForError;
       }
     });
   }

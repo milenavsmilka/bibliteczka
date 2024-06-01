@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            title: library,
+            title: AppLocalizations.of(context)!.library,
             debugShowCheckedModeBanner: false,
             theme:
                 ThemeManager.themeData(themeProvider.getCurrentTheme, context),

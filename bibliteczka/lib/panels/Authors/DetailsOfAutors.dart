@@ -214,7 +214,7 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                             children: [
                               if (genres.isEmpty) ...{
                                 Text(
-                                  nothingHere,
+                                  AppLocalizations.of(context)!.nothingHere,
                                   style: Theme.of(context).textTheme.titleSmall,
                                 )
                               },

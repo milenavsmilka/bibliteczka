@@ -117,7 +117,7 @@ Future<void> sendRequest(
     print(message);
     if (message == 'logged_out') {
       sharedPreferences.clear();
-      print(userLogOutCorrectly);
+      print(AppLocalizations.of(context)!.userLogOutCorrectly);
       checkIsTokenValid(
           context,
           Navigator.push(context,
@@ -185,7 +185,7 @@ void checkIsTokenValid(BuildContext context, [Future<dynamic>? navigator]) async
       Map<String, dynamic> data = jsonDecode(response.body);
       String tokenValid = data['message'];
       print('Czy token valid? $tokenValid');
-      if (tokenValid == tokenIsValid) {
+      if (tokenValid == AppLocalizations.of(context)!.tokenIsValid) {
         if (navigator != null) {
           navigator;
         }
@@ -193,7 +193,7 @@ void checkIsTokenValid(BuildContext context, [Future<dynamic>? navigator]) async
         showDialog(
             context: context,
             builder: (context) => AlertDialog(
-                  title: const Text(sessionExpired),
+                  title: Text(AppLocalizations.of(context)!.sessionExpired),
                   actions: [
                     TextButton(
                         onPressed: () {
@@ -202,7 +202,7 @@ void checkIsTokenValid(BuildContext context, [Future<dynamic>? navigator]) async
                               CustomPageRoute(
                                   chooseAnimation: CustomPageRoute.SLIDE, child: const LoginScreen()));
                         },
-                        child: const Text(ok)),
+                        child: Text(AppLocalizations.of(context)!.ok)),
                   ],
                 ));
       }
@@ -231,7 +231,7 @@ void whereToGo(BuildContext context) async {
       Map<String, dynamic> data = await getSthById(context, apiURLIsTokenValid, Map.of({}));
       String tokenValid = data['message'];
       print('Czy token valid? $tokenValid');
-      if (tokenValid == tokenIsValid) {
+      if (tokenValid == AppLocalizations.of(context)!.tokenIsValid) {
         Navigator.push(context,
             CustomPageRoute(chooseAnimation: CustomPageRoute.SLIDE, child: const MainPanelScreen()));
       } else {

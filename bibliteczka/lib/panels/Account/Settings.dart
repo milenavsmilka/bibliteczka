@@ -244,14 +244,14 @@ class SettingsScreenState extends State<SettingsScreen> {
     final deleteCode = UniqueKey().hashCode;
     final smtpServer = gmail(emailFrom, password);
     final message = Message()
-      ..from = const Address(emailFrom, library)
+      ..from = Address(emailFrom, AppLocalizations.of(context)!.library)
       ..recipients.add(emailTo)
-      ..subject = deleteMyAccountEmailSubject
+      ..subject = AppLocalizations.of(context)!.deleteMyAccountEmailSubject
       ..text =
-          '$mailSendBecauseYouWantDeleteAccount $deleteCode';
+          '${AppLocalizations.of(context)!.mailSendBecauseYouWantDeleteAccount} $deleteCode';
     try {
       await send(message, smtpServer);
-      showSnackBar(context, mailSentCorrectly, Colors.greenAccent);
+      showSnackBar(context, AppLocalizations.of(context)!.mailSentCorrectly, Colors.greenAccent);
       return deleteCode.toString();
     } catch (e) {
       if (kDebugMode) {
@@ -316,14 +316,14 @@ class SettingsScreenState extends State<SettingsScreen> {
                               .errorBorder!
                               .borderSide
                               .color);
-                          throw Exception(failedToLoadData);
+                          throw Exception(AppLocalizations.of(context)!.failedToLoadData);
                         }
                       },
                       child: Text(AppLocalizations.of(context)!.ok))
                 ],
               ));
     } else {
-      showSnackBar(context, codesDifferent, Theme
+      showSnackBar(context, AppLocalizations.of(context)!.codesDifferent, Theme
           .of(context)
           .inputDecorationTheme
           .errorBorder!
