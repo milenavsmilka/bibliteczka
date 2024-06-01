@@ -42,6 +42,7 @@ const String iconAdventure = "assets/icons/adventure.svg";
 const String search = 'Wyszukaj';
 const String nothingHere = 'Nic tu nie ma :(';
 
+const String library = "Biblioteczka";
 const String light = 'light';
 const String dark = 'dark';
 const String special = 'special';
