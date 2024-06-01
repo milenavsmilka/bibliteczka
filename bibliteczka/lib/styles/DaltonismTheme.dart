@@ -140,7 +140,7 @@ ThemeData daltonismTheme = ThemeData(
           fontSize: 15),
       surfaceTintColor: Colors.transparent),
   snackBarTheme: const SnackBarThemeData(
-    contentTextStyle: TextStyle(fontSize: 20),
+    contentTextStyle: TextStyle(fontSize: 20,color: Colors.black)
   ),
   iconTheme: const IconThemeData(color: textMainColor),
 );
