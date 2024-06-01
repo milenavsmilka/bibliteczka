@@ -51,7 +51,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
-                      cursorColor: Theme.of(context).textTheme.titleLarge?.color,
+                      style: Theme.of(context).textTheme.titleMedium,
+                      cursorColor: Theme.of(context).textTheme.titleMedium?.color,
                       autocorrect: false,
                       controller: usernameController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -62,7 +63,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.giveMeUserName,
                           errorMaxLines: 3,
-                          prefixIcon: const Icon(Icons.account_circle_rounded)),
+                          prefixIcon: const Icon(Icons.account_circle_rounded),
+                          prefixIconColor: Theme.of(context).textTheme.titleMedium?.color),
                     ),
                   ),
                 ]),
@@ -70,13 +72,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
-                      cursorColor: Theme.of(context).textTheme.titleLarge?.color,
+                      style: Theme.of(context).textTheme.titleMedium,
+                      cursorColor: Theme.of(context).textTheme.titleMedium?.color,
                       autocorrect: false,
                       controller: emailController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.giveMeEmail,
                         prefixIcon: const Icon(Icons.email),
+                        prefixIconColor: Theme.of(context).textTheme.titleMedium?.color,
                       ),
                       validator: MultiValidator([
                         RequiredValidator(
@@ -90,7 +94,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
-                      cursorColor: Theme.of(context).textTheme.titleLarge?.color,
+                      style: Theme.of(context).textTheme.titleMedium,
+                      cursorColor: Theme.of(context).textTheme.titleMedium?.color,
                       autocorrect: false,
                       controller: passwordController,
                       obscureText: !passVisible,
@@ -103,6 +108,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           labelText: AppLocalizations.of(context)!.giveMePassword,
                           errorMaxLines: 3,
                           prefixIcon: const Icon(Icons.lock),
+                          prefixIconColor: Theme.of(context).textTheme.titleMedium?.color,
                           suffix: InkWell(
                             onTap: () {
                               setState(() {
@@ -120,7 +126,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(children: [
                   Flexible(
                     child: TextFormField(
-                      cursorColor: Theme.of(context).textTheme.titleLarge?.color,
+                      style: Theme.of(context).textTheme.titleMedium,
+                      cursorColor: Theme.of(context).textTheme.titleMedium?.color,
                       autocorrect: false,
                       controller: repeatPasswordController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -132,6 +139,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.giveMeRepeatPassword,
                           prefixIcon: const Icon(Icons.lock),
+                          prefixIconColor: Theme.of(context).textTheme.titleMedium?.color,
                           suffix: InkWell(
                             onTap: () {
                               setState(() {

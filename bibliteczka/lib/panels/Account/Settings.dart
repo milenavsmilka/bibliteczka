@@ -172,14 +172,14 @@ class SettingsScreenState extends State<SettingsScreen> {
                   .size
                   .height / 5),
               child: AlertDialog(
-                title: const Text(areYouSureToDeleteAccount),
-                content: const Text(appSendDeleteCode),
+                title: Text(AppLocalizations.of(context)!.areYouSureToDeleteAccount),
+                content: Text(AppLocalizations.of(context)!.appSendDeleteCode),
                 actions: [
                   TextButton(
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: const Text(back)),
+                      child: Text(AppLocalizations.of(context)!.back)),
                   TextButton(
                       onPressed: () async {
                         deleteCode = await sendMail();
@@ -188,8 +188,8 @@ class SettingsScreenState extends State<SettingsScreen> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text(appSentCode),
-                                content: const Text(writeCode),
+                                title: Text(AppLocalizations.of(context)!.appSentCode),
+                                content: Text(AppLocalizations.of(context)!.writeCode),
                                 actions: [
                                   TextFormField(
                                     cursorColor: Theme
@@ -206,18 +206,19 @@ class SettingsScreenState extends State<SettingsScreen> {
                                         onPressed: () {
                                           Navigator.pop(context);
                                         },
-                                        child: const Text(back)),
+                                        child: Text(AppLocalizations.of(context)!.back)),
                                     TextButton(
                                         onPressed: () {
                                           deleteAccount(deleteCode);
+                                          Navigator.pop(context);
                                         },
-                                        child: const Text(ok))
+                                        child: Text(AppLocalizations.of(context)!.ok))
                                   ]),
                                 ],
                               );
                             });
                       },
-                      child: const Text(sendCode)),
+                      child: Text(AppLocalizations.of(context)!.sendCode)),
                 ],
               ),
             ));
@@ -271,7 +272,7 @@ class SettingsScreenState extends State<SettingsScreen> {
           context: context,
           builder: (context) =>
               AlertDialog(
-                title: const Text(giveMePassword),
+                title: Text(AppLocalizations.of(context)!.giveMePassword),
                 actions: [
                   TextFormField(
                     cursorColor: Theme
@@ -309,10 +310,16 @@ class SettingsScreenState extends State<SettingsScreen> {
                                   child: const LoginScreen()));
                         } else {
                           print("Nie okej :(");
+                          showSnackBar(context, AppLocalizations.of(context)!.passwordIsDifferentError, Theme
+                              .of(context)
+                              .inputDecorationTheme
+                              .errorBorder!
+                              .borderSide
+                              .color);
                           throw Exception(failedToLoadData);
                         }
                       },
-                      child: const Text(ok))
+                      child: Text(AppLocalizations.of(context)!.ok))
                 ],
               ));
     } else {

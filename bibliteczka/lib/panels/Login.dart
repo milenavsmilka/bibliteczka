@@ -38,8 +38,10 @@ class LoginScreenState extends State<LoginScreen> {
           context: context,
           builder: (context) {
             return AlertDialog(
-              title: Text(AppLocalizations.of(context)!.exitFromAppTitle),
-              content: Text(AppLocalizations.of(context)!.exitFromAppQuestion),
+              title: Text(AppLocalizations.of(context)!.exitFromAppTitle,
+                  style: Theme.of(context).textTheme.titleMedium),
+              content: Text(AppLocalizations.of(context)!.exitFromAppQuestion,
+                  style: Theme.of(context).textTheme.titleMedium),
               actions: [
                 TextButton(
                     onPressed: () {
@@ -77,17 +79,19 @@ class LoginScreenState extends State<LoginScreen> {
                 const Icon(
                   Icons.account_circle_rounded,
                   size: 120,
-                  color: Colors.black,
+                  //checkpoint
                 ),
                 const SizedBox(height: 10),
                 TextFormField(
-                  cursorColor: Theme.of(context).textTheme.titleLarge?.color,
+                  style: Theme.of(context).textTheme.titleMedium,
+                  cursorColor: Theme.of(context).textTheme.titleMedium?.color,
                   controller: emailController,
                   autocorrect: false,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     labelText: AppLocalizations.of(context)!.giveMeEmail,
                     prefixIcon: const Icon(Icons.email),
+                    prefixIconColor: Theme.of(context).textTheme.titleMedium?.color,
                   ),
                   validator: MultiValidator([
                     RequiredValidator(errorText: AppLocalizations.of(context)!.giveMeEmailError),
@@ -96,16 +100,21 @@ class LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
-                  cursorColor: Theme.of(context).textTheme.titleLarge?.color,
+                  style: Theme.of(context).textTheme.titleMedium,
+                  cursorColor: Theme.of(context).textTheme.titleMedium?.color,
                   controller: passwordController,
                   autocorrect: false,
                   obscureText: !passVisible,
-                  validator: PasswordMustContainValidator(AppLocalizations.of(context)!.validatePasswordError, passwordController.text).call,
+                  validator: PasswordMustContainValidator(
+                          AppLocalizations.of(context)!.validatePasswordError,
+                          passwordController.text)
+                      .call,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                       labelText: AppLocalizations.of(context)!.giveMePassword,
                       errorMaxLines: 3,
                       prefixIcon: const Icon(Icons.lock),
+                      prefixIconColor: Theme.of(context).textTheme.titleMedium?.color,
                       suffix: InkWell(
                         onTap: () {
                           setState(() {
@@ -113,9 +122,7 @@ class LoginScreenState extends State<LoginScreen> {
                           });
                         },
                         child: Icon(
-                          passVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                          passVisible ? Icons.visibility : Icons.visibility_off,
                         ),
                       )),
                 ),
@@ -123,13 +130,13 @@ class LoginScreenState extends State<LoginScreen> {
                 ElevatedButton(
                   child: Text(AppLocalizations.of(context)!.clickToLoginButton),
                   onPressed: () async {
-                    if(formKey.currentState!.validate()){
-                      try{
-                        await signIn(
-                            emailController.text, passwordController.text);
+                    if (formKey.currentState!.validate()) {
+                      try {
+                        await signIn(emailController.text, passwordController.text);
                       } on Exception {
-                        showSnackBar(context, AppLocalizations.of(context)!.sorryForErrorLogin, Theme.of(context).inputDecorationTheme.errorBorder!.borderSide.color);
-                    }
+                        showSnackBar(context, AppLocalizations.of(context)!.sorryForErrorLogin,
+                            Theme.of(context).inputDecorationTheme.errorBorder!.borderSide.color);
+                      }
                     }
                   },
                 ),
@@ -147,8 +154,7 @@ class LoginScreenState extends State<LoginScreen> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const RegisterScreen()),
+                            MaterialPageRoute(builder: (context) => const RegisterScreen()),
                           );
                         },
                         child: Text(AppLocalizations.of(context)!.haveOrNotAccountQuestion2))
@@ -184,17 +190,14 @@ class LoginScreenState extends State<LoginScreen> {
     if (message == "login_successful") {
       print("Okej :D");
       token = data['token'];
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.setString(MyHomePageState.TOKEN, token);
       sharedPreferences.setString(MyHomePageState.email, email);
-      sharedPreferences.setString(
-          MyHomePageState.password, passwordController.toString());
+      sharedPreferences.setString(MyHomePageState.password, passwordController.toString());
       sharedPreferences.setBool('isLogged', true);
       var isLoggedIn = sharedPreferences.getBool('isLogged');
       print("Wypiszę podczas ustawiania boola logowania $isLoggedIn");
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const MainPanelScreen()));
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const MainPanelScreen()));
     } else if (message == 'already_logged_in') {
       print("Nie okej :(");
       throw Exception(AppLocalizations.of(context)!.userAlreadyLoggedIn);

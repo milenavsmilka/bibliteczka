@@ -42,6 +42,7 @@ class _SearchScreenState extends State<SearchScreen> {
               width: widthScreen / 2,
               child: TextFormField(
                 cursorColor: Theme.of(context).textTheme.titleLarge?.color,
+                style: Theme.of(context).textTheme.titleLarge,
                 controller: searchController,
                 decoration: const InputDecoration(
                     disabledBorder: InputBorder.none,
@@ -126,7 +127,9 @@ class _SearchScreenState extends State<SearchScreen> {
                           ],
                         );
                       })
-                  : Center(child: Text(AppLocalizations.of(context)!.nothingHere)),
+                  : Center(
+                      child: Text(AppLocalizations.of(context)!.nothingHere,
+                          style: Theme.of(context).textTheme.titleLarge)),
             ),
             Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -134,6 +137,8 @@ class _SearchScreenState extends State<SearchScreen> {
                 children: [
                   if (pagesCount != -1 && pagesCount != 0) ...{
                     NumberPaginator(
+                      config: NumberPaginatorUIConfig(
+                          buttonSelectedBackgroundColor: Theme.of(context).primaryColor),
                       numberPages: pagesCount,
                       onPageChange: (index) {
                         setState(() {

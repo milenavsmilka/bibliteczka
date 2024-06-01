@@ -1,5 +1,6 @@
 import 'package:biblioteczka/panels/Account/MyProfile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../styles/strings.dart';
 import '../Account/QuoteForDay.dart';
 import '../Account/Settings.dart';
@@ -36,7 +37,7 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
       title: Text(widget.title, overflow: TextOverflow.ellipsis),
       automaticallyImplyLeading: widget.automaticallyImplyLeading,
       actions: <Widget>[
-        if (widget.turnSearch != null)...{
+        if (widget.turnSearch != null) ...{
           IconButton(
             icon: const Icon(
               Icons.search,
@@ -60,19 +61,22 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
           ),
           itemBuilder: (BuildContext context) => [
             PopupMenuItem(
-                onTap: widget.onTap ??
-                    () {
-                      checkIsTokenValid(
-                          context,
-                          Navigator.push(
-                              context,
-                              CustomPageRoute(
-                                  chooseAnimation: CustomPageRoute.SLIDE,
-                                  child: const MyProfileScreen())));
-                    },
-                child: const Text(showProfile)),
+              onTap: widget.onTap ??
+                  () {
+                    checkIsTokenValid(
+                        context,
+                        Navigator.push(
+                            context,
+                            CustomPageRoute(
+                                chooseAnimation: CustomPageRoute.SLIDE,
+                                child: const MyProfileScreen())));
+                  },
+              child: Text(AppLocalizations.of(context)!.showProfile,
+                  style: Theme.of(context).popupMenuTheme.textStyle),
+            ),
             PopupMenuItem(
-              child: const Text(quoteForToday),
+              child: Text(AppLocalizations.of(context)!.quoteForToday,
+                  style: Theme.of(context).popupMenuTheme.textStyle),
               onTap: () {
                 checkIsTokenValid(
                     context,
@@ -83,7 +87,8 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
               },
             ),
             PopupMenuItem(
-              child: const Text(settings),
+              child: Text(AppLocalizations.of(context)!.settings,
+                  style: Theme.of(context).popupMenuTheme.textStyle),
               onTap: () {
                 checkIsTokenValid(
                     context,
@@ -95,7 +100,8 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
               },
             ),
             PopupMenuItem(
-                child: const Text(clickToLogOutButton),
+                child: Text(AppLocalizations.of(context)!.clickToLogOutButton,
+                    style: Theme.of(context).popupMenuTheme.textStyle),
                 onTap: () async {
                   checkIsTokenValid(context);
                   await sendRequest(apiURLLogOut, Map.of({}), context);
@@ -106,4 +112,3 @@ class _DefaultAppBarState extends State<DefaultAppBar> {
     );
   }
 }
-

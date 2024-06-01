@@ -135,13 +135,14 @@ class _OpinionScreenState extends State<OpinionScreen> {
                       icon: SvgPicture.asset(
                         "assets/icons/pen.svg",
                         width: 15,
+                        color: Theme.of(context).iconTheme.color,
                       ),
                     ),
                     IconButton(
                         onPressed: () async {
                           try {
-                            await deleteSth(
-                                context, apiURLGetOpinion, Map.of({'id': widget.opinionId.toString()}));
+                            await deleteSth(context, apiURLGetOpinion,
+                                Map.of({'id': widget.opinionId.toString()}));
                             if (!context.mounted) return;
                             checkIsTokenValid(
                                 context,
@@ -149,7 +150,14 @@ class _OpinionScreenState extends State<OpinionScreen> {
                                     child: DetailsOfBookScreen(bookId: widget.bookId),
                                     chooseAnimation: CustomPageRoute.FADE)));
                           } on http.ClientException catch (e) {
-                            showSnackBar(context, e.message, Theme.of(context).inputDecorationTheme.errorBorder!.borderSide.color);
+                            showSnackBar(
+                                context,
+                                e.message,
+                                Theme.of(context)
+                                    .inputDecorationTheme
+                                    .errorBorder!
+                                    .borderSide
+                                    .color);
                           }
                         },
                         icon: const Icon(Icons.close, size: 23)),
@@ -187,10 +195,12 @@ class _OpinionScreenState extends State<OpinionScreen> {
       ]).call,
       onTap: onTap,
       controller: controller,
+      style: TextStyle(color: Theme.of(context).iconTheme.color),
       decoration: InputDecoration(
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
-          hintText: AppLocalizations.of(context)!.writeOwnOpinion),
+          hintText: AppLocalizations.of(context)!.writeOwnOpinion
+      ),
     );
   }
 

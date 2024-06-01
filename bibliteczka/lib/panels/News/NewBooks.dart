@@ -29,7 +29,6 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
     giveMeNewBooks(1);
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -48,7 +47,8 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
       return LoadingScreen(message: AppLocalizations.of(context)!.loading);
     } else {
       return Scaffold(
-        appBar: DefaultAppBar(title: AppLocalizations.of(context)!.news, automaticallyImplyLeading: true),
+        appBar: DefaultAppBar(
+            title: AppLocalizations.of(context)!.news, automaticallyImplyLeading: true),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -149,6 +149,9 @@ class _NewBooksScreenState extends State<NewBooksScreen> {
                   children: [
                     if (pagesCount != -1 && pagesCount != 0) ...{
                       NumberPaginator(
+                        config: NumberPaginatorUIConfig(
+                          buttonSelectedBackgroundColor: Theme.of(context).primaryColor,
+                        ),
                         numberPages: pagesCount,
                         onPageChange: (index) {
                           setState(() {

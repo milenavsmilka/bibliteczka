@@ -70,12 +70,6 @@ ThemeData lightTheme = ThemeData(
           fontWeight: FontWeight.w800,
           fontStyle: FontStyle.italic,
           fontSize: 55),
-      // displayMedium: TextStyle(
-      //     color: textMainColor,
-      //     fontFamily: 'Merienda',
-      //     fontWeight: FontWeight.w800,
-      //     fontStyle: FontStyle.italic,
-      //     fontSize: 35),
       displaySmall: TextStyle(
         color: Colors.black,
         fontFamily: 'LobsterTwo',
@@ -144,4 +138,8 @@ ThemeData lightTheme = ThemeData(
     contentTextStyle: TextStyle(fontSize: 20),
   ),
   iconTheme: const IconThemeData(color: textMainColor),
+  popupMenuTheme: const PopupMenuThemeData(
+    color: Colors.white,
+    textStyle: TextStyle(color: textMainColor),
+  ),
 );

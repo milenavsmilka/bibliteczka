@@ -88,8 +88,11 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                               height: 30,
                               width: widthScreen / 2.3,
                               child: Center(
-                                child: Text(listOfBooks[index]['title'],
-                                    style: Theme.of(context).textTheme.headlineSmall, overflow: TextOverflow.ellipsis,),
+                                child: Text(
+                                  listOfBooks[index]['title'],
+                                  style: Theme.of(context).textTheme.headlineSmall,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ),
                           ]),
@@ -103,6 +106,9 @@ class _AllCategoryBooksScreenState extends State<AllCategoryBooksScreen> {
                   children: [
                     if (pagesCount != -1 && pagesCount != 0) ...{
                       NumberPaginator(
+                        config: NumberPaginatorUIConfig(
+                          buttonSelectedBackgroundColor: Theme.of(context).primaryColor,
+                        ),
                         numberPages: pagesCount,
                         onPageChange: (index) {
                           setState(() {

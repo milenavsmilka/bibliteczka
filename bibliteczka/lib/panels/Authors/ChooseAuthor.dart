@@ -64,7 +64,8 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                   Navigator.push(
                           context,
                           CustomPageRoute(
-                              chooseAnimation: CustomPageRoute.SLIDE, child: const MyProfileScreen()))
+                              chooseAnimation: CustomPageRoute.SLIDE,
+                              child: const MyProfileScreen()))
                       .then((value) => giveMeListsOfAuthors(currentPage, letterThatWasClicked)));
             },
           ),
@@ -73,7 +74,8 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(AppLocalizations.of(context)!.popularAuthors, style: Theme.of(context).textTheme.headlineMedium),
+                Text(AppLocalizations.of(context)!.popularAuthors,
+                    style: Theme.of(context).textTheme.headlineMedium),
                 Container(
                   padding: const EdgeInsets.only(left: 20),
                   alignment: Alignment.center,
@@ -107,7 +109,8 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                   ),
                 ),
                 const Text(''),
-                Text(AppLocalizations.of(context)!.orderByAlphabet, style: Theme.of(context).textTheme.headlineMedium),
+                Text(AppLocalizations.of(context)!.orderByAlphabet,
+                    style: Theme.of(context).textTheme.headlineMedium),
                 Wrap(children: [
                   for (int i = 0; i < currentList.length; i++) ...{
                     SizedBox(
@@ -153,7 +156,7 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                       } else ...{
                         for (int i = 0; i < listOfAuthors.length; i++) ...{
                           TextButton(
-                              child: Text(listOfAuthors[i]['name']),
+                              child: Text(listOfAuthors[i]['name'],overflow: TextOverflow.ellipsis),
                               onPressed: () {
                                 checkIsTokenValid(
                                     context,
@@ -173,6 +176,9 @@ class _ChooseAuthorScreenState extends State<ChooseAuthorScreen> {
                     children: [
                       if (pagesCount != -1 && pagesCount != 0) ...{
                         NumberPaginator(
+                          config: NumberPaginatorUIConfig(
+                            buttonSelectedBackgroundColor: Theme.of(context).primaryColor,
+                          ),
                           numberPages: pagesCount,
                           onPageChange: (index) {
                             setState(() {
