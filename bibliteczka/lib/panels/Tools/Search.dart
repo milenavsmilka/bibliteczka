@@ -42,7 +42,7 @@ class _SearchScreenState extends State<SearchScreen> {
               width: widthScreen / 2,
               child: TextFormField(
                 cursorColor: Theme.of(context).textTheme.titleLarge?.color,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.titleMedium,
                 controller: searchController,
                 decoration: const InputDecoration(
                     disabledBorder: InputBorder.none,

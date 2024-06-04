@@ -304,7 +304,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
                           for (int i = 0; i < similarBooks.length; i++) ...{
                             PictureOfBooksInMyLibrary(
                               bookId: similarBooks[i]['id'],
-                              isEditingLibrary: isEditing,
+                              isEditingLibrary: false,
                               categoryUrl: '',
                               onPressed: () {
                                 checkIsTokenValid(
@@ -354,27 +354,30 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
     showCupertinoDialog(
         context: context,
         builder: (context) {
-          return GridView(
-            scrollDirection: Axis.vertical,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, mainAxisExtent: heightScreen / 4),
-            children: [
-              for (int i = 1; i < 19; i++) ...{
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      userData[0]['profile_picture'] = i;
-                      changeSthInMyAccount(
-                          context, apiURLChangeProfilePicture, Map.of({'profile_picture': i}));
-                      Navigator.pop(context);
-                    });
-                  },
-                  icon: Image.asset(
-                    setProfilePicture(i),
+          return Container(
+            color: Colors.grey.withAlpha(60),
+            child: GridView(
+              scrollDirection: Axis.vertical,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, mainAxisExtent: heightScreen / 4),
+              children: [
+                for (int i = 1; i < 19; i++) ...{
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        userData[0]['profile_picture'] = i;
+                        changeSthInMyAccount(
+                            context, apiURLChangeProfilePicture, Map.of({'profile_picture': i}));
+                        Navigator.pop(context);
+                      });
+                    },
+                    icon: Image.asset(
+                      setProfilePicture(i),
+                    ),
                   ),
-                ),
-              },
-            ],
+                },
+              ],
+            ),
           );
         });
   }

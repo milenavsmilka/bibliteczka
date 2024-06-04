@@ -37,8 +37,6 @@ const String iconComic = "assets/icons/comic.svg";
 const String iconOther = "assets/icons/other.svg";
 const String iconAdventure = "assets/icons/adventure.svg";
 
-
-
 const String search = 'Wyszukaj';
 const String nothingHere = 'Nic tu nie ma :(';
 

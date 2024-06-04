@@ -23,12 +23,12 @@ ThemeData specialTheme = ThemeData(
             fontWeight: FontWeight.w700,
             fontStyle: FontStyle.normal,
             fontSize: 22),
-        minimumSize: Size.square(50.0),
+        minimumSize: const Size.square(50.0),
         backgroundColor: categoryButtonCyanColor,
         foregroundColor: textMainColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
   ),
-  inputDecorationTheme: InputDecorationTheme(
+  inputDecorationTheme: const InputDecorationTheme(
     labelStyle: TextStyle(
         color: Colors.grey,
         fontFamily: 'Lato',

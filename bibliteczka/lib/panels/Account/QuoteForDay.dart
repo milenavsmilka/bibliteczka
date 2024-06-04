@@ -67,7 +67,7 @@ class QuoteScreenState extends State<QuoteScreen> {
                         icon: Image.asset('assets/images/bookToQuote.png',
                             width: 150.0, height: 150.0, fit: BoxFit.fill),
                       ),
-                      Text('$count%', style: Theme.of(context).textTheme.titleLarge),
+                      Text('$count%', style: Theme.of(context).textTheme.titleMedium),
                     ],
                   )
                 : Container(

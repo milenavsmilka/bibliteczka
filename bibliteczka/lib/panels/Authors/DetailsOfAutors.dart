@@ -181,12 +181,12 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
                             ),
                             if (dateOfDead != '') ...{
                               Text(AppLocalizations.of(context)!.dateOfDeadTitle,
-                                  style: Theme.of(context).textTheme.headlineSmall)
+                                  style: Theme.of(context).textTheme.headlineSmall),
+                              Text(
+                                dateOfDead,
+                                style: Theme.of(context).textTheme.titleSmall,
+                              )
                             },
-                            Text(
-                              dateOfDead,
-                              style: Theme.of(context).textTheme.titleSmall,
-                            )
                           },
                           if (authorsWebsite != '') ...{
                             Text(AppLocalizations.of(context)!.authorsWebsiteTitle,
