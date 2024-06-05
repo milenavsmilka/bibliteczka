@@ -43,6 +43,9 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
 
   String username = '-1';
 
+  var showAll = false;
+  final length = lengthToShow + 150;
+
   @override
   void initState() {
     super.initState();
@@ -141,8 +144,8 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                                     });
                                   } on http.ClientException catch (e) {
                                     print('wcale nie $e');
-                                    await deleteSth(context, apiURLBookFromRead, Map.of({'book_id':
-                                      widget.bookId.toString()}));
+                                    await deleteSth(context, apiURLBookFromRead,
+                                        Map.of({'book_id': widget.bookId.toString()}));
                                     setState(() {
                                       emptyRead = false;
                                     });
@@ -188,8 +191,8 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             emptyHeart = true;
                           } on http.ClientException catch (e) {
                             print('wcale nie $e');
-                            await deleteSth(
-                                context, apiURLBookFromFav, Map.of({'book_id': widget.bookId.toString()}));
+                            await deleteSth(context, apiURLBookFromFav,
+                                Map.of({'book_id': widget.bookId.toString()}));
                             emptyHeart = false;
                           }
                         },
@@ -204,8 +207,8 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             emptyRead = true;
                           } on http.ClientException catch (e) {
                             print('wcale nie $e');
-                            await deleteSth(
-                                context, apiURLBookFromRead, Map.of({'book_id': widget.bookId.toString()}));
+                            await deleteSth(context, apiURLBookFromRead,
+                                Map.of({'book_id': widget.bookId.toString()}));
                             emptyRead = false;
                           }
                         },
@@ -218,12 +221,14 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(AppLocalizations.of(context)!.bookTitle, style: Theme.of(context).textTheme.headlineSmall),
+                          Text(AppLocalizations.of(context)!.bookTitle,
+                              style: Theme.of(context).textTheme.headlineSmall),
                           Text(
                             title,
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
-                          Text(AppLocalizations.of(context)!.bookAuthors, style: Theme.of(context).textTheme.headlineSmall),
+                          Text(AppLocalizations.of(context)!.bookAuthors,
+                              style: Theme.of(context).textTheme.headlineSmall),
                           Column(
                             children: [
                               if (authorsNames.isEmpty) ...{
@@ -254,7 +259,8 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                           if (countOfPages != 0) ...{
-                            Text(AppLocalizations.of(context)!.numberOfPages, style: Theme.of(context).textTheme.headlineSmall),
+                            Text(AppLocalizations.of(context)!.numberOfPages,
+                                style: Theme.of(context).textTheme.headlineSmall),
                             Text(
                               countOfPages.toString(),
                               style: Theme.of(context).textTheme.titleSmall,
@@ -273,12 +279,39 @@ class _DetailsOfBookScreenState extends State<DetailsOfBookScreen> {
                 Row(
                   children: [
                     Flexible(
-                        child: Text(description, style: Theme.of(context).textTheme.titleSmall)),
+                      child: Text.rich(TextSpan(
+                        children: <InlineSpan>[
+                          TextSpan(
+                              text: description.length > length && !showAll
+                                  ? "${description.substring(0, length)}..."
+                                  : description,
+                              style: Theme.of(context).textTheme.titleSmall),
+                          description.length > length
+                              ? WidgetSpan(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        showAll = !showAll;
+                                      });
+                                    },
+                                    child: Text(
+                                      showAll
+                                          ? AppLocalizations.of(context)!.showLess
+                                          : AppLocalizations.of(context)!.showMore,
+                                      style: Theme.of(context).textTheme.titleMedium,
+                                    ),
+                                  ),
+                                )
+                              : const TextSpan(),
+                        ],
+                      )),
+                    )
                   ],
                 )
               },
               const Row(children: [Text('')]),
-              Text(AppLocalizations.of(context)!.opinionsAndTalks, style: Theme.of(context).textTheme.headlineSmall),
+              Text(AppLocalizations.of(context)!.opinionsAndTalks,
+                  style: Theme.of(context).textTheme.headlineSmall),
               const Row(children: [Text('')]),
               OpinionScreen(instruction: OpinionScreen.SEND, bookId: widget.bookId),
               for (int i = 0; i < opinions.length; i++)

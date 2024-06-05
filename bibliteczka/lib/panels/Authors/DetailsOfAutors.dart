@@ -39,6 +39,9 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
   bool isHeartAnimating = false;
   bool emptyHeart = false;
 
+  var showAll = false;
+  final length = lengthToShow + 150;
+
   @override
   void initState() {
     super.initState();
@@ -242,7 +245,34 @@ class _DetailsOfAuthorsScreenState extends State<DetailsOfAuthorsScreen> {
               const Row(children: [Text('')]),
               Row(
                 children: [
-                  Flexible(child: Text(biography, style: Theme.of(context).textTheme.titleSmall)),
+                  Flexible(
+                    child: Text.rich(TextSpan(
+                      children: <InlineSpan>[
+                        TextSpan(
+                            text: biography.length > length && !showAll
+                                ? "${biography.substring(0, length)}..."
+                                : biography,
+                            style: Theme.of(context).textTheme.titleSmall),
+                        biography.length > length
+                            ? WidgetSpan(
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                showAll = !showAll;
+                              });
+                            },
+                            child: Text(
+                              showAll
+                                  ? AppLocalizations.of(context)!.showLess
+                                  : AppLocalizations.of(context)!.showMore,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                        )
+                            : const TextSpan(),
+                      ],
+                    )),
+                  )
                 ],
               ),
               Center(
