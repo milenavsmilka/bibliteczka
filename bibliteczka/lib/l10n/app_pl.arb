@@ -12,6 +12,7 @@
     "giveMeUserName": "Nazwa użytkownika",
     "giveMeEmail": "Wpisz email",
     "giveMeEmailError": "Podaj adres email",
+    "giveMePasswordError": "Podaj hasło",
     "wrongEmailError": "Podano niepoprawny adres email",
     "giveMePassword": "Podaj hasło",
     "passwordIsDifferentError": "Hasła są różne",

@@ -56,9 +56,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       autocorrect: false,
                       controller: usernameController,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: UsernameMustContainValidator(
-                              AppLocalizations.of(context)!.validateUsernameError,
-                              usernameController.text)
+                      validator: MultiValidator([
+                        UsernameMustContainValidator(
+                            AppLocalizations.of(context)!.validateUsernameError,
+                            usernameController.text),
+                        RequiredValidator(
+                            errorText: AppLocalizations.of(context)!.validateUsernameError)
+                      ])
                           .call,
                       decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.giveMeUserName,
@@ -99,10 +103,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       autocorrect: false,
                       controller: passwordController,
                       obscureText: !passVisible,
-                      validator: PasswordMustContainValidator(
-                              AppLocalizations.of(context)!.validatePasswordError,
-                              passwordController.text)
-                          .call,
+                      validator: MultiValidator([
+                        PasswordMustContainValidator(
+                            AppLocalizations.of(context)!.validatePasswordError,
+                            passwordController.text),
+                        RequiredValidator(
+                            errorText: AppLocalizations.of(context)!.giveMePasswordError)
+                      ]).call,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.giveMePassword,
@@ -134,8 +141,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       obscureText: !passRepVisible,
                       validator: (repeat) => repeat != passwordController.text
                           ? AppLocalizations.of(context)!.passwordIsDifferentError
-                          : null,
-                      //repeatPassValidator,
+                          : AppLocalizations.of(context)!.giveMePasswordError,
                       decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.giveMeRepeatPassword,
                           prefixIcon: const Icon(Icons.lock),

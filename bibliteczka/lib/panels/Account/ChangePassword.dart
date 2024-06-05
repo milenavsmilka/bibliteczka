@@ -47,9 +47,13 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       autocorrect: false,
                       controller: currentPasswordController,
                       obscureText: !passVisible,
-                      validator: PasswordMustContainValidator(
-                          AppLocalizations.of(context)!.validatePasswordError, currentPasswordController.text)
-                          .call,
+                      validator: MultiValidator([
+                        RequiredValidator(
+                            errorText: AppLocalizations.of(context)!.giveMePasswordError),
+                        PasswordMustContainValidator(
+                            AppLocalizations.of(context)!.validatePasswordError,
+                            currentPasswordController.text)
+                      ]).call,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.giveMeCurrentPassword,
@@ -78,11 +82,14 @@ class ChangePasswordScreenState extends State<ChangePasswordScreen> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       obscureText: !passRepVisible,
                       validator: MultiValidator([
-                        RequiredValidator(errorText: AppLocalizations.of(context)!.fieldCannotBeEmpty),
+                        RequiredValidator(
+                            errorText: AppLocalizations.of(context)!.fieldCannotBeEmpty),
                         DifferentPasswordValidator(
-                            AppLocalizations.of(context)!.passMustBeDifferent, currentPasswordController.text),
+                            AppLocalizations.of(context)!.passMustBeDifferent,
+                            currentPasswordController.text),
                         PasswordMustContainValidator(
-                            AppLocalizations.of(context)!.validatePasswordError, newPasswordController.text)
+                            AppLocalizations.of(context)!.validatePasswordError,
+                            newPasswordController.text)
                       ]).call,
                       decoration: InputDecoration(
                           labelText: AppLocalizations.of(context)!.giveMeNewPassword,

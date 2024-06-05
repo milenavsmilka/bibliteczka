@@ -105,9 +105,12 @@ class LoginScreenState extends State<LoginScreen> {
                   controller: passwordController,
                   autocorrect: false,
                   obscureText: !passVisible,
-                  validator: PasswordMustContainValidator(
-                          AppLocalizations.of(context)!.validatePasswordError,
-                          passwordController.text)
+                  validator: MultiValidator([
+                    PasswordMustContainValidator(
+                        AppLocalizations.of(context)!.validatePasswordError,
+                        passwordController.text),
+                    RequiredValidator(errorText: AppLocalizations.of(context)!.giveMePassword)
+                  ])
                       .call,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(

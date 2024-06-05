@@ -12,6 +12,7 @@
     "giveMeUserName": "Username",
     "giveMeEmail": "Enter email",
     "giveMeEmailError": "Enter email",
+    "giveMePasswordError": "Enter password",
     "wrongEmailError": "An invalid email address has been provided",
     "giveMePassword": "Enter password",
     "passwordIsDifferentError": "Passwords are different",
