@@ -60,8 +60,10 @@ class _IconsAnimationState extends State<IconsAnimation>
   }
 
   @override
-  Widget build(BuildContext context) => ScaleTransition(
+  Widget build(BuildContext context) {
+    return ScaleTransition(
     scale: scale,
     child: widget.child,
   );
+  }
 }
